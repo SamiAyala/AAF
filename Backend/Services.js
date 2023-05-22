@@ -1,4 +1,4 @@
-import config from './dbconfig';
+import config from './dbconfig.js';
 import sql from 'mssql';
 export class Services {
     static getAllCursos = async () => 
@@ -71,8 +71,8 @@ export class Services {
     static insertUsuario = async (Usuario) => {
         console.log("Estoy en: insert - Curso");
         const { Nombre, Apellido, FkRol, Telefono, Mail } = Usuario
+        console.log(Nombre);
         let pool = await sql.connect(config)
-
         let result = await pool.request()
             .input('nombre', sql.NVarChar(200), Nombre)
             .input('apellido', sql.NVarChar(200), Apellido)

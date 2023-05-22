@@ -1,19 +1,21 @@
 import  express from "express";
-import config from './dbconfig.js';
-import sql from 'mssql';
-import cors from 'cors';
 import { Services } from "./Services.js";
 const app = express();
-const port = 3000;
-app.use(cors());
-app.post('/Registrarse', async(req,res) =>{
+const port = 5000;
+app.put('/aaf/editarperfil',async(req,res) => {
+    let usuario = Services.updateUsuario(req.body);
+    res.status(202).send(usuario);
+})
+
+app.use(express.json())
+app.post('/aaf/registrarse', async(req,res) =>{
     try{
         console.log(req.body)
-        await Services.insert(req.body);
-        res.status(201).json({message: 'Pizza creada'})
+        await Services.insertUsuario(req.body);
+        res.status(201).json({message: 'Registrado con éxito'})
     } catch (error){
         console.log(error)
-        res.status(500).json({error : 'Fallo la cracion'})
+        res.status(500).json({error : 'Fallo el registro'})
     }
 })
 app.listen(port,() =>{

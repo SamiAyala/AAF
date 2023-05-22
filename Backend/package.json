@@ -1,0 +1,28 @@
+{
+  "name": "aaf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "API.js",
+  "type": "module",
+  "scripts": {
+    "start": "node API.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamiAyala/AAF.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SamiAyala/AAF/issues"
+  },
+  "homepage": "https://github.com/SamiAyala/AAF#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mssql": "^9.1.1"
+  }
+}
