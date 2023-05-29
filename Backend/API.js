@@ -1,8 +1,12 @@
 import  express from "express";
 import { Services } from "./Services.js";
+import cors from 'cors';
+
 const app = express();
 const port = 5000;
 app.use(express.json());
+app.use(cors())
+
 //Test
 app.get('/aaf/getPerfil/:id',async(req,res)=>{
     const perfil = await Services.getUserById(req.params.id);
@@ -10,11 +14,13 @@ app.get('/aaf/getPerfil/:id',async(req,res)=>{
 })
 
 //Sprint:
-app.post('/login', async(req, res) => {
-	let mail = req.body.Mail;
-	let contraseña = req.body.Contraseña;
+app.post('/aaf/login', async(req, res) => {
+	let mail = req.body.mail;
+	let contraseña = req.body.contraseña;
+    console.log(req.body)
     if (mail && contraseña) {
         const respuesta = await Services.login(mail,contraseña);
+        console.log(respuesta, respuesta.objeto)
 		res.status(respuesta.status).send(respuesta.objeto);
 	} else {
 		res.status(400);
