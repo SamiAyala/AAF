@@ -5,30 +5,44 @@ import Form from 'react-bootstrap/Form';
 /*import InputGroup from 'react-bootstrap/InputGroup';*/
 /*import Row from 'react-bootstrap/Row';*/
 import './Registrar.css';
-
+import axios from 'axios';
 function FormIniciarSesion() {
-  const [validated, setValidated] = useState(false);
-
+  const [Mail, setMail] = useState('');
+  const [Contraseña, setContraseña] = useState('');
   const handleSubmit = (event) => {
+    event.preventDefault();
+    let nuevoUsuario = {
+      mail: Mail,
+      contraseña: Contraseña,
+    };
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-    }
+    } 
 
-    setValidated(true);
+    axios.post('http://localhost:5000/aaf/login', nuevoUsuario)
+   // .then(res => {
+    //  if (res.response === 404 ){
+           
+     // }
+    //});
+
   };
 
   return (
     <div className='container'>
-    <Form noValidate validated={validated} onSubmit={handleSubmit} className='form'>
+    <Form onSubmit={(e) => handleSubmit(e)} className='form'>
     <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-          <Form.Label>Mail</Form.Label>
+        <Form.Label>Mail</Form.Label>
           <Form.Control
             required
             type="text"
-            placeholder="mail   "
+            placeholder="mail"
             defaultValue=""
+            onChange={(event) =>
+              setMail(event.target.value)
+            }
           />  
         </Form.Group>
         <br></br>
@@ -39,7 +53,10 @@ function FormIniciarSesion() {
             type="text"
             placeholder="Contraseña"
             defaultValue=""
-          />  
+            onChange={(event) =>
+              setContraseña(event.target.value)
+            }
+          /> 
         </Form.Group>
         <br></br>
         <Button type="submit" className='form'>Iniciar Sesión</Button>
