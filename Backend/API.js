@@ -15,9 +15,9 @@ app.post('/login', async(req, res) => {
 	let contraseña = req.body.Contraseña;
     if (mail && contraseña) {
         const respuesta = await Services.login(mail,contraseña);
-		res.send(respuesta);
+		res.status(respuesta.status).send(respuesta.objeto);
 	} else {
-		res.send('Porfavor ingrese el mail y la contraseña!');
+		res.status(400);
 		res.end();
 	}
 });
@@ -29,7 +29,6 @@ app.put('/aaf/editarperfil',async(req,res) => {
 
 app.post('/aaf/registrarse', async(req,res) =>{
     try{
-        console.log(req.body)
         await Services.insertUsuario(req.body);
         res.status(201).json({message: 'Registrado con éxito'})
     } catch (error){
