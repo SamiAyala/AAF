@@ -1,6 +1,23 @@
 import config from './dbconfig.js';
 import sql from 'mssql';
 export class Services {
+
+    static login = async(mail,contraseña) =>
+    {
+        let returnEntity = null;
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+            .input("mail",sql.NVarChar(200),mail)
+            .input("contraseña",sql.NVarChar(50),contraseña)
+            .query('SELECT * FROM Usuarios WHERE Mail = @mail AND Contraseña = @contraseña');
+            if(result.recordsets[0][0]!=null){
+                returnEntity = "Login exitoso";
+            } else {
+                returnEntity = "El mail y/o la contraseña ingresados no son correctos!"
+            }
+        return returnEntity;
+    }
+
     static getAllCursos = async () => 
     {
         let returnEntity = null;
@@ -13,7 +30,7 @@ export class Services {
         } catch (error) {
             console.log(error);
         }
-        return returnEntity
+        return returnEntity;
     }
 
     static getMaterial = async (idCurso) =>
@@ -70,32 +87,34 @@ export class Services {
 
     static insertUsuario = async (Usuario) => {
         console.log("Estoy en: insert - Curso");
-        const { Nombre, Apellido, FkRol, Telefono, Mail } = Usuario
+        const { Contraseña, Nombre, Apellido, FkRol, Telefono, Mail } = Usuario
         console.log(Nombre);
         let pool = await sql.connect(config)
         let result = await pool.request()
+            .input('contraseña',sql.NVarChar(50),Contraseña)
             .input('nombre', sql.NVarChar(200), Nombre)
             .input('apellido', sql.NVarChar(200), Apellido)
             .input('fkRol',sql.Int,FkRol)
             .input('Telefono',sql.NVarChar(17),Telefono)
             .input('Mail',sql.NVarChar(200),Mail)
-            .query('INSERT INTO Usuarios (nombre,apellido,fkRol,Telefono,Mail) VALUES (@nombre,@apellido,@fkRol,@telefono,@mail)')
+            .query('INSERT INTO Usuarios (Contraseña,Nombre,Apellido,FkRol,Telefono,Mail) VALUES (@contraseña,@nombre,@apellido,@fkRol,@telefono,@mail)')
     }
 
     static updateUsuario = async (usuario) => {
-        const { Id, Nombre, Apellido, Telefono, Mail, FkRol } = usuario
+        const { Id, Contraseña, Nombre, Apellido, FkRol, Telefono, Mail } = usuario
         let returnEntity = null;
         console.log("Estoy en: update");
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input('pId', sql.Int, Id)
+                .input('contraseña',sql.NVarChar(50),Contraseña)
                 .input('nombre', sql.NVarChar(50), Nombre)
                 .input('apellido', sql.NVarChar(50), Apellido)
+                .input('fkRol', sql.Int, FkRol)
                 .input('telefono', sql.NVarChar(15), Telefono)
                 .input('mail', sql.NVarChar(50), Mail)
-                .input('fkRol', sql.Int, FkRol)
-                .query('UPDATE Usuarios SET Nombre = @nombre, Apellido = @apellido, fkRol = @fkRol, Telefono = @telefono, Mail = @mail WHERE Usuarios.Id = @pId')
+                .query('UPDATE Usuarios SET Contraseña = @contraseña, Nombre = @nombre, Apellido = @apellido, fkRol = @fkRol, Telefono = @telefono, Mail = @mail WHERE Usuarios.Id = @pId')
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
