@@ -1,9 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-import FormExample from './Registrar.js';
+import FormIniciarSesion from './IniciarSesion';
+/*import FormRegistro from './Registrar.js';*/
+import Perfil from './Perfil.js';
 function App() {
   return (
-   <FormExample></FormExample>
+   /*<FormRegistro></FormRegistro>*/
+   <FormIniciarSesion></FormIniciarSesion>
+     /*<Perfil></Perfil>*/
   );
 }
 

@@ -1,0 +1,27 @@
+.container{
+    background-color: grey;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+
+}
+.foto{
+    margin-top: 1%;
+    width: 15%;
+    height: auto;
+}
+.contacto{
+    bottom: 30%;
+    left: 10%;
+}
+.boton{
+float: right;
+top: 0%;
+}
+.sobreMi{
+    float: right;
+    margin-top: 7%;
+}
+.hr1{
+    width: 50%;
+}

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
+/*import Col from 'react-bootstrap/Col';*/
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
+/*import InputGroup from 'react-bootstrap/InputGroup';*/
+/*import Row from 'react-bootstrap/Row';*/
 import './Registrar.css';
 
-function FormExample() {
+function FormRegistro() {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -88,4 +88,4 @@ function FormExample() {
   );
 }
 
-export default FormExample;
+export default FormRegistro;
