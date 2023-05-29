@@ -11,9 +11,9 @@ export class Services {
             .input("contraseña",sql.NVarChar(50),contraseña)
             .query('SELECT * FROM Usuarios WHERE Mail = @mail AND Contraseña = @contraseña');
             if(result.recordsets[0][0]!=null){
-                returnEntity = "Login exitoso";
+                returnEntity = {status:200, objeto: result.recordsets[0][0]};
             } else {
-                returnEntity = "El mail y/o la contraseña ingresados no son correctos!"
+                returnEntity = {status:404}
             }
         return returnEntity;
     }
@@ -88,7 +88,6 @@ export class Services {
     static insertUsuario = async (Usuario) => {
         console.log("Estoy en: insert - Curso");
         const { Contraseña, Nombre, Apellido, FkRol, Telefono, Mail } = Usuario
-        console.log(Nombre);
         let pool = await sql.connect(config)
         let result = await pool.request()
             .input('contraseña',sql.NVarChar(50),Contraseña)
