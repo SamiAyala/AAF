@@ -7,13 +7,14 @@ export class Services {
         let returnEntity = null;
             let pool = await sql.connect(config)
             let result = await pool.request()
-            .input("mail",sql.NVarChar(200),mail)
+            .input("mail",sql.VarChar(200),mail)
             .input("contraseña",sql.NVarChar(50),contraseña)
             .query('SELECT * FROM Usuarios WHERE Mail = @mail AND Contraseña = @contraseña');
-            if(result.recordsets[0][0]!=null){
+            console.log("Recordsets = ", result.recordsets[0][0]);
+            if(typeof result.recordsets[0][0] !== "undefined"){
                 returnEntity = {status:200, objeto: result.recordsets[0][0]};
             } else {
-                returnEntity = {status:404}
+                  returnEntity = {status:404}
             }
         return returnEntity;
     }

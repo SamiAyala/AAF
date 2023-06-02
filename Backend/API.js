@@ -23,8 +23,7 @@ app.post('/aaf/login', async(req, res) => {
         console.log(respuesta, respuesta.objeto)
 		res.status(respuesta.status).send(respuesta.objeto);
 	} else {
-		res.status(400);
-		res.end();
+		res.status(400).send("Mail o contraseña invalidos");
 	}
 });
 
