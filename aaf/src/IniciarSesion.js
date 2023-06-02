@@ -22,11 +22,12 @@ function FormIniciarSesion() {
     } 
 
     axios.post('http://localhost:5000/aaf/login', nuevoUsuario)
-   // .then(res => {
-    //  if (res.response === 404 ){
-           
-     // }
-    //});
+    .then(res => {
+      console.log("Iniciaste sesion correctamente", res.data)    
+    })
+    .catch(e => {
+      console.log(e.response.status);
+    });
 
   };
 
