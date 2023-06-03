@@ -6,12 +6,13 @@ import Form from 'react-bootstrap/Form';
 /*import Row from 'react-bootstrap/Row';*/
 import './Registrar.css';
 import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 
 function FormRegistro() {
   const [validated, setValidated] = useState(false);
   const [values, setValues] = useState({});
-  //const Navigate = useNavigate();
+  const Navigate = useNavigate('/iniciarSeesion');
   const handleChange = (event) => {
     setValues({...values, [event.target.name]:event.target.value 
     })
@@ -28,7 +29,7 @@ function FormRegistro() {
     axios.post('http://localhost:5000/aaf/registrarse', values)
       .then(res => {
         console.log("soygay")
-        //Navigate('/iniciarSesion') 
+        Navigate('/iniciarSesion') 
       })
       .catch(e => {
         console.log(e.response.status, e.data);
