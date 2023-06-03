@@ -6,6 +6,8 @@ import Form from 'react-bootstrap/Form';
 /*import Row from 'react-bootstrap/Row';*/
 import './Registrar.css';
 import axios from 'axios';
+import {Link} from 'react-router-dom'
+
 function FormIniciarSesion() {
   const [Mail, setMail] = useState('');
   const [Contraseña, setContraseña] = useState('');
@@ -61,6 +63,7 @@ function FormIniciarSesion() {
         </Form.Group>
         <br></br>
         <Button type="submit" className='form'>Iniciar Sesión</Button>
+        <Link to="/" className="btn btn-light form">Registrar</Link>
     </Form>
     </div>
   );
