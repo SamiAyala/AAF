@@ -33,6 +33,7 @@ app.put('/aaf/editarperfil',async(req,res) => {
 })
 
 app.post('/aaf/registrarse', async(req,res) =>{
+    console.log(req.body)
     try{
         await Services.insertUsuario(req.body);
         res.status(201).json({message: 'Registrado con éxito'})

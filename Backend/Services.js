@@ -88,15 +88,16 @@ export class Services {
 
     static insertUsuario = async (Usuario) => {
         console.log("Estoy en: insert - Curso");
-        const { Contraseña, Nombre, Apellido, FkRol, Telefono, Mail } = Usuario
+        const { contraseña, nombre, apellido, rol, telefono, mail } = Usuario
+        const fkRol= rol=== "profesor" ? 1 : 2 
         let pool = await sql.connect(config)
         let result = await pool.request()
-            .input('contraseña',sql.NVarChar(50),Contraseña)
-            .input('nombre', sql.NVarChar(200), Nombre)
-            .input('apellido', sql.NVarChar(200), Apellido)
-            .input('fkRol',sql.Int,FkRol)
-            .input('Telefono',sql.NVarChar(17),Telefono)
-            .input('Mail',sql.NVarChar(200),Mail)
+            .input('contraseña',sql.NVarChar(50),contraseña)
+            .input('nombre', sql.NVarChar(200), nombre)
+            .input('apellido', sql.NVarChar(200), apellido)
+            .input('fkRol',sql.Int,fkRol)
+            .input('Telefono',sql.NVarChar(17),telefono)
+            .input('Mail',sql.NVarChar(200),mail)
             .query('INSERT INTO Usuarios (Contraseña,Nombre,Apellido,FkRol,Telefono,Mail) VALUES (@contraseña,@nombre,@apellido,@fkRol,@telefono,@mail)')
     }
 
