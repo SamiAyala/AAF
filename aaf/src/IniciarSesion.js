@@ -7,10 +7,12 @@ import Form from 'react-bootstrap/Form';
 import './Registrar.css';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
+//import {useNavigate} from 'react-router-dom'
 
 function FormIniciarSesion() {
   const [Mail, setMail] = useState('');
   const [Contraseña, setContraseña] = useState('');
+  //const Navigate = useNavigate('/perfil');
   const handleSubmit = (event) => {
     event.preventDefault();
     let nuevoUsuario = {
@@ -25,7 +27,8 @@ function FormIniciarSesion() {
 
     axios.post('http://localhost:5000/aaf/login', nuevoUsuario)
     .then(res => {
-      console.log("Iniciaste sesion correctamente", res.data)    
+      console.log("Iniciaste sesion correctamente", res.data)
+      //Navigate('/perfil',{state:{id:res.data.Id}}) 
     })
     .catch(e => {
       console.log(e.response.status);
@@ -68,5 +71,4 @@ function FormIniciarSesion() {
     </div>
   );
 }
-
 export default FormIniciarSesion;

@@ -1,7 +1,11 @@
 import './Perfil.css';
-//import './Julian.jpg';    
+import './Julian.jpg';    
 import Button from 'react-bootstrap/Button';
-function Perfil (){
+//mport {useLocation} from 'react-router-dom';
+
+function Perfil (usuario){
+  //const location = useLocation();
+  //console.log(location.state.Id)
   return(
    <div className='container'>
       <Button type="submit" className='boton'>Editar perfil</Button>

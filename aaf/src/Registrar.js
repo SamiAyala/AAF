@@ -28,7 +28,6 @@ function FormRegistro() {
     }
     axios.post('http://localhost:5000/aaf/registrarse', values)
       .then(res => {
-        console.log("soygay")
         Navigate('/iniciarSesion') 
       })
       .catch(e => {
