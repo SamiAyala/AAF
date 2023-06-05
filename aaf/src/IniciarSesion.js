@@ -7,12 +7,12 @@ import Form from 'react-bootstrap/Form';
 import './Registrar.css';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
-//import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 function FormIniciarSesion() {
   const [Mail, setMail] = useState('');
   const [Contraseña, setContraseña] = useState('');
-  //const Navigate = useNavigate('/perfil');
+  const Navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     let nuevoUsuario = {
@@ -27,11 +27,10 @@ function FormIniciarSesion() {
 
     axios.post('http://localhost:5000/aaf/login', nuevoUsuario)
     .then(res => {
-      console.log("Iniciaste sesion correctamente", res.data)
-      //Navigate('/perfil',{state:{id:res.data.Id}}) 
+      console.log("LOGIN: ", res)
+      Navigate(`/perfil/${res.data.Id}`, { state: res.data })
     })
     .catch(e => {
-      console.log(e.response.status);
     });
 
   };
@@ -56,7 +55,7 @@ function FormIniciarSesion() {
           <Form.Label>Contraseña</Form.Label>
           <Form.Control
             required
-            type="text"
+            type="password"
             placeholder="Contraseña"
             defaultValue=""
             onChange={(event) =>

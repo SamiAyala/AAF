@@ -1,18 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 /*import Col from 'react-bootstrap/Col';*/
 import Form from 'react-bootstrap/Form';
 /*import InputGroup from 'react-bootstrap/InputGroup';*/
 /*import Row from 'react-bootstrap/Row';*/
 import './Registrar.css';
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 
-function FormRegistro() {
+
+function EditarPerfil() {
+    const {state} = useLocation();
+    const perfil = state;
   const [validated, setValidated] = useState(false);
   const [values, setValues] = useState({});
-  const Navigate = useNavigate('/iniciarSeesion');
+  const Navigate = useNavigate();
+
+    useEffect(() => {
+        setValues({...perfil});
+    }, []);
+
   const handleChange = (event) => {
     setValues({...values, [event.target.name]:event.target.value 
     })
@@ -20,15 +28,17 @@ function FormRegistro() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
+
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
-    axios.post('http://localhost:5000/aaf/registrarse', values)
+    axios.put('http://localhost:5000/aaf/editarperfil', values)
       .then(res => {
-        Navigate('/iniciarSesion') 
+        Navigate(`/perfil/${perfil.Id}`, {state: values})
       })
       .catch(e => {
+        console.log(e.response.status, e.data);
       });
     setValidated(true);
   };
@@ -43,7 +53,7 @@ function FormRegistro() {
             type="text"
             placeholder="nombre"
             defaultValue=""
-            name="nombre"
+            name="Nombre"
             onChange={handleChange}
           />
         </Form.Group>
@@ -55,7 +65,7 @@ function FormRegistro() {
             type="text"
             placeholder="apellido"
             defaultValue=""
-            name="apellido"
+            name="Apellido"
             onChange={handleChange}
           />
         </Form.Group>
@@ -67,7 +77,7 @@ function FormRegistro() {
             type="password"
             placeholder="Contraseña"
             defaultValue=""
-            name="contraseña"
+            name="Contraseña"
             onChange={handleChange}
           />
         </Form.Group>
@@ -90,7 +100,7 @@ function FormRegistro() {
             type="text"
             placeholder="telefono"
             defaultValue=""
-            name="telefono"
+            name="Telefono"
             onChange={handleChange}
           />
         </Form.Group>
@@ -102,17 +112,7 @@ function FormRegistro() {
             type="text"
             placeholder="mail"
             defaultValue=""
-            name="mail"
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-          <Form.Label>Rol</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            defaultValue=""
-            name="rol"
+            name="Mail"
             onChange={handleChange}
           />
         </Form.Group>
@@ -123,7 +123,7 @@ function FormRegistro() {
             required
             type="text"
             defaultValue=""
-            name="fiscalia"
+            name="Fiscalia"
             onChange={handleChange}
           />
         </Form.Group>
@@ -134,16 +134,26 @@ function FormRegistro() {
             required
             type="text"
             defaultValue=""
-            name="oficio"
+            name="Oficio"
             onChange={handleChange}
           />
         </Form.Group>
         <br></br>
-        <Button type="submit" className='form'>Registrarse</Button>
-        <Link to="/iniciarSesion" className="btn btn-light form">Iniciar Sesion</Link>
+        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+          <Form.Label>Descripcion</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            defaultValue=""
+            name="Descripcion"
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <br></br>
+        <Button type="submit" className='form'>Guardar</Button>
       </Form>
     </div>
   );
 }
 
-export default FormRegistro;
+export default EditarPerfil;
