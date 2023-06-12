@@ -20,7 +20,6 @@ app.post('/aaf/login', async(req, res) => {
 	let contraseña = req.body.contraseña;
     if (mail && contraseña) {
         const respuesta = await Services.login(mail,contraseña);
-        console.log(respuesta, respuesta.objeto)
 		res.status(respuesta.status).send(respuesta.objeto);
 	} else {
 		res.status(400).send("Mail o contraseña invalidos");
@@ -30,6 +29,13 @@ app.post('/aaf/login', async(req, res) => {
 app.put('/aaf/editarperfil',async(req,res) => {
     let usuario = Services.updateUsuario(req.body);
     res.status(202).send(usuario);
+})
+
+app.put('/aaf/convertirUsuario',async(req,res)=> {
+    let id = req.body.id;
+    let rol = req.body.rol;
+    const result = Services.convertirUsuario(id,rol);
+    res.status(202);
 })
 
 app.post('/aaf/registrarse', async(req,res) =>{
