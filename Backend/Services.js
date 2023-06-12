@@ -1,8 +1,9 @@
 import config from './dbconfig.js';
 import sql from 'mssql';
+import bcrypt from 'bcryptjs';
 export class Services {
 
-    static login = async(mail,contraseña) =>
+    /*static login = async(mail,contraseña) =>
     {
         let returnEntity = null;
             let pool = await sql.connect(config)
@@ -16,6 +17,23 @@ export class Services {
             } else {
                   returnEntity = {status:404}
             }
+        return returnEntity;
+    }*/
+    static login = async(mail,contraseña) =>
+    {
+        let returnEntity = null;
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+        .input("mail",sql.VarChar(200),mail)
+        .query('SELECT * FROM Usuarios WHERE Mail = @mail');
+        console.log("Recordsets = ",result.recordsets[0][0]);
+        if(typeof result.recordsets[0][0] !== "undefined"){
+            bcrypt.compare(contraseña, recordsets[0][0].Contraseña, function(err, result) {
+                if (result) {
+                    returnEntity = {status:200, objeto: result.recordsets[0][0]};
+                }  else{returnEntity = {status:404}}
+            })
+        };
         return returnEntity;
     }
 
@@ -50,6 +68,21 @@ export class Services {
         return returnEntity;
     }
 
+    static getProfesores = async () =>
+    {
+        let returnEntity = null;
+        console.log("Estoy en: getProfesores");
+        try {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .query("SELECT * FROM Usuarios WHERE FkRol=2");
+            returnEntity = result.recordsets[0];
+        } catch (error){
+            console.log(error);
+        }
+        return returnEntity;
+    }
+
     static getUserById = async (id) => {
         let returnEntity = null;
         console.log("Estoy en: GetById");
@@ -67,12 +100,13 @@ export class Services {
 
     static insertCurso = async (curso) => {
         console.log("Estoy en: insert - Curso");
-        const { Titulo, Descripcion } = curso
+        const { Titulo, Descripcion, FkProfesor } = curso
         let pool = await sql.connect(config)
         let result = await pool.request()
             .input('titulo', sql.NVarChar(50), Titulo)
             .input('descripcion', sql.NVarChar(200), Descripcion)
-            .query('INSERT INTO Cursos(titulo,descripcion) VALUES (@titulo,@descripcion)')
+            .input('fkProfesor',sql.Int,FkProfesor)
+            .query('INSERT INTO Cursos(titulo,descripcion,fkProfesor) VALUES (@titulo,@descripcion,@fkProfesor)')
     }
     static insertMaterial = async (Material) => {
         console.log("Estoy en: insert - Curso");
@@ -90,15 +124,19 @@ export class Services {
         console.log("Estoy en: insert - Curso");
         const { contraseña, nombre, apellido, rol, telefono, mail } = Usuario
         const fkRol= rol=== "profesor" ? 1 : 2 
-        let pool = await sql.connect(config)
-        let result = await pool.request()
-            .input('contraseña',sql.NVarChar(50),contraseña)
+        bcrypt.genSalt(10,(err, salt) => {
+            bcrypt.hash(contraseña, salt, async function(err, hash) {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+            .input('contraseña',sql.NVarChar(200),hash)
             .input('nombre', sql.NVarChar(200), nombre)
             .input('apellido', sql.NVarChar(200), apellido)
             .input('fkRol',sql.Int,fkRol)
-            .input('Telefono',sql.NVarChar(17),telefono)
-            .input('Mail',sql.NVarChar(200),mail)
+            .input('telefono',sql.NVarChar(17),telefono)
+            .input('mail',sql.NVarChar(200),mail)
             .query('INSERT INTO Usuarios (Contraseña,Nombre,Apellido,FkRol,Telefono,Mail) VALUES (@contraseña,@nombre,@apellido,@fkRol,@telefono,@mail)')
+            });
+        })
     }
 
     static updateUsuario = async (usuario) => {
@@ -116,6 +154,22 @@ export class Services {
                 .input('telefono', sql.NVarChar(15), Telefono)
                 .input('mail', sql.NVarChar(50), Mail)
                 .query('UPDATE Usuarios SET Contraseña = @contraseña, Nombre = @nombre, Apellido = @apellido, fkRol = @fkRol, Telefono = @telefono, Mail = @mail WHERE Usuarios.Id = @pId')
+            returnEntity = result.recordsets[0];
+        } catch (error) {
+            console.log(error);
+        }
+        return returnEntity;
+    }
+
+    static updateProfesor = async (idProfesor,idCurso) => {
+        let returnEntity = null;
+        console.log("Estoy en: updateProfesor");
+        try {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .input('idProfesor', sql.Int, idProfesor)
+                .input('idCurso',sql.Int, idCurso)
+                .query('UPDATE Cursos SET fkProfesor = @IdProfesor WHERE Id = @IdCurso')
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
