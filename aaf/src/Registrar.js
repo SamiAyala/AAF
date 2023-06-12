@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 /*import Col from 'react-bootstrap/Col';*/
 import Form from 'react-bootstrap/Form';
@@ -9,9 +9,45 @@ import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 
+/*function CustomAlert() {
+  this.ok = function(){
+    document.getElementById('dialogbox').style.display = "none";
+    document.getElementById('dialogoverlay').style.display = "none";
+  }
+
+  this.alert = function(message,title){
+    document.body.innerHTML = document.body.innerHTML + '<div id="dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>';
+
+    let dialogoverlay = document.getElementById('dialogoverlay');
+    let dialogbox = document.getElementById('dialogbox');
+    
+    let winH = window.innerHeight;
+    dialogoverlay.style.height = winH+"px";
+    
+    dialogbox.style.top = "100px";
+
+    dialogoverlay.style.display = "block";
+    dialogbox.style.display = "block";
+    
+    document.getElementById('dialogboxhead').style.display = 'block';
+
+    if(typeof title === 'undefined') {
+      document.getElementById('dialogboxhead').style.display = 'none';
+    } else {
+      document.getElementById('dialogboxhead').innerHTML = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> '+ title;
+    }
+    document.getElementById('dialogboxbody').innerHTML = message;
+    document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-contained active">OK</button>';
+    document.getElementById('dialogboxfoot').onclick = this.ok;
+  }
+}
+
+let customAlert = new CustomAlert();
+*/
 function FormRegistro() {
   const [validated, setValidated] = useState(false);
   const [values, setValues] = useState({});
+  const [noCoinciden, setNoCoinciden] = useState(false);
   const Navigate = useNavigate('/iniciarSeesion');
   const handleChange = (event) => {
     setValues({...values, [event.target.name]:event.target.value 
@@ -19,17 +55,41 @@ function FormRegistro() {
   }
   const handleSubmit = (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
+    event.stopPropagation();
+    setNoCoinciden(false);
+    const form =event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
+    console.log(event.target.confirmarContraseña.value);
+    let mensaje1 = ""; 
+    let mensaje2 = ""; 
+    let mensaje3 = ""; 
+
+    if (event.target.contraseña.value !== event.target.confirmarContraseña.value)
+    {
+      mensaje1 = "Las contraseñas no coinciden. "
+    }      
+    if(event.target.nombre.value=== "" || event.target.apellido.value=== "" || event.target.mail.value=== "" || event.target.contraseña.value=== "" || event.target.confirmarContraseña.value=== "" || event.target.telefono.value=== "" || event.target.fiscalia.value=== "" || event.target.oficio.value=== "" ){
+      mensaje2 =  "Complete todos los campos. "
+    }
+    if (!/@gmail\.com$/.test(event.target.mail.value)) {
+      mensaje3 = "Mail Incorrecto, Este tiene que terminar con @gmail.com " 
+  }
+   if(mensaje1 === "" && mensaje2 === "" && mensaje3 === ""){
     axios.post('http://localhost:5000/aaf/registrarse', values)
       .then(res => {
         Navigate('/iniciarSesion') 
       })
       .catch(e => {
-      });
+      }); }
+      else {
+        console.log (mensaje1, mensaje2, mensaje3);
+        //alert((<h1 className='TituloAlert'>mensaje1</h1>));
+        //alert(mensaje1);
+        setNoCoinciden(true);
+      }
     setValidated(true);
   };
 
@@ -72,6 +132,7 @@ function FormRegistro() {
           />
         </Form.Group>
         <br></br>
+        { noCoinciden ? <h4>Las contraseñas no coinciden zapato</h4> : <h4></h4> }
         <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
           <Form.Label>Confirmar Contraseña</Form.Label>
           <Form.Control
@@ -79,6 +140,7 @@ function FormRegistro() {
             type="password"
             placeholder="confirmar contraseña"
             defaultValue=""
+            name="confirmarContraseña"
             onChange={handleChange}
           />
         </Form.Group>
@@ -99,20 +161,10 @@ function FormRegistro() {
           <Form.Label>Mail</Form.Label>
           <Form.Control
             required
-            type="text"
+            type="email"
             placeholder="mail"
             defaultValue=""
             name="mail"
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-          <Form.Label>Rol</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            defaultValue=""
-            name="rol"
             onChange={handleChange}
           />
         </Form.Group>

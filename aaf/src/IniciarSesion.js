@@ -31,6 +31,8 @@ function FormIniciarSesion() {
       Navigate(`/perfil/${res.data.Id}`, { state: res.data })
     })
     .catch(e => {
+      console.log(e)
+      alert("Los campos Ingresados no coinciden con ningun usuario. Por favor revisarlos.")
     });
 
   };
