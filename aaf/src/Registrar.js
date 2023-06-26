@@ -48,6 +48,8 @@ function FormRegistro() {
   const [validated, setValidated] = useState(false);
   const [values, setValues] = useState({});
   const [noCoinciden, setNoCoinciden] = useState(false);
+  const [camposVacios, setcamposVacios] = useState(false);
+  const [mailIncorrecto, setmailIncorrecto] = useState(false);
   const Navigate = useNavigate('/iniciarSeesion');
   const handleChange = (event) => {
     setValues({...values, [event.target.name]:event.target.value 
@@ -57,6 +59,8 @@ function FormRegistro() {
     event.preventDefault();
     event.stopPropagation();
     setNoCoinciden(false);
+    setcamposVacios(false);
+    setmailIncorrecto(false)
     const form =event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -70,12 +74,16 @@ function FormRegistro() {
     if (event.target.contraseña.value !== event.target.confirmarContraseña.value)
     {
       mensaje1 = "Las contraseñas no coinciden. "
+      setNoCoinciden(true);
     }      
     if(event.target.nombre.value=== "" || event.target.apellido.value=== "" || event.target.mail.value=== "" || event.target.contraseña.value=== "" || event.target.confirmarContraseña.value=== "" || event.target.telefono.value=== "" || event.target.fiscalia.value=== "" || event.target.oficio.value=== "" ){
       mensaje2 =  "Complete todos los campos. "
+      setcamposVacios(true)
+
     }
     if (!/@gmail\.com$/.test(event.target.mail.value)) {
       mensaje3 = "Mail Incorrecto, Este tiene que terminar con @gmail.com " 
+      setmailIncorrecto(true)
   }
    if(mensaje1 === "" && mensaje2 === "" && mensaje3 === ""){
     axios.post('http://localhost:5000/aaf/registrarse', values)
@@ -88,7 +96,6 @@ function FormRegistro() {
         console.log (mensaje1, mensaje2, mensaje3);
         //alert((<h1 className='TituloAlert'>mensaje1</h1>));
         //alert(mensaje1);
-        setNoCoinciden(true);
       }
     setValidated(true);
   };
@@ -132,7 +139,7 @@ function FormRegistro() {
           />
         </Form.Group>
         <br></br>
-        { noCoinciden ? <h4>Las contraseñas no coinciden zapato</h4> : <h4></h4> }
+        { noCoinciden ? <h5>Las contraseñas no coinciden zapato</h5> : <h5></h5> }
         <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
           <Form.Label>Confirmar Contraseña</Form.Label>
           <Form.Control
@@ -168,6 +175,7 @@ function FormRegistro() {
             onChange={handleChange}
           />
         </Form.Group>
+        { mailIncorrecto ? <h5>Mail Incorrecto, Este tiene que terminar con @gmail.com </h5> : <h5></h5> }
         <br></br>
         <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
           <Form.Label>Fiscalia</Form.Label>
@@ -191,6 +199,7 @@ function FormRegistro() {
           />
         </Form.Group>
         <br></br>
+        { camposVacios ? <h5>Completa todos los campos</h5> : <h5></h5> }
         <Button type="submit" className='form'>Registrarse</Button>
         <Link to="/iniciarSesion" className="btn btn-light form">Iniciar Sesion</Link>
       </Form>
