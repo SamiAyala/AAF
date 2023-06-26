@@ -12,12 +12,23 @@ app.use(cors())
 app.get('/aaf/getPerfil/:id',async(req,res)=>{
     const perfil = await Services.getUserById(req.params.id);
     res.status(200).send(perfil);
-})
+});
+
+app.get('/aaf/getUsers',async(res) =>{
+    try{
+        const usuarios = await Services.getAllUsers();
+        res.status(200).send(usuarios)
+    } catch (error){
+        console.log(error);
+        res.status(500)
+    }
+});
 
 //Sprint:
 app.post('/aaf/login', async(req, res) => {
 	let mail = req.body.mail;
 	let contraseña = req.body.contraseña;
+
     if (mail && contraseña) {
         const respuesta = await Services.login(mail,contraseña);
 		res.status(respuesta.status).send(respuesta.objeto);

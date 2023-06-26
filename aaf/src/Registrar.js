@@ -138,8 +138,8 @@ function FormRegistro() {
             onChange={handleChange}
           />
         </Form.Group>
-        <br></br>
         { noCoinciden ? <h5>Las contraseñas no coinciden zapato</h5> : <h5></h5> }
+        <br></br>
         <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
           <Form.Label>Confirmar Contraseña</Form.Label>
           <Form.Control
@@ -198,8 +198,8 @@ function FormRegistro() {
             onChange={handleChange}
           />
         </Form.Group>
-        <br></br>
         { camposVacios ? <h5>Completa todos los campos</h5> : <h5></h5> }
+        <br></br>
         <Button type="submit" className='form'>Registrarse</Button>
         <Link to="/iniciarSesion" className="btn btn-light form">Iniciar Sesion</Link>
       </Form>

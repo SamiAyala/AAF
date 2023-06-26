@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 
 
 async function comparePassword(contraseñaPlana, hash) {
+    console.log("asdasd", hash);
     const result = await bcrypt.compare(contraseñaPlana, hash);
     console.log("result:",result);
     return result;
@@ -19,7 +20,7 @@ export class Services {
         .query('SELECT * FROM Usuarios WHERE Mail = @mail');
         if(typeof result.recordsets[0][0] !== "undefined")
         {
-            const valid = await comparePassword(contraseña, result.recordsets[0][0].Contraseña);
+            const valid = await comparePassword(contraseña, result.recordsets[0][0].contraseña);
             valid ? returnEntity = {status:200, objeto: result.recordsets[0][0]} : returnEntity = {status:404}
         } 
         else {
@@ -72,6 +73,19 @@ export class Services {
             console.log(error);
         }
         return returnEntity;
+    }
+    static getAllUsers = async (id) => {
+        let returnEntity = null;
+        console.log("Estoy en: GetAllUsers");
+        try {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .query("SELECT * FROM Usuarios");
+            returnEntity = result.recordsets[0][0];
+        } catch (error) {
+            console.log(error);
+        }
+        return returnEntity
     }
 
     static getUserById = async (id) => {
@@ -156,13 +170,17 @@ export class Services {
 
     static convertirUsuario = async (id,rol) => {
         let returnEntity = null;
+        let fkRol
         console.log("Estoy en: updateRol");
-        console.log(id,rol)
+        console.log(id,rol);
+        if (rol === "alumno")
+        {fkRol=1}
+        else {fkRol=2};
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input('pId', sql.Int, id)
-                .input('fkRol', sql.Int, rol)
+                .input('fkRol', sql.Int, fkRol)
                 .query('UPDATE Usuarios SET FkRol = @fkRol WHERE Usuarios.Id = @pId')
             returnEntity = result.rowsAffected;
         } catch (error) {
