@@ -4,7 +4,8 @@ import bcrypt from 'bcryptjs';
 
 
 async function comparePassword(contraseñaPlana, hash) {
-    console.log("asdasd", hash);
+    console.log("comparePassword: contraseñaPlana", contraseñaPlana);
+    console.log("hash: ", hash);
     const result = await bcrypt.compare(contraseñaPlana, hash);
     console.log("result:",result);
     return result;
@@ -18,10 +19,13 @@ export class Services {
         let result = await pool.request()
         .input("mail",sql.VarChar(200),mail)
         .query('SELECT * FROM Usuarios WHERE Mail = @mail');
+        console.log("result.recordsets: ",result.recordsets[0][0])
+        console.log("result.recordsets.contraseña: ",result.recordsets[0][0].Contrasenia)
         if(typeof result.recordsets[0][0] !== "undefined")
         {
-            const valid = await comparePassword(contraseña, result.recordsets[0][0].contraseña);
+            const valid = await comparePassword(contraseña, result.recordsets[0][0].Contrasenia);
             valid ? returnEntity = {status:200, objeto: result.recordsets[0][0]} : returnEntity = {status:404}
+            console.log("valid: ",valid)
         } 
         else {
               returnEntity = {status:404}
@@ -114,7 +118,7 @@ export class Services {
             .query('INSERT INTO Cursos(titulo,descripcion,fkProfesor) VALUES (@titulo,@descripcion,@fkProfesor)')
     }
     static insertMaterial = async (Material) => {
-        console.log("Estoy en: insert - Curso");
+        console.log("Estoy en: insert - Material");
         const { IdCurso, Imagen, Texto } = Material
         let pool = await sql.connect(config)
 
@@ -126,7 +130,7 @@ export class Services {
     }
 
     static insertUsuario = async (Usuario) => {
-        console.log("Estoy en: insert - Curso");
+        console.log("Estoy en: insert - Usuario");
         const { contraseña, nombre, apellido,telefono, mail, fiscalia, oficio } = Usuario;
         const fkRol = 1;
         bcrypt.genSalt(10,(err, salt) => {
@@ -141,7 +145,7 @@ export class Services {
             .input('mail',sql.NVarChar(200),mail)
             .input('fiscalia',sql.NVarChar(200),fiscalia)
             .input('oficio',sql.NVarChar(200),oficio)
-            .query('INSERT INTO Usuarios (Contraseña,Nombre,Apellido,FkRol,Telefono,Mail,Fiscalia,Oficio) VALUES (@contraseña,@nombre,@apellido,@fkRol,@telefono,@mail,@fiscalia,@oficio)')
+            .query('INSERT INTO Usuarios (Contrasenia,Nombre,Apellido,FkRol,Telefono,Mail,Fiscalia,Oficio) VALUES (@contraseña,@nombre,@apellido,@fkRol,@telefono,@mail,@fiscalia,@oficio)')
             });
         })
     }
@@ -160,7 +164,7 @@ export class Services {
                 .input('fkRol', sql.Int, FkRol)
                 .input('telefono', sql.NVarChar(15), Telefono)
                 .input('mail', sql.NVarChar(50), Mail)
-                .query('UPDATE Usuarios SET Contraseña = @contraseña, Nombre = @nombre, Apellido = @apellido, fkRol = @fkRol, Telefono = @telefono, Mail = @mail WHERE Usuarios.Id = @pId')
+                .query('UPDATE Usuarios SET Contrasenia = @contraseña, Nombre = @nombre, Apellido = @apellido, fkRol = @fkRol, Telefono = @telefono, Mail = @mail WHERE Usuarios.Id = @pId')
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);

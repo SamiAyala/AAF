@@ -19,6 +19,7 @@ function FormIniciarSesion() {
       mail: Mail,
       contraseña: Contraseña,
     };
+    console.log(nuevoUsuario);
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
