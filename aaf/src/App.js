@@ -5,7 +5,8 @@ import Perfil from './Perfil.js';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import EditarPerfil from  './EditarPerfil' 
 import ListaUsuario from './ListaUsuario';
-
+import ListaCursos from './ListaCursos';
+import CrearCursos from './CrearCursos'
 function App() {
   return (
     <BrowserRouter>
@@ -14,7 +15,9 @@ function App() {
         <Route path='/iniciarSesion' element={<FormIniciarSesion></FormIniciarSesion>}></Route>
         <Route path='/Perfil/:id' element={<Perfil></Perfil>}></Route>
         <Route path='/EditarPerfil/:id' element={<EditarPerfil></EditarPerfil>}></Route>
-        <Route path='/EditarPerfil/:id' element={<ListaUsuario></ListaUsuario>}></Route>
+        <Route path='/ListaUsuarios' element={<ListaUsuario></ListaUsuario>}></Route>
+        <Route path='/ListaCursos' element={<ListaCursos></ListaCursos>}></Route>
+        <Route path='/CrearCursos' element={<CrearCursos></CrearCursos>}></Route>
       </Routes>
     </BrowserRouter>
   );
