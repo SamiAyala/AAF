@@ -53,7 +53,6 @@ function CrearCurso() {
   const handleChange = (event) => {
     setValues({...values, [event.target.name]:event.target.value 
     })
-    console.log(values)
   }
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -64,11 +63,11 @@ function CrearCurso() {
       event.preventDefault();
       event.stopPropagation();
     }
-    if(event.target.titulo.value=== "" || event.target.descipcion.value=== ""){
+    if(event.target.titulo.value=== "" || event.target.descripcion.value=== ""){
         mensaje =  "Complete todos los campos. "
         setcamposVacios(true)
       }
-      if(mensaje === ""){
+      if(mensaje === undefined){
         axios.post('http://localhost:5000/aaf/crearCurso', values)
           .then(res => {
             Navigate('/ListaCursos') 
@@ -76,7 +75,7 @@ function CrearCurso() {
           .catch(e => {
           }); }
           else {
-            console.log (mensaje);
+            console.log ("mensaje: ",mensaje);
           }
           setValidated(true);
       };
@@ -100,7 +99,7 @@ function CrearCurso() {
                 required
                 type="text"
                 defaultValue=""
-                name="descipcion"
+                name="descripcion"
                 onChange={handleChange}
               />
             </Form.Group>

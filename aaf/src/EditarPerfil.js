@@ -52,7 +52,7 @@ function EditarPerfil() {
             required
             type="text"
             placeholder="nombre"
-            defaultValue=""
+            defaultValue={perfil.Nombre}
             name="Nombre"
             onChange={handleChange}
           />
@@ -64,7 +64,7 @@ function EditarPerfil() {
             required
             type="text"
             placeholder="apellido"
-            defaultValue=""
+            defaultValue={perfil.Apellido}
             name="Apellido"
             onChange={handleChange}
           />
@@ -98,8 +98,8 @@ function EditarPerfil() {
           <Form.Control
             required
             type="text"
-            placeholder="telefono"
-            defaultValue=""
+            placeholder="Telefono"
+            defaultValue={perfil.Telefono}
             name="Telefono"
             onChange={handleChange}
           />
@@ -110,8 +110,8 @@ function EditarPerfil() {
           <Form.Control
             required
             type="text"
-            placeholder="mail"
-            defaultValue=""
+            placeholder="Mail"
+            defaultValue={perfil.Mail}
             name="Mail"
             onChange={handleChange}
           />
@@ -122,7 +122,7 @@ function EditarPerfil() {
           <Form.Control
             required
             type="text"
-            defaultValue=""
+            defaultValue={perfil.Fiscalia}
             name="Fiscalia"
             onChange={handleChange}
           />
@@ -133,7 +133,7 @@ function EditarPerfil() {
           <Form.Control
             required
             type="text"
-            defaultValue=""
+            defaultValue={perfil.Oficio}
             name="Oficio"
             onChange={handleChange}
           />
@@ -144,7 +144,7 @@ function EditarPerfil() {
           <Form.Control
             required
             type="text"
-            defaultValue=""
+            defaultValue={perfil.Descripcion}
             name="Descripcion"
             onChange={handleChange}
           />

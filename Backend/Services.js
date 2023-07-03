@@ -4,10 +4,7 @@ import bcrypt from 'bcryptjs';
 
 
 async function comparePassword(contraseñaPlana, hash) {
-    console.log("comparePassword: contraseñaPlana", contraseñaPlana);
-    console.log("hash: ", hash);
     const result = await bcrypt.compare(contraseñaPlana, hash);
-    console.log("result:",result);
     return result;
 }
 export class Services {
@@ -19,13 +16,10 @@ export class Services {
         let result = await pool.request()
         .input("mail",sql.VarChar(200),mail)
         .query('SELECT * FROM Usuarios WHERE Mail = @mail');
-        console.log("result.recordsets: ",result.recordsets[0][0])
-        console.log("result.recordsets.contraseña: ",result.recordsets[0][0].Contrasenia)
         if(typeof result.recordsets[0][0] !== "undefined")
         {
             const valid = await comparePassword(contraseña, result.recordsets[0][0].Contrasenia);
             valid ? returnEntity = {status:200, objeto: result.recordsets[0][0]} : returnEntity = {status:404}
-            console.log("valid: ",valid)
         } 
         else {
               returnEntity = {status:404}
@@ -85,7 +79,6 @@ export class Services {
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .query("SELECT Usuarios.Id, Usuarios.Nombre, Usuarios.Apellido, Usuarios.contrasenia, Usuarios.Telefono, Usuarios.Mail, Usuarios.Fiscalia, Usuarios.Oficio, Roles.Descripcion AS Rol FROM Usuarios INNER JOIN Roles ON Usuarios.FkRol = Roles.Id");
-                console.log(result)
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
@@ -174,23 +167,17 @@ export class Services {
 
     static convertirUsuario = async (id,rol) => {
         let returnEntity = null;
-        let fkRol
         console.log("Estoy en: updateRol");
-        console.log(id,rol);
-        if (rol === "alumno")
-        {fkRol=1}
-        else {fkRol=2};
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input('pId', sql.Int, id)
-                .input('fkRol', sql.Int, fkRol)
+                .input('fkRol', sql.Int, rol)
                 .query('UPDATE Usuarios SET FkRol = @fkRol WHERE Usuarios.Id = @pId')
             returnEntity = result.rowsAffected;
         } catch (error) {
             console.log(error);
         }
-        console.log(returnEntity);
         return returnEntity;
     }
 

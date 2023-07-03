@@ -8,7 +8,6 @@ const port = 5000;
 app.use(express.json());
 app.use(cors())
 
-//Test
 app.get('/aaf/getPerfil/:id',async(req,res)=>{
     const perfil = await Services.getUserById(req.params.id);
     res.status(200).send(perfil);
@@ -36,7 +35,6 @@ app.get('/aaf/getCursos',async(req,res) =>{
       }
  });
 
-//Sprint:
 app.post('/aaf/login', async(req, res) => {
 	let mail = req.body.mail;
 	let contraseña = req.body.contraseña;
@@ -58,7 +56,7 @@ app.put('/aaf/convertirUsuario',async(req,res)=> {
     let id = req.body.id;
     let rol = req.body.rol;
     const result = Services.convertirUsuario(id,rol);
-    res.status(202);
+    res.status(202).send(result);
 })
 
 app.post('/aaf/registrarse', async(req,res) =>{
