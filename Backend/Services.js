@@ -78,14 +78,15 @@ export class Services {
         }
         return returnEntity;
     }
-    static getAllUsers = async (id) => {
+    static getAllUsers = async () => {
         let returnEntity = null;
         console.log("Estoy en: GetAllUsers");
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .query("SELECT * FROM Usuarios");
-            returnEntity = result.recordsets[0][0];
+                .query("SELECT Usuarios.Id, Usuarios.Nombre, Usuarios.Apellido, Usuarios.contrasenia, Usuarios.Telefono, Usuarios.Mail, Usuarios.Fiscalia, Usuarios.Oficio, Roles.Descripcion AS Rol FROM Usuarios INNER JOIN Roles ON Usuarios.FkRol = Roles.Id");
+                console.log(result)
+            returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
         }
@@ -109,13 +110,12 @@ export class Services {
 
     static insertCurso = async (curso) => {
         console.log("Estoy en: insert - Curso");
-        const { Titulo, Descripcion, FkProfesor } = curso
+        const { titulo, descripcion} = curso
         let pool = await sql.connect(config)
         let result = await pool.request()
-            .input('titulo', sql.NVarChar(50), Titulo)
-            .input('descripcion', sql.NVarChar(200), Descripcion)
-            .input('fkProfesor',sql.Int,FkProfesor)
-            .query('INSERT INTO Cursos(titulo,descripcion,fkProfesor) VALUES (@titulo,@descripcion,@fkProfesor)')
+            .input('titulo', sql.NVarChar(50), titulo)
+            .input('descripcion', sql.NVarChar(200), descripcion)
+            .query('INSERT INTO Cursos (Titulo,Descripcion) VALUES (@titulo,@descripcion)')
     }
     static insertMaterial = async (Material) => {
         console.log("Estoy en: insert - Material");

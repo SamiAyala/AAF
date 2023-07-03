@@ -14,15 +14,27 @@ app.get('/aaf/getPerfil/:id',async(req,res)=>{
     res.status(200).send(perfil);
 });
 
-app.get('/aaf/getUsers',async(res) =>{
-    try{
+app.get('/aaf/getUsers',async(req,res) =>{
+   try{
         const usuarios = await Services.getAllUsers();
+        console.log("a",usuarios)
         res.status(200).send(usuarios)
     } catch (error){
-        console.log(error);
-        res.status(500)
-    }
+        console.log(error,"putos");
+        res.status(500).send(error)
+     }
 });
+
+app.get('/aaf/getCursos',async(req,res) =>{
+    try{
+         const cursos = await Services.getAllCursos();
+         console.log("a",cursos)
+         res.status(200).send(cursos)
+     } catch (error){
+         console.log(error,"putos");
+         res.status(500).send(error)
+      }
+ });
 
 //Sprint:
 app.post('/aaf/login', async(req, res) => {
@@ -58,6 +70,15 @@ app.post('/aaf/registrarse', async(req,res) =>{
         res.status(500).json({error : 'Fallo el registro'})
     }
 })
+app.post('/aaf/crearCurso', async(req,res) =>{
+    try{
+        await Services.insertCurso(req.body);
+        res.status(201).json({message: 'Creado con éxito'})
+    } catch (error){
+        console.log(error)
+        res.status(500).json({error : 'Fallo la cracion'})
+    }
+})
 
 app.get('/aaf/getProfesores',async(req,res) =>{
     try{
@@ -87,10 +108,18 @@ app.post('/aaf/crearCurso',async(req,res) =>{
     }
 })
 
-app.delete('/aaf/eliminarCurso',async(req,res) =>{
-    let id = req.body.id;
+app.delete('/aaf/eliminarCurso/:Id',async(req,res) =>{
     try{
-        await Services.deleteCurso(id);
+        await Services.deleteCurso(req.params.Id);
+        res.status(200).json({message:'eliminado con éxito'});
+    } catch(error){
+        console.log(error);
+        res.status(500).json({error:'fallo la eliminación'})
+    }
+})
+app.delete('/aaf/eliminarUsuario/:Id',async(req,res) =>{
+    try{
+        await Services.deleteUsuario(req.params.Id);
         res.status(200).json({message:'eliminado con éxito'});
     } catch(error){
         console.log(error);
