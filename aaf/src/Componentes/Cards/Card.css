@@ -5,4 +5,7 @@
     margin-bottom: 20px;
     border-radius: 20px;
     width: fit-content;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
   }

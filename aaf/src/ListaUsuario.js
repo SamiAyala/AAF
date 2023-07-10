@@ -3,10 +3,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import './Registrar.css';
+import './Componentes/Formularios/Registrar';
 import { Link, json } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import CardListaUsuarios from './CardListaUsuarios.js';
+import CardListaUsuarios from './Componentes/Cards/CardListaUsuarios';
 import axios from 'axios';
 import './ListaUsuario.css'
 //import { useState } from 'react';

@@ -1,12 +1,13 @@
 import './App.css';
-import FormIniciarSesion from './IniciarSesion';
-import FormRegistro from './Registrar.js';
-import Perfil from './Perfil.js';
+import FormIniciarSesion from './Componentes/Formularios/IniciarSesion';
+import FormRegistro from './Componentes/Formularios/Registrar';
+import Perfil from './Perfil';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import EditarPerfil from  './EditarPerfil' 
+import EditarPerfil from  './Componentes/Formularios/EditarPerfil' 
 import ListaUsuario from './ListaUsuario';
 import ListaCursos from './ListaCursos';
-import CrearCursos from './CrearCursos'
+import CrearCursos from './Componentes/Formularios/CrearCursos'
+import Home from './Componentes/Home';
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ function App() {
         <Route path='/ListaUsuarios' element={<ListaUsuario></ListaUsuario>}></Route>
         <Route path='/ListaCursos' element={<ListaCursos></ListaCursos>}></Route>
         <Route path='/CrearCursos' element={<CrearCursos></CrearCursos>}></Route>
+        <Route path='/Home' element={<Home></Home>}></Route>
       </Routes>
     </BrowserRouter>
   );

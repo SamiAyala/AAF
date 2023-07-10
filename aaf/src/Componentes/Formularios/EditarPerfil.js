@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 /*import InputGroup from 'react-bootstrap/InputGroup';*/
 /*import Row from 'react-bootstrap/Row';*/
-import './Registrar.css';
 import {Link, useLocation} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';

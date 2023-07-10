@@ -3,12 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import './Registrar.css';
-import { Link, json } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
-import CardListaCursos from './CardListaCursos.js';
+import './Componentes/Formularios/Registrar.css';
+import CardListaCursos from './Componentes/Cards/CardListaCursos';
 import axios from 'axios';
 import './ListaUsuario.css'
+import { Row,Col } from 'react-bootstrap';
 //import { useState } from 'react';
 
 function ListaCursos() {
@@ -48,14 +47,14 @@ function ListaCursos() {
   }
 
   return (
-    <div>
-      {Cursos.map(Curso => <div><CardListaCursos Titulo={Curso.Titulo} Descripcion={Curso.Descripcion} Profesor={Curso.fkProfesor}></CardListaCursos>
-        <Button onClick={() => eliminarCurso(Curso.Id)} className='button elimnar u-full-width'>Eliminar</Button>
-      <DropdownButton id="dropdown-basic-button" title={Curso.fkProfesor===null ? "Asignar Profesor" : "Cambiar Profesor Asignado"}>
-      {Profesores.map(Profesor => <Dropdown.Item onClick={() => asignarProfesor(Profesor.Id,Curso.Id)}>{Profesor.Nombre} {Profesor.Apellido}</Dropdown.Item>)}
+    <Row>
+      {Cursos.map(Curso =><Col sm={4}><CardListaCursos Titulo={Curso.Titulo} Descripcion={Curso.Descripcion} Profesor={Curso.fkProfesor}></CardListaCursos>
+        <Button onClick={() => eliminarCurso(Curso.Id)} className='button elimnar u-full-width'>Eliminar</Button> 
+      <DropdownButton className='margenes' id="dropdown-basic-button" title={Curso.fkProfesor===null ? "Asignar Profesor" : "Cambiar Profesor Asignado"}>
+      {Profesores.map(Profesor => <Dropdown.Item className='margenes' onClick={() => asignarProfesor(Profesor.Id,Curso.Id)}>{Profesor.Nombre} {Profesor.Apellido}</Dropdown.Item>)}
     </DropdownButton>
-      </div>)}
-    </div>
+      </Col>)}
+    </Row>
   );
 
 

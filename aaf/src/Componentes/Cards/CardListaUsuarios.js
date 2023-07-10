@@ -1,6 +1,7 @@
 import './Card.css';
 import React from 'react';
 
+
 function CardListaUsuarios({Nombre="", Apellido="",Fiscalia="",Oficio="",Mail="", Telefono="", Rol=""}) {
  return (
     <>

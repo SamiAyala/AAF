@@ -1,5 +1,5 @@
 import './Perfil.css';
-import './Julian.jpg';
+import './Imagenes/Julian.jpg';
 import Button from 'react-bootstrap/Button';
 //import {useLocation} from 'react-router-dom';
 import axios from 'axios';
@@ -11,15 +11,6 @@ function Perfil() {
   //const location = useLocation();
   //const [perfil, setPerfil] = useState({});
   let { id } = useParams();
-
-  /*useEffect(() => {
-    async function getPerfil() {
-      let response = await axios.get("http://localhost:5000/aaf/getPerfil/" + id)
-      setPerfil(response.data);
-         
-    };
-      getPerfil();
-  }, []);*/
   const {state} = useLocation();
   const Navigate = useNavigate();
   const perfil = state;
@@ -43,7 +34,7 @@ function Perfil() {
     <div className='container'>
       <button onClick={navigateEditarPefil} className='btn btn-light form boton'>Editar Perfil</button>
       <h3>{perfil.Nombre} {perfil.Apellido}</h3>
-      <img src={require('./Julian.jpg')} className='foto' alt=''></img>
+      <img src={require('./Imagenes/Julian.jpg')} className='foto' alt=''></img>
       <div className='sobreMi'>
         <h2>Sobre mi: </h2>
         <h3>Rol: {rol}</h3>
