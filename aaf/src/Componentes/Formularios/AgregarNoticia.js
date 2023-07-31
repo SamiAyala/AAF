@@ -6,11 +6,11 @@ import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 
-function CrearCurso() {
+function AgregarNoticia() {
   const [validated, setValidated] = useState(false);
   const [values, setValues] = useState({});
   const [camposVacios, setcamposVacios] = useState(false);
-  const Navigate = useNavigate('/ListaCursos');
+  const Navigate = useNavigate('/');
   let mensaje;
   const handleChange = (event) => {
     setValues({...values, [event.target.name]:event.target.value 
@@ -25,14 +25,14 @@ function CrearCurso() {
       event.preventDefault();
       event.stopPropagation();
     }
-    if(event.target.titulo.value=== "" || event.target.descripcion.value=== ""){
-        mensaje =  "Complete todos los campos. "
+    if(event.target.titulo.value=== "" || event.target.texto.value=== "" || event.target.fecha.value== "" || event.target.footer.value== "" ){
+        mensaje =  "Complete todos los campos (El de imagen puede estar vacio). "
         setcamposVacios(true)
       }
       if(mensaje === undefined){
-        axios.post('http://localhost:5000/aaf/crearCurso', values)
+        axios.post('http://localhost:5000/aaf/crearNoticia', values)
           .then(res => {
-            Navigate('/ListaCursos') 
+            Navigate('/') 
           })
           .catch(e => {
           }); }
@@ -56,23 +56,45 @@ function CrearCurso() {
             </Form.Group>
             <br></br>
             <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-              <Form.Label>Descipcion</Form.Label>
+              <Form.Label>Texto</Form.Label>
               <Form.Control
                 required
                 type="text"
                 defaultValue=""
-                name="descripcion"
+                name="texto"
                 onChange={handleChange}
               />
             </Form.Group>
             { camposVacios ? <h5>Completa todos los campos</h5> : <h5></h5> }
             <br></br>
-            <Button type="submit" className='form'>crear Curso</Button>
-            <Link to="/ListaCursos" className="btn btn-light form">Lista de los cursos</Link>
+            <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+              <Form.Label>Fecha</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                defaultValue=""
+                name="fecha"
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <br></br>
+            <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+              <Form.Label>Footer</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                defaultValue=""
+                name="footer"
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <br></br>
+            <Button type="submit" className='form'>Crear Noticia</Button>
+            <Link to="/" className="btn btn-light form">Home</Link>
           </Form>
         </div>
       );
   };
 
 
-export default CrearCurso;
+export default AgregarNoticia;

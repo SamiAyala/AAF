@@ -1,14 +1,19 @@
-.contraseñaValida{
+.contraseñaValida {
     color: red;
 }
-.form{
-text-align: center;}
-.container{
+
+.form {
+    text-align: center;
+    margin-bottom: 1%;
+}
+
+.container {
+    display: block;
     background-color: grey;
     align-items: center;
     justify-content: center;
     margin-top: 5%;
     border-radius: 2%;
     width: 50%;
-    height: 80%;
+    height: fit-content;
 }

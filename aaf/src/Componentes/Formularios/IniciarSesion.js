@@ -13,6 +13,7 @@ function FormIniciarSesion() {
   const [Mail, setMail] = useState('');
   const [Contraseña, setContraseña] = useState('');
   const Navigate = useNavigate();
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     let nuevoUsuario = {
@@ -28,8 +29,8 @@ function FormIniciarSesion() {
 
     axios.post('http://localhost:5000/aaf/login', nuevoUsuario)
     .then(res => {
-      console.log("LOGIN: ", res)
-      Navigate(`/Home`, { state: res.data })
+      console.log("res.data: ",res.data)
+      Navigate(`/`, { state: res.data })
     })
     .catch(e => {
       console.log(e)
@@ -68,7 +69,7 @@ function FormIniciarSesion() {
         </Form.Group>
         <br></br>
         <Button type="submit" className='form'>Iniciar Sesión</Button>
-        <Link to="/" className="btn btn-light form">Registrar</Link>
+        <Link to="/Registrarse" className="btn btn-light form">Registrar</Link>
     </Form>
     </div>
   );

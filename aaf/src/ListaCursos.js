@@ -8,7 +8,7 @@ import CardListaCursos from './Componentes/Cards/CardListaCursos';
 import axios from 'axios';
 import './ListaUsuario.css'
 import { Row,Col } from 'react-bootstrap';
-//import { useState } from 'react';
+
 
 function ListaCursos() {
   const [Cursos, setCursos] = useState([{}]);

@@ -14,6 +14,7 @@ function Perfil() {
   const {state} = useLocation();
   const Navigate = useNavigate();
   const perfil = state;
+  console.log("perfil state: ",state)
   console.log("PERFIL:",perfil)
 
    let rol = null;

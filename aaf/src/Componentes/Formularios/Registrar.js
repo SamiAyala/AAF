@@ -1,49 +1,12 @@
-import { Fragment, useState } from 'react';
+import {useState } from 'react';
 import Button from 'react-bootstrap/Button';
-/*import Col from 'react-bootstrap/Col';*/
 import Form from 'react-bootstrap/Form';
-/*import InputGroup from 'react-bootstrap/InputGroup';*/
-/*import Row from 'react-bootstrap/Row';*/
 import './Registrar.css';
 import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 
-/*function CustomAlert() {
-  this.ok = function(){
-    document.getElementById('dialogbox').style.display = "none";
-    document.getElementById('dialogoverlay').style.display = "none";
-  }
 
-  this.alert = function(message,title){
-    document.body.innerHTML = document.body.innerHTML + '<div id="dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>';
-
-    let dialogoverlay = document.getElementById('dialogoverlay');
-    let dialogbox = document.getElementById('dialogbox');
-    
-    let winH = window.innerHeight;
-    dialogoverlay.style.height = winH+"px";
-    
-    dialogbox.style.top = "100px";
-
-    dialogoverlay.style.display = "block";
-    dialogbox.style.display = "block";
-    
-    document.getElementById('dialogboxhead').style.display = 'block';
-
-    if(typeof title === 'undefined') {
-      document.getElementById('dialogboxhead').style.display = 'none';
-    } else {
-      document.getElementById('dialogboxhead').innerHTML = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> '+ title;
-    }
-    document.getElementById('dialogboxbody').innerHTML = message;
-    document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-contained active">OK</button>';
-    document.getElementById('dialogboxfoot').onclick = this.ok;
-  }
-}
-
-let customAlert = new CustomAlert();
-*/
 function FormRegistro() {
   const [validated, setValidated] = useState(false);
   const [values, setValues] = useState({});
@@ -94,8 +57,6 @@ function FormRegistro() {
       }); }
       else {
         console.log (mensaje1, mensaje2, mensaje3);
-        //alert((<h1 className='TituloAlert'>mensaje1</h1>));
-        //alert(mensaje1);
       }
     setValidated(true);
   };
@@ -103,7 +64,7 @@ function FormRegistro() {
   return (
     <div className='container'>
       <Form onSubmit={(e) => handleSubmit(e)} noValidate validated={validated} className='form'>
-        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom01">
+        <Form.Group  controlId="validationCustom01">
           <Form.Label>Nombre</Form.Label>
           <Form.Control
             required
@@ -115,7 +76,7 @@ function FormRegistro() {
           />
         </Form.Group>
         <br></br>
-        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+        <Form.Group controlId="validationCustom02">
           <Form.Label>Apellido</Form.Label>
           <Form.Control
             required
@@ -127,7 +88,7 @@ function FormRegistro() {
           />
         </Form.Group>
         <br></br>
-        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+        <Form.Group  controlId="validationCustom02">
           <Form.Label>Contraseña</Form.Label>
           <Form.Control
             required
@@ -140,7 +101,7 @@ function FormRegistro() {
         </Form.Group>
         { noCoinciden ? <h5>Las contraseñas no coinciden.</h5> : <h5></h5> }
         <br></br>
-        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+        <Form.Group  controlId="validationCustom02">
           <Form.Label>Confirmar Contraseña</Form.Label>
           <Form.Control
             required
@@ -152,7 +113,7 @@ function FormRegistro() {
           />
         </Form.Group>
         <br></br>
-        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+        <Form.Group  controlId="validationCustom02">
           <Form.Label>Telefono</Form.Label>
           <Form.Control
             required
@@ -164,7 +125,7 @@ function FormRegistro() {
           />
         </Form.Group>
         <br></br>
-        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+        <Form.Group  controlId="validationCustom02">
           <Form.Label>Mail</Form.Label>
           <Form.Control
             required
@@ -177,7 +138,7 @@ function FormRegistro() {
         </Form.Group>
         { mailIncorrecto ? <h5>Mail Incorrecto, Este tiene que terminar con @gmail.com </h5> : <h5></h5> }
         <br></br>
-        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+        <Form.Group  controlId="validationCustom02">
           <Form.Label>Fiscalia</Form.Label>
           <Form.Control
             required
@@ -188,7 +149,7 @@ function FormRegistro() {
           />
         </Form.Group>
         <br></br>
-        <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+        <Form.Group controlId="validationCustom02">
           <Form.Label>Oficio</Form.Label>
           <Form.Control
             required

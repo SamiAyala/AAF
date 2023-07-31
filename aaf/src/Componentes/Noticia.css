@@ -1,0 +1,44 @@
+.Noticia{
+    width: auto;
+    height: auto;
+    display: flex;
+}
+.card{
+    background-color: white;
+    display: flex;
+    overflow: scroll;
+}
+.titulo{
+    position: relative;
+    top: 2%;
+    left: 2%;
+    margin-bottom: 1%;
+
+}
+
+.img{
+    position: relative;
+    left: 2%;
+    width: 50%;
+    height: auto;
+}
+.texto{
+    position: relative;
+    left: 50%;
+    top: 5%;
+    margin-left: 1%;
+}
+
+.footer{
+    position: relative; 
+    margin-top: 1%;
+    bottom: 2%;
+    left: 2%;
+}
+
+
+.fecha{
+    position: relative; 
+    margin-top: 1%;
+    left: 2%;
+}

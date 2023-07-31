@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 /*import Row from 'react-bootstrap/Row';*/
 import {Link, useLocation} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
+import './IniciarSesion.css'
 import axios from 'axios';
 
 
@@ -17,6 +18,7 @@ function EditarPerfil() {
   const Navigate = useNavigate();
 
     useEffect(() => {
+      console.log("perfil editarperfil:",perfil)
         setValues({...perfil});
     }, []);
 
@@ -32,6 +34,7 @@ function EditarPerfil() {
       event.preventDefault();
       event.stopPropagation();
     }
+    console.log("values editarperfil: ",values)
     axios.put('http://localhost:5000/aaf/editarperfil', values)
       .then(res => {
         Navigate(`/perfil/${perfil.Id}`, {state: values})

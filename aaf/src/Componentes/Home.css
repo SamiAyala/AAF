@@ -1,4 +1,5 @@
-body{
+.body{
+    height: 100%;
     background-color: grey;
 }
 
@@ -7,4 +8,12 @@ body{
 }
 .text{
     color: black ;
+}
+
+nav a{
+    text-decoration: none;
+}
+
+.noticia{
+    justify-content: center;
 }
