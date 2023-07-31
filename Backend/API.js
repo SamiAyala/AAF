@@ -88,6 +88,16 @@ app.get('/aaf/getProfesores',async(req,res) =>{
     }
 })
 
+app.get('/aaf/getNoticias',async(req,res) =>{
+    try{
+        const noticias = await Services.getNoticias();
+        res.status(200).send(noticias)
+    } catch(error){
+        console.log(error);
+        res.status(500);
+    }
+})
+
 app.put('/aaf/asignarProfesor',async(req,res) =>{
     let idProfesor = req.body.idProfesor;
 	let idCurso = req.body.idCurso;
@@ -102,6 +112,16 @@ app.post('/aaf/crearCurso',async(req,res) =>{
         res.status(201).json({message:'Creado con éxito'})
     } catch(error){
         console.log(error)
+        res.status(500).json({error:'fallo la creación'})
+    }
+})
+
+app.post('/aaf/crearNoticia',async(req,res) => {
+    try{
+        await Services.insertNoticia(req.body)
+        res.status(201).json({message:'creado con éxito'})
+    } catch(error){
+        console.log(error);
         res.status(500).json({error:'fallo la creación'})
     }
 })

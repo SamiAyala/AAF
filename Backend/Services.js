@@ -72,6 +72,22 @@ export class Services {
         }
         return returnEntity;
     }
+
+    static getNoticias = async () =>
+    {
+        let returnEntity = null;
+        console.log("Estoy en: get - Noticias");
+        try {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .query("SELECT * FROM articuloNoticia ORDER BY fecha desc");
+            returnEntity = result.recordsets[0];
+        } catch (error){
+            console.log(error);
+        }
+        return returnEntity;
+    }
+
     static getAllUsers = async () => {
         let returnEntity = null;
         console.log("Estoy en: GetAllUsers");
@@ -110,6 +126,20 @@ export class Services {
             .input('descripcion', sql.NVarChar(200), descripcion)
             .query('INSERT INTO Cursos (Titulo,Descripcion) VALUES (@titulo,@descripcion)')
     }
+
+    static insertNoticia = async (noticia) => {
+        console.log("Estoy en: insert - Noticia");
+        const { titulo , texto , imagen , fecha , footer } = noticia;
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+        .input('titulo',sql.NVarChar(50),titulo)
+        .input('texto',sql.NVarChar(200),texto)
+        .input('imagen',sql.NVarChar(200),imagen)
+        .input('fecha',sql.Date,fecha)
+        .input('footer',sql.NVarChar(50),footer)
+        .query('insert into ArticuloNoticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
+    }
+
     static insertMaterial = async (Material) => {
         console.log("Estoy en: insert - Material");
         const { IdCurso, Imagen, Texto } = Material
