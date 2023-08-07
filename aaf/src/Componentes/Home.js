@@ -13,11 +13,11 @@ import Noticia from './Noticia'
 
 export default function Home() {
    const [usuario, setUsuario] = useState(false);
-   let { id } = useParams();
+   //let { id } = useParams();
    const { state } = useLocation();
    const Navigate = useNavigate();
    const perfil = state;
-   const [noticias, setNoticias] = useState([]);
+   const [noticias, setNoticias] = useState([{}]);
 
    useEffect(() => {
       if (perfil === null) {
@@ -53,7 +53,7 @@ export default function Home() {
             </Container>
          </Navbar><Navbar className='navBar'></Navbar>
            <Row className='justify-content-md-center'>
-            {noticias.map(noticia => <Col sm={8}  style={{marginTop:'2%'}}><Noticia titulo={noticia.Titulo} texto={noticia.Texto} imagen={noticia.Imagen} footer={noticia.Footer} fecha={noticia.Fecha}></Noticia></Col>)}
+           {noticias.map(noticia => <Col sm={8}  style={{marginTop:'2%'}}><Noticia titulo={noticia.Titulo} texto={noticia.Texto} imagen={noticia.Imagen} footer={noticia.Footer} fecha={noticia.Fecha}></Noticia></Col>)}
             </Row> 
         </div>
    )
