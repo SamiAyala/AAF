@@ -1,15 +1,8 @@
 import './Perfil.css';
 import './Imagenes/Julian.jpg';
-import Button from 'react-bootstrap/Button';
-//import {useLocation} from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 function Perfil() {
-  //const location = useLocation();
-  //const [perfil, setPerfil] = useState({});
   let { id } = useParams();
   const {state} = useLocation();
   const Navigate = useNavigate();

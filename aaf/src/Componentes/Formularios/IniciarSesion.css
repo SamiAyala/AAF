@@ -9,7 +9,7 @@
 
 .container {
     display: block;
-    background-color: grey;
+    background-color: rgb(3, 3, 73);
     align-items: center;
     justify-content: center;
     margin-top: 5%;
