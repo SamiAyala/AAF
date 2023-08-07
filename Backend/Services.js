@@ -137,7 +137,7 @@ export class Services {
         .input('imagen',sql.NVarChar(200),imagen)
         .input('fecha',sql.Date,fecha)
         .input('footer',sql.NVarChar(50),footer)
-        .query('insert into Noticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
+        .query('insert into ArticuloNoticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
     }
 
     static insertMaterial = async (Material) => {
