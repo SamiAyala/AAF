@@ -80,7 +80,7 @@ export class Services {
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .query("SELECT * FROM articuloNoticia ORDER BY fecha desc");
+                .query("SELECT * FROM Noticia ORDER BY fecha desc");
             returnEntity = result.recordsets[0];
         } catch (error){
             console.log(error);
@@ -137,7 +137,7 @@ export class Services {
         .input('imagen',sql.NVarChar(200),imagen)
         .input('fecha',sql.Date,fecha)
         .input('footer',sql.NVarChar(50),footer)
-        .query('insert into ArticuloNoticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
+        .query('insert into Noticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
     }
 
     static insertMaterial = async (Material) => {
