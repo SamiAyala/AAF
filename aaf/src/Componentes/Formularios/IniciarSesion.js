@@ -29,7 +29,7 @@ function FormIniciarSesion() {
 
     axios.post('http://localhost:5000/aaf/login', nuevoUsuario)
     .then(res => {
-      console.log("res.data: ",res.data)
+      console.log("res.data: ",res.data);
       Navigate(`/`, { state: res.data })
     })
     .catch(e => {

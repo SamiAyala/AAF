@@ -65,7 +65,7 @@ function AgregarNoticia() {
                 onChange={handleChange}
               />
             </Form.Group>
-            { camposVacios ? <h5>Completa todos los campos</h5> : <h5></h5> }
+           
             <br></br>
             <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
               <Form.Label>Fecha</Form.Label>
@@ -89,6 +89,7 @@ function AgregarNoticia() {
               />
             </Form.Group>
             <br></br>
+            { camposVacios ? <h5>Completa todos los campos</h5> : <h5></h5> }
             <Button type="submit" className='form'>Crear Noticia</Button>
             <Link to="/" className="btn btn-light form">Home</Link>
           </Form>

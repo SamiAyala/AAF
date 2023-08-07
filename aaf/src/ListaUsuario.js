@@ -1,18 +1,15 @@
 import { Fragment, useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import './Componentes/Formularios/Registrar';
-import { Link, json } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
 import CardListaUsuarios from './Componentes/Cards/CardListaUsuarios';
 import axios from 'axios';
-import './ListaUsuario.css'
+import './Lista.css';
+import { Row, Col } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 //import { useState } from 'react';
 
 function ListaUsuario() {
   const [Usuarios, setUsuarios] = useState([{}]);
+  const navigate = useNavigate();
   useEffect(() => {
     axios.get('http://localhost:5000/aaf/getUsers')
       .then(res => {
@@ -29,27 +26,24 @@ function ListaUsuario() {
       })
     window.location.reload();
   }
-  const convertirUsuario = (id,value) => {
+  const convertirUsuario = (id, value) => {
     const values = {
-      "id":id,
-      "rol":value
+      "id": id,
+      "rol": value
     }
-    axios.put("http://localhost:5000/aaf/convertirUsuario",values)
-    .then(res => {
-      console.log(res)
-      window.location.reload();
-    })
+    axios.put("http://localhost:5000/aaf/convertirUsuario", values)
+      .then(res => {
+        console.log(res)
+        window.location.reload();
+      })
   }
 
   return (
     <div>
-      {Usuarios.map(Usuario => <div><CardListaUsuarios Nombre={Usuario.Nombre} Apellido={Usuario.Apellido} Fiscalia={Usuario.Fiscalia} Oficio={Usuario.Oficio} Mail={Usuario.Mail} Telefono={Usuario.Telefono} Rol={Usuario.Rol}></CardListaUsuarios>
-        <Button onClick={() => eliminarUsuario(Usuario.Id)} class='button elimnar u-full-width'>Eliminar</Button>
-        <DropdownButton id="dropdown-basic-button" title="Cambiar Rol">
-          <Dropdown.Item onClick={() => convertirUsuario(Usuario.Id,1)}>Alumno</Dropdown.Item>
-          <Dropdown.Item onClick={() => convertirUsuario(Usuario.Id,2)}>Profesor</Dropdown.Item>
-        </DropdownButton>
-      </div>)}
+      <Row style={{ padding: '4%' }}>
+        {Usuarios.map(Usuario => <Col sm={2}><CardListaUsuarios Usuario={Usuario} eliminarUsuario={eliminarUsuario} convertirUsuario={convertirUsuario}></CardListaUsuarios>
+        </Col>)}
+      </Row>
     </div>
   );
 }

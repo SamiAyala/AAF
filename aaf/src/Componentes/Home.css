@@ -3,22 +3,7 @@
     background-color: grey;
 }
 
-.navBar{
-    background-color: rgb(3, 3, 73);
-}
-.text{
-    color: white ;
-}
 
-nav a{
-    text-decoration: none;
-}
-.text:hover{
-    color:white;
-    padding: 10px;
-    background-color: navy;
-    border-radius: 30px;
-}
 
 .noticia{
     justify-content: center;
