@@ -34,7 +34,7 @@ export class Services {
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .query("SELECT * FROM Cursos");
+                .query("SELECT Cursos.Id, Cursos.Titulo, Cursos.Descripcion, Cursos.fkProfesor, Usuarios.Nombre AS NombreProfesor FROM Cursos INNER JOIN Usuarios ON Cursos.fkProfesor = Usuarios.Id");
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
@@ -80,7 +80,7 @@ export class Services {
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .query("SELECT * FROM Noticia ORDER BY fecha desc");
+                .query("SELECT * FROM ArticuloNoticia ORDER BY fecha desc");
             returnEntity = result.recordsets[0];
         } catch (error){
             console.log(error);
