@@ -34,7 +34,7 @@ export class Services {
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .query("SELECT Cursos.Id, Cursos.Titulo, Cursos.Descripcion, Cursos.fkProfesor, Usuarios.Nombre AS NombreProfesor FROM Cursos INNER JOIN Usuarios ON Cursos.fkProfesor = Usuarios.Id");
+                .query("SELECT Cursos.Id, Cursos.Titulo, Cursos.Descripcion, Cursos.fkProfesor, Usuarios.Nombre AS NombreProfesor FROM Cursos INNER JOIN Usuarios ON Cursos.id = Usuarios.Id");
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
@@ -122,9 +122,9 @@ export class Services {
         const { titulo, descripcion} = curso
         let pool = await sql.connect(config)
         let result = await pool.request()
-            .input('titulo', sql.NVarChar(50), titulo)
+            .input('titulo', sql.NVarChar(99999), titulo)
             .input('descripcion', sql.NVarChar(200), descripcion)
-            .query('INSERT INTO Cursos (Titulo,Descripcion) VALUES (@titulo,@descripcion)')
+            .query('INSERT INTO Cursos (Titulo,Descripcion,) VALUES (@titulo,@descripcion)')
     }
 
     static insertNoticia = async (noticia) => {
