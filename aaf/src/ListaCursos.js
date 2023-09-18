@@ -49,7 +49,7 @@ function ListaCursos() {
   return (
     <div>
     <Row style={{padding:'4%'}}>
-      {Cursos.map(Curso => <Col sm={4}><CardListaCursos Titulo={Curso.Titulo} Descripcion={Curso.Descripcion} Profesor={Curso.NombreProfesor} eliminarCurso={eliminarCurso} asignarProfesor={asignarProfesor} Profesores={Profesores} Id={Curso.Id} fkProfesor={Curso.fkProfesor}></CardListaCursos>
+      {Cursos.map(Curso => <Col sm={4}><CardListaCursos Titulo={Curso.Titulo} Descripcion={Curso.Descripcion} Profesor={Curso.NombreProfesor} eliminarCurso={eliminarCurso} asignarProfesor={asignarProfesor}  Profesores={Profesores} Id={Curso.Id} fkProfesor={Curso.fkProfesor}></CardListaCursos>
       </Col>)}
     </Row>
     <footer>
