@@ -16,21 +16,26 @@ app.get('/aaf/getPerfil/:id',async(req,res)=>{
 app.get('/aaf/getUsers',async(req,res) =>{
    try{
         const usuarios = await Services.getAllUsers();
-        console.log("a",usuarios)
         res.status(200).send(usuarios)
     } catch (error){
-        console.log(error,"putos");
         res.status(500).send(error)
      }
 });
 
+app.get('/aaf/getAlumnos',async(req,res) =>{
+    try{
+         const alumnos = await Services.getAlumnos(req.body.idCurso);
+         res.status(200).send(alumnos);
+     } catch (error){
+         res.status(500).send(error);
+      }
+ });
+
 app.get('/aaf/getCursos',async(req,res) =>{
     try{
          const cursos = await Services.getAllCursos();
-         console.log("a",cursos)
          res.status(200).send(cursos)
      } catch (error){
-         console.log(error,"putos");
          res.status(500).send(error)
       }
  });

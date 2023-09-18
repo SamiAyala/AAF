@@ -13,9 +13,8 @@ function Noticia ({ titulo = "", texto = "", footer = "", fecha = "", imagen = "
                <Card.Img style={{height:'auto',width:'70rem',padding:'1rem'}} variant="top" src={imagen} />
                <Card.Body>
                   <Card.Title>{titulo}</Card.Title>
-                  <Card.Text>
-                     
-                    <h5>{texto}</h5>
+                  <Card.Text className='textoNoticia'>
+                     {texto}
                   </Card.Text>
                   <Card.Footer><h6>Fecha de Creacion de la noticia: {shortDate}</h6>{footer}</Card.Footer>
                </Card.Body>

@@ -1,18 +1,17 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-/*import Col from 'react-bootstrap/Col';*/
 import Form from 'react-bootstrap/Form';
-/*import InputGroup from 'react-bootstrap/InputGroup';*/
-/*import Row from 'react-bootstrap/Row';*/
 import './Registrar.css';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
+import usuarioContext from '../../Context/Context';
 
 function FormIniciarSesion() {
   const [Mail, setMail] = useState('');
   const [Contraseña, setContraseña] = useState('');
   const Navigate = useNavigate();
+  const context = useContext(usuarioContext);
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,7 +29,9 @@ function FormIniciarSesion() {
     axios.post('http://localhost:5000/aaf/login', nuevoUsuario)
     .then(res => {
       console.log("res.data: ",res.data);
-      Navigate(`/`, { state: res.data })
+      context.setUsuarioLogeado({Id:res.data.Id,Nombre:res.data.Nombre , Apellido:res.data.Apellido , FkRol:res.data.FkRol , Contrasenia:res.data.Contrasenia , Telefono:res.data.Telefono , Mail:res.data.Mail , Fiscalia:res.data.Fiscalia , Oficio:res.data.Oficio , Descripcion:res.data.Descripcion});
+      console.log(nuevoUsuario);
+      Navigate(`/`)
     })
     .catch(e => {
       console.log(e)

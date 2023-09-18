@@ -1,21 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-/*import Col from 'react-bootstrap/Col';*/
 import Form from 'react-bootstrap/Form';
-/*import InputGroup from 'react-bootstrap/InputGroup';*/
-/*import Row from 'react-bootstrap/Row';*/
-import {Link, useLocation} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import './IniciarSesion.css'
 import axios from 'axios';
+import usuarioContext from '../../Context/Context';
 
 
 function EditarPerfil() {
-    const {state} = useLocation();
-    const perfil = state;
+  const context = useContext(usuarioContext);
   const [validated, setValidated] = useState(false);
   const [values, setValues] = useState({});
   const Navigate = useNavigate();
+  const perfil = context.usuarioLogeado;
 
     useEffect(() => {
       console.log("perfil editarperfil:",perfil)
@@ -37,7 +34,8 @@ function EditarPerfil() {
     console.log("values editarperfil: ",values)
     axios.put('http://localhost:5000/aaf/editarperfil', values)
       .then(res => {
-        Navigate(`/perfil/${perfil.Id}`, {state: values})
+        context.setUsuarioLogeado(values)
+        Navigate(`/perfil/${context.usuarioLogeado.Id}`)
       })
       .catch(e => {
         console.log(e.response.status, e.data);
@@ -79,7 +77,7 @@ function EditarPerfil() {
             type="password"
             placeholder="Contraseña"
             defaultValue=""
-            name="Contraseña"
+            name="Contrasenia"
             onChange={handleChange}
           />
         </Form.Group>
