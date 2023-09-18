@@ -133,6 +133,16 @@ app.post('/aaf/crearNoticia',async(req,res) => {
     }
 })
 
+app.post('/aaf/insertMaterial',async(req,res) => {
+    try{
+        await Services.insertMaterial(req.body)
+        res.status(201).json({message:'creado con éxito'})
+    } catch(error){
+        console.log(error);
+        res.status(500).json({error:'fallo la creación'})
+    }
+})
+
 app.delete('/aaf/eliminarCurso/:Id',async(req,res) =>{
     try{
         await Services.deleteCurso(req.params.Id);
