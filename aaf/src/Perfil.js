@@ -1,7 +1,7 @@
 import './Perfil.css';
 import './Imagenes/Julian.jpg';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import usuarioContext from './Context/Context';
+import { useNavigate, useParams } from 'react-router-dom';
+import {usuarioContext} from './Context/Context';
 import { useContext } from 'react';
 
 function Perfil() {

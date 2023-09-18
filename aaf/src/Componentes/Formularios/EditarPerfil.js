@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import {useNavigate} from 'react-router-dom'
 import './IniciarSesion.css'
 import axios from 'axios';
-import usuarioContext from '../../Context/Context';
+import {usuarioContext} from '../../Context/Context';
 
 
 function EditarPerfil() {

@@ -5,13 +5,14 @@ import './Registrar.css';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
-import usuarioContext from '../../Context/Context';
+import { usuarioContext,isAdmContext } from '../../Context/Context';
 
 function FormIniciarSesion() {
   const [Mail, setMail] = useState('');
   const [Contraseña, setContraseña] = useState('');
   const Navigate = useNavigate();
   const context = useContext(usuarioContext);
+  const isAdm = useContext(isAdmContext);
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,6 +31,9 @@ function FormIniciarSesion() {
     .then(res => {
       console.log("res.data: ",res.data);
       context.setUsuarioLogeado({Id:res.data.Id,Nombre:res.data.Nombre , Apellido:res.data.Apellido , FkRol:res.data.FkRol , Contrasenia:res.data.Contrasenia , Telefono:res.data.Telefono , Mail:res.data.Mail , Fiscalia:res.data.Fiscalia , Oficio:res.data.Oficio , Descripcion:res.data.Descripcion});
+      let auxBool;
+      res.data.FkRol === 3 ? auxBool=true : auxBool=false;
+      isAdm.setIsAdm(auxBool);
       console.log(nuevoUsuario);
       Navigate(`/`)
     })

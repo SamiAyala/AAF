@@ -9,7 +9,7 @@ function Noticia ({ titulo = "", texto = "", footer = "", fecha = "", imagen = "
    return (
       <>
          {
-            <Card style={{ width: '70rem' }}>
+            <Card style={{ width: '70rem' , marginBottom:'3%'}}>
                <Card.Img style={{height:'auto',width:'70rem',padding:'1rem'}} variant="top" src={imagen} />
                <Card.Body>
                   <Card.Title>{titulo}</Card.Title>

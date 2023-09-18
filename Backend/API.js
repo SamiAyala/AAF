@@ -106,6 +106,8 @@ app.get('/aaf/getNoticias',async(req,res) =>{
 app.put('/aaf/asignarProfesor',async(req,res) =>{
     let idProfesor = req.body.idProfesor;
 	let idCurso = req.body.idCurso;
+    console.log("idProfesor",idProfesor);
+    console.log("idCurso",idCurso);
     let curso = await Services.updateProfesor(idProfesor,idCurso);
     res.status(202).send(curso);
 })

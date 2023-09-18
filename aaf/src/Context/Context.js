@@ -1,5 +1,6 @@
 import React from "react";
 
 const usuarioContext = React.createContext([]);
+const isAdmContext = React.createContext(false);
 
-export default usuarioContext;
+export {usuarioContext ,  isAdmContext };

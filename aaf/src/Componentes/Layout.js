@@ -5,15 +5,17 @@ import perfilIcono from '../Imagenes/perfilIcono.png';
 import logoAAF from '../Imagenes/logoAAF.png';
 import { Link,Outlet} from 'react-router-dom';
 import { useContext, useEffect} from 'react';
-import usuarioContext from '../Context/Context';
+import {usuarioContext,isAdmContext} from '../Context/Context';
 import './Layout.css';
 
 const Layout = () => {
     const context = useContext(usuarioContext);
+    const isAdm = useContext(isAdmContext);
 
     useEffect(()=>{
         console.log("typeof context",typeof context.usuarioLogeado)
-        console.log("context",context.usuarioLogeado)
+        console.log("context Usuario",context.usuarioLogeado)
+        console.log("isAdm?",isAdm);
     })
 
     return (

@@ -32,6 +32,7 @@ function CrearCurso() {
       if(mensaje === undefined){
         axios.post('http://localhost:5000/aaf/crearCurso', values)
           .then(res => {
+            console.log("values",values)
             Navigate('/ListaCursos') 
           })
           .catch(e => {
@@ -56,7 +57,7 @@ function CrearCurso() {
             </Form.Group>
             <br></br>
             <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-              <Form.Label>Descipcion</Form.Label>
+              <Form.Label>Descripcion</Form.Label>
               <Form.Control
                 required
                 type="text"
@@ -68,7 +69,7 @@ function CrearCurso() {
             { camposVacios ? <h5>Completa todos los campos</h5> : <h5></h5> }
             <br></br>
             <Button type="submit" className='form'>crear Curso</Button>
-            <Link to="/ListaCursos" className="btn btn-light form">Lista de los cursos</Link>
+            <Link to="/ListaCursos" className="btn btn-light form">Cancelar</Link>
           </Form>
         </div>
       );
