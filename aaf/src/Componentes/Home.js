@@ -1,15 +1,17 @@
 import './Home.css'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row, Col } from 'react-bootstrap';
 import Noticia from './Noticia';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import usuarioContext from '../Context/Context';
 
 export default function Home() {
-   const [noticias, setNoticias] = useState([{}]);
+   const [noticias, setNoticias] = useState([]);
    const [adm,setAdm] = useState(false);
    const navigate = useNavigate();
+   const context = useContext(usuarioContext);
 
    useEffect(() => {
       axios.get('http://localhost:5000/aaf/getNoticias')
@@ -23,7 +25,7 @@ export default function Home() {
          <div>
          
            <Row className='justify-content-md-center'>
-            {noticias.map(noticia => <Col sm={8}  style={{marginTop:'2%'}}><Noticia titulo={noticia.Titulo} texto={noticia.Texto} imagen={noticia.Imagen} footer={noticia.Footer} fecha={noticia.Fecha}></Noticia></Col>)}
+            {noticias.map(noticia => <Col sm={8} key={noticia.Id}  style={{marginTop:'2%'}}><Noticia titulo={noticia.Titulo} texto={noticia.Texto} imagen={noticia.Imagen} footer={noticia.Footer} fecha={noticia.Fecha}></Noticia></Col>)}
             <Button onClick={()=> navigate("/AgregarNoticia")}>Crear Noticia</Button>
             </Row> 
         </div>

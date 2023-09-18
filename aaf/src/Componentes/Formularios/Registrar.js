@@ -136,7 +136,7 @@ function FormRegistro() {
             onChange={handleChange}
           />
         </Form.Group>
-        { mailIncorrecto ? <h5>Mail Incorrecto, Este tiene que terminar con @gmail.com </h5> : <h5></h5> }
+        { mailIncorrecto ? <h5>Formato del mail incorrecto </h5> : <h5></h5> }
         <br></br>
         <Form.Group  controlId="validationCustom02">
           <Form.Label>Fiscalia</Form.Label>
@@ -156,6 +156,17 @@ function FormRegistro() {
             type="text"
             defaultValue=""
             name="oficio"
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <br></br>
+        <Form.Group controlId="validationCustom02">
+          <Form.Label>Descripcion</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            defaultValue=""
+            name="descripcion"
             onChange={handleChange}
           />
         </Form.Group>

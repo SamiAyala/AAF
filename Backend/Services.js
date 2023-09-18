@@ -9,26 +9,23 @@ async function comparePassword(contraseñaPlana, hash) {
 }
 export class Services {
 
-    static login = async(mail,contraseña) =>
-    {
+    static login = async (mail, contraseña) => {
         let returnEntity = null;
         let pool = await sql.connect(config);
         let result = await pool.request()
-        .input("mail",sql.VarChar(200),mail)
-        .query('SELECT * FROM Usuarios WHERE Mail = @mail');
-        if(typeof result.recordsets[0][0] !== "undefined")
-        {
+            .input("mail", sql.VarChar(200), mail)
+            .query('SELECT * FROM Usuarios WHERE Mail = @mail');
+        if (typeof result.recordsets[0][0] !== "undefined") {
             const valid = await comparePassword(contraseña, result.recordsets[0][0].Contrasenia);
-            valid ? returnEntity = {status:200, objeto: result.recordsets[0][0]} : returnEntity = {status:404}
-        } 
+            valid ? returnEntity = { status: 200, objeto: result.recordsets[0][0] } : returnEntity = { status: 404 }
+        }
         else {
-              returnEntity = {status:404}
+            returnEntity = { status: 404 }
         }
         return returnEntity;
     }
 
-    static getAllCursos = async () => 
-    {
+    static getAllCursos = async () => {
         let returnEntity = null;
         console.log("Estoy en: GetAll - Cursos");
         try {
@@ -42,24 +39,37 @@ export class Services {
         return returnEntity;
     }
 
-    static getMaterial = async (idCurso) =>
-    {
+    static getAlumnos = async (idCurso) => {
         let returnEntity = null;
-        console.log("Estoy en: getAll - Material");
+        console.log("Estoy en: GetAll - Alumnos");
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .input("pId",sql.Int, idCurso)
-                .query("SELECT * FROM CursoMateriales WHERE IdCurso = @pId");
+                .input("pId", sql.Int, idCurso)
+                .query("select U.* from Usuarios U inner join CursoUsuarios CU on CU.idCurso = @pId WHERE U.Id = CU.IdUsuario");
             returnEntity = result.recordsets[0];
-        } catch (error){
+        } catch (error) {
             console.log(error);
         }
         return returnEntity;
     }
 
-    static getProfesores = async () =>
-    {
+    static getMaterial = async (idCurso) => {
+        let returnEntity = null;
+        console.log("Estoy en: getAll - Material");
+        try {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .input("pId", sql.Int, idCurso)
+                .query("SELECT * FROM CursoMateriales WHERE IdCurso = @pId");
+            returnEntity = result.recordsets[0];
+        } catch (error) {
+            console.log(error);
+        }
+        return returnEntity;
+    }
+
+    static getProfesores = async () => {
         let returnEntity = null;
         console.log("Estoy en: getProfesores");
         try {
@@ -67,14 +77,13 @@ export class Services {
             let result = await pool.request()
                 .query("SELECT * FROM Usuarios WHERE FkRol=2");
             returnEntity = result.recordsets[0];
-        } catch (error){
+        } catch (error) {
             console.log(error);
         }
         return returnEntity;
     }
 
-    static getNoticias = async () =>
-    {
+    static getNoticias = async () => {
         let returnEntity = null;
         console.log("Estoy en: get - Noticias");
         try {
@@ -82,7 +91,7 @@ export class Services {
             let result = await pool.request()
                 .query("SELECT * FROM ArticuloNoticia ORDER BY fecha desc");
             returnEntity = result.recordsets[0];
-        } catch (error){
+        } catch (error) {
             console.log(error);
         }
         return returnEntity;
@@ -119,7 +128,7 @@ export class Services {
 
     static insertCurso = async (curso) => {
         console.log("Estoy en: insert - Curso");
-        const { titulo, descripcion} = curso
+        const { titulo, descripcion } = curso
         let pool = await sql.connect(config)
         let result = await pool.request()
             .input('titulo', sql.NVarChar(99999), titulo)
@@ -129,15 +138,15 @@ export class Services {
 
     static insertNoticia = async (noticia) => {
         console.log("Estoy en: insert - Noticia");
-        const { titulo , texto , imagen , fecha , footer } = noticia;
+        const { titulo, texto, imagen, fecha, footer } = noticia;
         let pool = await sql.connect(config);
         let result = await pool.request()
-        .input('titulo',sql.NVarChar(50),titulo)
-        .input('texto',sql.NVarChar(200),texto)
-        .input('imagen',sql.NVarChar(200),imagen)
-        .input('fecha',sql.Date,fecha)
-        .input('footer',sql.NVarChar(50),footer)
-        .query('insert into ArticuloNoticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
+            .input('titulo', sql.NVarChar(50), titulo)
+            .input('texto', sql.NVarChar(200), texto)
+            .input('imagen', sql.NVarChar(200), imagen)
+            .input('fecha', sql.Date, fecha)
+            .input('footer', sql.NVarChar(50), footer)
+            .query('insert into ArticuloNoticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
     }
 
     static insertMaterial = async (Material) => {
@@ -148,54 +157,64 @@ export class Services {
         let result = await pool.request()
             .input('idCurso', sql.Int, IdCurso)
             .input('imagen', sql.NVarChar(200), Imagen)
-            .input('texto',sql.NVarChar(200),Texto)
+            .input('texto', sql.NVarChar(200), Texto)
             .query('INSERT INTO CursoMateriales (idCurso,imagen,texto) VALUES (@idCurso,@imagen,@texto)')
     }
 
     static insertUsuario = async (Usuario) => {
         console.log("Estoy en: insert - Usuario");
-        const { contraseña, nombre, apellido,telefono, mail, fiscalia, oficio } = Usuario;
+        const { contraseña, nombre, apellido, telefono, mail, fiscalia, oficio } = Usuario;
         const fkRol = 1;
-        bcrypt.genSalt(10,(err, salt) => {
-            bcrypt.hash(contraseña, salt, async function(err, hash) {
-            let pool = await sql.connect(config)
-            let result = await pool.request()
-            .input('contraseña',sql.NVarChar(200),hash)
-            .input('nombre', sql.NVarChar(200), nombre)
-            .input('apellido', sql.NVarChar(200), apellido)
-            .input('fkRol',sql.Int,fkRol)
-            .input('telefono',sql.NVarChar(17),telefono)
-            .input('mail',sql.NVarChar(200),mail)
-            .input('fiscalia',sql.NVarChar(200),fiscalia)
-            .input('oficio',sql.NVarChar(200),oficio)
-            .query('INSERT INTO Usuarios (Contrasenia,Nombre,Apellido,FkRol,Telefono,Mail,Fiscalia,Oficio) VALUES (@contraseña,@nombre,@apellido,@fkRol,@telefono,@mail,@fiscalia,@oficio)')
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(contraseña, salt, async function (err, hash) {
+                let pool = await sql.connect(config)
+                let result = await pool.request()
+                    .input('contraseña', sql.NVarChar(200), hash)
+                    .input('nombre', sql.NVarChar(200), nombre)
+                    .input('apellido', sql.NVarChar(200), apellido)
+                    .input('fkRol', sql.Int, fkRol)
+                    .input('telefono', sql.NVarChar(17), telefono)
+                    .input('mail', sql.NVarChar(200), mail)
+                    .input('fiscalia', sql.NVarChar(200), fiscalia)
+                    .input('oficio', sql.NVarChar(200), oficio)
+                    .query('INSERT INTO Usuarios (Contrasenia,Nombre,Apellido,FkRol,Telefono,Mail,Fiscalia,Oficio) VALUES (@contraseña,@nombre,@apellido,@fkRol,@telefono,@mail,@fiscalia,@oficio)')
             });
         })
     }
 
     static updateUsuario = async (usuario) => {
-        const { Id, Contraseña, Nombre, Apellido, FkRol, Telefono, Mail } = usuario
+        console.log("usuario", usuario)
+        const { Id, Contrasenia, Nombre, Apellido, FkRol, Telefono, Mail, Fiscalia, Oficio, Descripcion } = usuario
         let returnEntity = null;
-        console.log("Estoy en: update");
-        try {
-            let pool = await sql.connect(config)
-            let result = await pool.request()
-                .input('pId', sql.Int, Id)
-                .input('contraseña',sql.NVarChar(50),Contraseña)
-                .input('nombre', sql.NVarChar(50), Nombre)
-                .input('apellido', sql.NVarChar(50), Apellido)
-                .input('fkRol', sql.Int, FkRol)
-                .input('telefono', sql.NVarChar(15), Telefono)
-                .input('mail', sql.NVarChar(50), Mail)
-                .query('UPDATE Usuarios SET Contrasenia = @contraseña, Nombre = @nombre, Apellido = @apellido, fkRol = @fkRol, Telefono = @telefono, Mail = @mail WHERE Usuarios.Id = @pId')
-            returnEntity = result.recordsets[0];
-        } catch (error) {
-            console.log(error);
-        }
-        return returnEntity;
+        console.log("Estoy en: update - Usuario");
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(Contrasenia, salt, async function (err, hash) {
+                try {
+                    let pool = await sql.connect(config)
+                    let result = await pool.request()
+                        .input('pId', sql.Int, Id)
+                        .input('contrasenia', sql.NVarChar(999), hash)
+                        .input('nombre', sql.NVarChar(999), Nombre)
+                        .input('apellido', sql.NVarChar(999), Apellido)
+                        .input('fkRol', sql.Int, FkRol)
+                        .input('telefono', sql.NChar(17), Telefono)
+                        .input('mail', sql.NVarChar(999), Mail)
+                        .input('fiscalia', sql.NVarChar(999), Fiscalia)
+                        .input('oficio', sql.NVarChar(999), Oficio)
+                        .input('descripcion', sql.NVarChar(999), Descripcion)
+                        .query('UPDATE Usuarios SET Contrasenia = @contrasenia, Nombre = @nombre, Apellido = @apellido, FkRol = @fkRol, Telefono = @telefono, Mail = @mail, Fiscalia = @fiscalia, Oficio = @oficio, Descripcion = @descripcion WHERE Usuarios.Id = @pId')
+                    returnEntity = result.rowsAffected;
+                    console.log("returnEntity", returnEntity);
+                } catch (error) {
+                    console.log(error);
+                }
+                return returnEntity;
+            });
+        })
+
     }
 
-    static convertirUsuario = async (id,rol) => {
+    static convertirUsuario = async (id, rol) => {
         let returnEntity = null;
         console.log("Estoy en: updateRol");
         try {
@@ -211,14 +230,14 @@ export class Services {
         return returnEntity;
     }
 
-    static updateProfesor = async (idProfesor,idCurso) => {
+    static updateProfesor = async (idProfesor, idCurso) => {
         let returnEntity = null;
         console.log("Estoy en: updateProfesor");
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input('idProfesor', sql.Int, idProfesor)
-                .input('idCurso',sql.Int, idCurso)
+                .input('idCurso', sql.Int, idCurso)
                 .query('UPDATE Cursos SET fkProfesor = @IdProfesor WHERE Id = @IdCurso')
             returnEntity = result.recordsets[0];
         } catch (error) {
