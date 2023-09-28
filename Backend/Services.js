@@ -31,7 +31,7 @@ export class Services {
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .query("SELECT Cursos.Id, Cursos.Titulo, Cursos.Descripcion, Cursos.fkProfesor, CONCAT(Usuarios.Nombre,' ',Usuarios.Apellido) AS NombreProfesor FROM Cursos INNER JOIN Usuarios ON Cursos.fkProfesor = Usuarios.Id");
+                .query("SELECT Cursos.Id, Cursos.Titulo, Cursos.Descripcion, Cursos.fkProfesor, (SELECT Concat(Usuarios.Nombre, ' ', Usuarios.Apellido) FROM Usuarios WHERE Usuarios.Id = Cursos.fkProfesor) AS NombreProfesor FROM Cursos");
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);

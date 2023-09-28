@@ -41,7 +41,7 @@ function ListaUsuario() {
   return (
     <div>
       <Row style={{ padding: '4%' }}>
-        {Usuarios.map(Usuario => <Col sm={2}><CardListaUsuarios Usuario={Usuario} eliminarUsuario={eliminarUsuario} convertirUsuario={convertirUsuario}></CardListaUsuarios>
+        {Usuarios.map(Usuario => <Col sm='auto'><CardListaUsuarios Usuario={Usuario} eliminarUsuario={eliminarUsuario} convertirUsuario={convertirUsuario}></CardListaUsuarios>
         </Col>)}
       </Row>
     </div>

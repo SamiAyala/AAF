@@ -43,7 +43,6 @@ app.get('/aaf/getCursos',async(req,res) =>{
 app.post('/aaf/login', async(req, res) => {
 	let mail = req.body.mail;
 	let contraseña = req.body.contraseña;
-    console.log("mail: ",mail, "contraseña: ",contraseña);
     if (mail && contraseña) {
         const respuesta = await Services.login(mail,contraseña);
 		res.status(respuesta.status).send(respuesta.objeto);

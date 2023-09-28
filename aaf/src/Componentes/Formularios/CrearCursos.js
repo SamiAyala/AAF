@@ -50,6 +50,7 @@ function CrearCurso() {
               <Form.Control
                 required
                 type="text"
+                placeholder='Titulo...'
                 defaultValue=""
                 name="titulo"
                 onChange={handleChange}
@@ -62,6 +63,7 @@ function CrearCurso() {
                 required
                 type="text"
                 defaultValue=""
+                placeholder='Descripcion...'
                 name="descripcion"
                 onChange={handleChange}
               />

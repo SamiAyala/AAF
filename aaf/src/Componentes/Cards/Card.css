@@ -1,11 +1,20 @@
 .cita {
     padding: 2rem;
     background-color: rgb(3, 3, 73);
-    color: white;
     margin-bottom: 20px;
     border-radius: 20px;
     width: fit-content;
     text-align: center;
     align-items: center;
     justify-content: center;
+  }
+
+  .cardListas{
+    border-radius: 20px !important;
+    padding: 0% !important;
+    overflow: hidden !important;
+    color: white;
+    min-height: 300px;
+    width: 500px;
+    margin-top: 5%;
   }

@@ -52,7 +52,7 @@ function FormIniciarSesion() {
           <Form.Control
             required
             type="text"
-            placeholder="mail"
+            placeholder="Mail"
             defaultValue=""
             onChange={(event) =>
               setMail(event.target.value)
