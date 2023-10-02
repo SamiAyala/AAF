@@ -7,14 +7,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
-
+import { Link } from "react-router-dom";
 
 function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha asignado ningún profesor aún.", eliminarCurso, asignarProfesor, cargarMaterial, Profesores, Id, fkProfesor, isAdm }) {
    const Navigate = useNavigate('/AgregarMateriales');
-   
 
-   const anotarse = () => {
-      
+
+   const verDetalle = () => {
+     
    }
 
    return (
@@ -30,7 +30,7 @@ function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha a
                   {
                      fkProfesor === null ?
                         <b>No se ha asignado un profesor aún</b>
-                        : 
+                        :
                         <>
                            Profesor Asignado:
                            <br />
@@ -55,9 +55,10 @@ function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha a
                      </Col>
                   </Row>
                </Card.Footer>
-               : <Button onClick={()=> anotarse}>
-                  Anotarme
-               </Button>}
+               : 
+               <Link to={"/VerDetalle/"+Id}>Ver Detalles</Link>
+
+            }
          </Card>
       </>
    )

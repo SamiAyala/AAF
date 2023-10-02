@@ -12,6 +12,7 @@ import AgregarNoticia from './Componentes/Formularios/AgregarNoticia';
 import Layout from './Componentes/Layout';
 import { usuarioContext , isAdmContext } from './Context/Context';
 import { useState } from 'react';
+import VerDetalleCursos from './VerDetalleCurso';
 
 const App = () => {
 
@@ -33,6 +34,7 @@ const App = () => {
               <Route path='/ListaCursos' element={<ListaCursos />}></Route>
               <Route path='/CrearCursos' element={<CrearCursos />}></Route>
               <Route path='/AgregarNoticia' element={<AgregarNoticia />}></Route>
+              <Route path='/VerDetalle/:Id' element={<VerDetalleCursos/>}></Route>
             </Route>
           </Routes>
         </BrowserRouter>

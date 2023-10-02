@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 
-function AgregarNoticia() {
+function AgregarMaterial() {
     let { id } = useParams();
   const [validated, setValidated] = useState(false);
   const [values, setValues] = useState({});
@@ -88,4 +88,4 @@ function AgregarNoticia() {
   };
 
 
-export default AgregarNoticia;
+export default AgregarMaterial;
