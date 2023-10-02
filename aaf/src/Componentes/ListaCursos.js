@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import './Componentes/Formularios/Registrar.css';
-import CardListaCursos from './Componentes/Cards/CardListaCursos';
+import './Formularios/Registrar.css';
+import CardListaCursos from './Cards/CardListaCursos';
 import axios from 'axios';
 import './Lista.css'
 import { Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { isAdmContext } from './Context/Context';
+import { usuarioContext , isAdmContext } from '../Context/Context';
 
 
 function ListaCursos() {
@@ -14,7 +14,9 @@ function ListaCursos() {
   const [Profesores, setProfesores] = useState([]);
   const [recargar, setRecargar] = useState(false);
   const isAdm = useContext(isAdmContext);
+  const usuario = useContext(usuarioContext);
   const navigate = useNavigate();
+  console.log("usuario lista",usuario);
   useEffect(() => {
     setRecargar(false);
     axios.get('http://localhost:5000/aaf/getCursos')
@@ -55,7 +57,7 @@ function ListaCursos() {
   return (
     <div>
     <Row style={{padding:'4%'}}>
-      {Cursos.map(Curso => <Col sm='auto'><CardListaCursos Titulo={Curso.Titulo} Descripcion={Curso.Descripcion} Profesor={Curso.NombreProfesor} eliminarCurso={eliminarCurso} asignarProfesor={asignarProfesor} Profesores={Profesores} Id={Curso.Id} fkProfesor={Curso.fkProfesor} isAdm={isAdm.isAdm}></CardListaCursos>
+      {Cursos.map(Curso => <Col sm='auto'><CardListaCursos Titulo={Curso.Titulo} Descripcion={Curso.Descripcion} Profesor={Curso.NombreProfesor} eliminarCurso={eliminarCurso} asignarProfesor={asignarProfesor} Profesores={Profesores} Id={Curso.Id} fkProfesor={Curso.fkProfesor} isAdm={isAdm.isAdm} idUsuario={usuario.usuarioLogeado.Id}></CardListaCursos>
       </Col>)}
     </Row>
     <footer>

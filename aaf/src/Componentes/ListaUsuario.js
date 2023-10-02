@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import CardListaUsuarios from './Componentes/Cards/CardListaUsuarios';
+import CardListaUsuarios from './Cards/CardListaUsuarios';
 import axios from 'axios';
 import './Lista.css';
 import { Row, Col } from 'react-bootstrap';

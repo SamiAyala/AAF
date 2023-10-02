@@ -40,6 +40,15 @@ app.get('/aaf/getCursos',async(req,res) =>{
       }
  });
 
+app.post("/aaf/anotarAlumno",async(req,res) =>{
+    console.log("req.body",req.body);
+    let idAlumno = req.body.Id;
+    let idCurso = req.body.idUsuario;
+    const respuesta = await Services.anotarAlumno(idAlumno,idCurso);
+    res.status(404).send(respuesta);
+    console.log("respuesta",respuesta);
+});
+
 app.post('/aaf/login', async(req, res) => {
 	let mail = req.body.mail;
 	let contraseña = req.body.contraseña;

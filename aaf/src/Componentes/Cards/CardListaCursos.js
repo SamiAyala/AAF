@@ -7,14 +7,24 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
+import axios from 'axios';
 
 
-function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha asignado ningún profesor aún.", eliminarCurso, asignarProfesor, cargarMaterial, Profesores, Id, fkProfesor, isAdm }) {
+function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha asignado ningún profesor aún.", eliminarCurso, asignarProfesor, cargarMaterial, Profesores, Id, fkProfesor, isAdm, idUsuario }) {
    const Navigate = useNavigate('/AgregarMateriales');
-   
+
 
    const anotarse = () => {
-      
+      console.log("anotarse")
+      let body = { Id, idUsuario }
+      if (idUsuario !== undefined){   
+         axios.post("http://localhost:5000/aaf/anotarAlumno",body)
+         .then(res => {
+            alert("Ha sido anotado correctamente.");
+         })
+      } else {
+         alert("Inicie sesión o regístrese primero.");
+      }
    }
 
    return (
@@ -30,7 +40,7 @@ function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha a
                   {
                      fkProfesor === null ?
                         <b>No se ha asignado un profesor aún</b>
-                        : 
+                        :
                         <>
                            Profesor Asignado:
                            <br />
@@ -55,7 +65,7 @@ function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha a
                      </Col>
                   </Row>
                </Card.Footer>
-               : <Button onClick={()=> anotarse}>
+               : <Button onClick={() => anotarse()}>
                   Anotarme
                </Button>}
          </Card>

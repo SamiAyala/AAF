@@ -25,6 +25,7 @@ export class Services {
         return returnEntity;
     }
 
+
     static getAllCursos = async () => {
         let returnEntity = null;
         console.log("Estoy en: GetAll - Cursos");
@@ -147,6 +148,13 @@ export class Services {
             .input('fecha', sql.Date, fecha)
             .input('footer', sql.NVarChar(50), footer)
             .query('insert into ArticuloNoticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
+    }
+    static anotarAlumno = async (idAlumno,idCurso) => {
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+        .input("pIdA",sql.Int,idAlumno)
+        .input("pIdC",sql.Int,idCurso)
+        .query("insert into CursoUsuarios (IdCurso,IdUsuario) VALUES (@pIdC,@pIdA)");
     }
 
     static insertMaterial = async (Material) => {

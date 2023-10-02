@@ -1,11 +1,11 @@
 import './App.css';
 import FormIniciarSesion from './Componentes/Formularios/IniciarSesion';
 import FormRegistro from './Componentes/Formularios/Registrar';
-import Perfil from './Perfil';
+import Perfil from './Componentes/Perfil';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import EditarPerfil from './Componentes/Formularios/EditarPerfil'
-import ListaUsuario from './ListaUsuario';
-import ListaCursos from './ListaCursos';
+import ListaUsuario from './Componentes/ListaUsuario';
+import ListaCursos from './Componentes/ListaCursos';
 import CrearCursos from './Componentes/Formularios/CrearCursos'
 import Home from './Componentes/Home';
 import AgregarNoticia from './Componentes/Formularios/AgregarNoticia';
