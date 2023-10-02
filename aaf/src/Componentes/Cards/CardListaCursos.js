@@ -7,11 +7,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
+<<<<<<< HEAD
 import axios from 'axios';
 
+=======
+import { Link } from "react-router-dom";
+>>>>>>> eef1c63d63b00b4a08c2ce5430ee0d405c6f65c7
 
 function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha asignado ningún profesor aún.", eliminarCurso, asignarProfesor, cargarMaterial, Profesores, Id, fkProfesor, isAdm, idUsuario }) {
    const Navigate = useNavigate('/AgregarMateriales');
+<<<<<<< HEAD
 
 
    const anotarse = () => {
@@ -25,6 +30,12 @@ function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha a
       } else {
          alert("Inicie sesión o regístrese primero.");
       }
+=======
+
+
+   const verDetalle = () => {
+     
+>>>>>>> eef1c63d63b00b4a08c2ce5430ee0d405c6f65c7
    }
 
    return (
@@ -65,9 +76,16 @@ function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha a
                      </Col>
                   </Row>
                </Card.Footer>
+<<<<<<< HEAD
                : <Button onClick={() => anotarse()}>
                   Anotarme
                </Button>}
+=======
+               : 
+               <Link to={"/VerDetalle/"+Id}>Ver Detalles</Link>
+
+            }
+>>>>>>> eef1c63d63b00b4a08c2ce5430ee0d405c6f65c7
          </Card>
       </>
    )

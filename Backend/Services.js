@@ -62,8 +62,8 @@ export class Services {
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input("pId", sql.Int, idCurso)
-                .query("SELECT * FROM CursoMateriales WHERE IdCurso = @pId");
-            returnEntity = result.recordsets[0];
+                .query("SELECT * FROM CursoMateriales INNER JOIN Cursos ON Cursos.Id = CursoMateriales.IdCurso WHERE IdCurso = @pId");
+            returnEntity = result.recordset[0];
         } catch (error) {
             console.log(error);
         }
