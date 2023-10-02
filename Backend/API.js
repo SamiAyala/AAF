@@ -101,6 +101,17 @@ app.get('/aaf/getNoticias',async(req,res) =>{
         res.status(500);
     }
 })
+app.get('/aaf/getMaterial/:id',async(req,res) =>{
+    console.log("Estoy en: get - material");
+    try{
+        console.log("req.params",req.params)
+        const material = await Services.getMaterial(req.params.id);
+        res.status(200).send(material);
+    } catch(error){
+        console.log(error);
+        res.status(500);
+    }
+})
 
 app.put('/aaf/asignarProfesor',async(req,res) =>{
     let idProfesor = req.body.idProfesor;
