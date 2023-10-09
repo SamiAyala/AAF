@@ -39,6 +39,14 @@ app.get('/aaf/getCursos',async(req,res) =>{
          res.status(500).send(error)
       }
  });
+ app.get('/aaf/getUsersCurso',async(req,res) =>{
+    try{
+         const usuarios = await Services.getUsersCurso();
+         res.status(200).send(usuarios)
+     } catch (error){
+         res.status(500).send(error)
+      }
+ });
 
 app.post("/aaf/anotarAlumno",async(req,res) =>{
     console.log("req.body",req.body);
@@ -46,6 +54,15 @@ app.post("/aaf/anotarAlumno",async(req,res) =>{
     let idAlumno = req.body.idUsuario;
     const respuesta = await Services.anotarAlumno(idAlumno,idCurso);
     res.status(200).send(respuesta);
+    console.log("respuesta",respuesta);
+});
+app.post("/aaf/tomarLista",async(req,res) =>{
+    console.log("req.body",req.body);
+    let idAlumno = req.body.idUsuario;
+    let idClase = req.body.idClase;
+    let asistencia = req.body.asistencia;
+    const respuesta = await Services.tomarAsistencia(idAlumno,idClase,asistencia);
+    res.status(404).send(respuesta);
     console.log("respuesta",respuesta);
 });
 

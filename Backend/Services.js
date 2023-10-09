@@ -127,7 +127,19 @@ export class Services {
         }
         return returnEntity
     }
-
+    static getUsersCurso = async (IdCurso) => {
+        let returnEntity = null;
+        console.log("Estoy en: GetAllUsers");
+        try {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .query("SELECT Usuarios.* FROM Usuarios INNER JOIN CursoUsuarios ON CursoUsuarios.IdUsuario = Usuarios.Id WHERE CursoUsuarios.IdCurso = @IdCurso")
+            returnEntity = result.recordsets[0];
+        } catch (error) {
+            console.log(error);
+        }
+        return returnEntity
+    }
     static insertCurso = async (curso) => {
         console.log("Estoy en: insert - Curso");
         const { titulo, descripcion } = curso
@@ -159,6 +171,15 @@ export class Services {
         .input('pIdA',sql.Int,idAlumno)
         .query('insert into CursoUsuarios (IdCurso,IdUsuario) VALUES (@pIdC,@pIdA)');
         return result.rowsAffected;
+    }
+    
+    static tomarAsistencia = async (idAlumno, idClase, asistencia) =>{
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+        .input("pIdAlumno",sql.Int,idAlumno)
+        .input("pIdClase",sql.Int,idClase)
+        .input("pAsistencia", sql.Bit,asistencia)
+        .query("insert into ClaseAsistencia (IdCursoUsuarios,IdClase,Asistencia) VALUES (@pIdAlumno,@pIdClase,@pAsistencia)");
     }
 
     static insertMaterial = async (Material) => {
