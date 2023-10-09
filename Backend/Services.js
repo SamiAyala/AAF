@@ -11,6 +11,7 @@ export class Services {
 
     static login = async (mail, contraseña) => {
         let returnEntity = null;
+        console.log("mail: ", mail, " contraseña: ",contraseña)
         let pool = await sql.connect(config);
         let result = await pool.request()
             .input("mail", sql.VarChar(200), mail)
@@ -150,11 +151,14 @@ export class Services {
             .query('insert into ArticuloNoticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
     }
     static anotarAlumno = async (idAlumno,idCurso) => {
+        console.log("idCurso",idCurso)
+        console.log("idAlumno",idAlumno)
         let pool = await sql.connect(config);
         let result = await pool.request()
-        .input("pIdA",sql.Int,idAlumno)
-        .input("pIdC",sql.Int,idCurso)
-        .query("insert into CursoUsuarios (IdCurso,IdUsuario) VALUES (@pIdC,@pIdA)");
+        .input('pIdC',sql.Int,idCurso)
+        .input('pIdA',sql.Int,idAlumno)
+        .query('insert into CursoUsuarios (IdCurso,IdUsuario) VALUES (@pIdC,@pIdA)');
+        return result.rowsAffected;
     }
 
     static insertMaterial = async (Material) => {
@@ -177,7 +181,7 @@ export class Services {
             bcrypt.hash(contraseña, salt, async function (err, hash) {
                 let pool = await sql.connect(config)
                 let result = await pool.request()
-                    .input('contraseña', sql.NVarChar(200), hash)
+                    .input('contrasenia', sql.NVarChar(200), hash)
                     .input('nombre', sql.NVarChar(200), nombre)
                     .input('apellido', sql.NVarChar(200), apellido)
                     .input('fkRol', sql.Int, fkRol)
@@ -185,18 +189,21 @@ export class Services {
                     .input('mail', sql.NVarChar(200), mail)
                     .input('fiscalia', sql.NVarChar(200), fiscalia)
                     .input('oficio', sql.NVarChar(200), oficio)
-                    .query('INSERT INTO Usuarios (Contrasenia,Nombre,Apellido,FkRol,Telefono,Mail,Fiscalia,Oficio) VALUES (@contraseña,@nombre,@apellido,@fkRol,@telefono,@mail,@fiscalia,@oficio)')
-            });
+                    .query('INSERT INTO Usuarios (Contrasenia,Nombre,Apellido,FkRol,Telefono,Mail,Fiscalia,Oficio) VALUES (@contrasenia,@nombre,@apellido,@fkRol,@telefono,@mail,@fiscalia,@oficio)')
+                });
         })
+        return Usuario;
     }
 
     static updateUsuario = async (usuario) => {
         console.log("usuario", usuario)
-        const { Id, Contrasenia, Nombre, Apellido, FkRol, Telefono, Mail, Fiscalia, Oficio, Descripcion } = usuario
+        const { Id, Contrasenia, Nombre, Apellido, FkRol, Telefono, Mail, Fiscalia, Oficio, Descripcion } = usuario;
         let returnEntity = null;
         console.log("Estoy en: update - Usuario");
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(Contrasenia, salt, async function (err, hash) {
+                console.log("Contrasenia",Contrasenia)
+                console.log("hash",hash)
                 try {
                     let pool = await sql.connect(config)
                     let result = await pool.request()

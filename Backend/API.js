@@ -42,10 +42,10 @@ app.get('/aaf/getCursos',async(req,res) =>{
 
 app.post("/aaf/anotarAlumno",async(req,res) =>{
     console.log("req.body",req.body);
-    let idAlumno = req.body.Id;
-    let idCurso = req.body.idUsuario;
+    let idCurso = req.body.Id;
+    let idAlumno = req.body.idUsuario;
     const respuesta = await Services.anotarAlumno(idAlumno,idCurso);
-    res.status(404).send(respuesta);
+    res.status(200).send(respuesta);
     console.log("respuesta",respuesta);
 });
 
@@ -74,8 +74,12 @@ app.put('/aaf/convertirUsuario',async(req,res)=> {
 
 app.post('/aaf/registrarse', async(req,res) =>{
     try{
-        await Services.insertUsuario(req.body);
-        res.status(201).json({message: 'Registrado con éxito'})
+        const perfil = await Services.insertUsuario(req.body);
+        console.log("perfil",perfil);
+        let contrasenia = perfil.contraseña;
+        const usuario = await Services.login(perfil.mail,contrasenia);
+        console.log("usuario",usuario);
+        res.status(201).send(usuario);
     } catch (error){
         console.log(error)
         res.status(500).json({error : 'Fallo el registro'})

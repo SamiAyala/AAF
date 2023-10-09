@@ -16,12 +16,10 @@ function ListaCursos() {
   const isAdm = useContext(isAdmContext);
   const usuario = useContext(usuarioContext);
   const navigate = useNavigate();
-  console.log("usuario lista",usuario);
   useEffect(() => {
     setRecargar(false);
     axios.get('http://localhost:5000/aaf/getCursos')
       .then(res => {
-        console.log(res.data);
         setCursos(res.data)
       })
       .catch(e => {
@@ -31,7 +29,6 @@ function ListaCursos() {
         setProfesores(res.data);
       })
       console.log("cursos",Cursos);
-      console.log("Profesores",Profesores);
   }, [recargar]);
 
   const eliminarCurso = (Id) => {
@@ -54,11 +51,14 @@ function ListaCursos() {
       })
   }
 
+
   return (
     <div>
     <Row style={{padding:'4%'}}>
-      {Cursos.map(Curso => <Col sm='auto'><CardListaCursos Titulo={Curso.Titulo} Descripcion={Curso.Descripcion} Profesor={Curso.NombreProfesor} eliminarCurso={eliminarCurso} asignarProfesor={asignarProfesor} Profesores={Profesores} Id={Curso.Id} fkProfesor={Curso.fkProfesor} isAdm={isAdm.isAdm} idUsuario={usuario.usuarioLogeado.Id}></CardListaCursos>
-      </Col>)}
+      {Cursos.map(Curso =>
+        <Col sm='auto' key={Curso.Id}>
+          <CardListaCursos Titulo={Curso.Titulo} Descripcion={Curso.Descripcion} Profesor={Curso.NombreProfesor} eliminarCurso={eliminarCurso} asignarProfesor={asignarProfesor} Profesores={Profesores} Id={Curso.Id} fkProfesor={Curso.fkProfesor} isAdm={isAdm.isAdm} idUsuario={usuario.usuarioLogeado.Id}/>
+        </Col>)}
     </Row>
     <footer>
       {isAdm.isAdm ? <Button onClick={()=> navigate("/CrearCursos")}>Crear Curso</Button> : <></>}

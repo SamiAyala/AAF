@@ -8,17 +8,15 @@ function VerDetalleCursos() {
     const { Id } = useParams();
     useEffect(() => {
         axios.get('http://localhost:5000/aaf/getMaterial/' + Id)
-            .then(function (response) {
-                console.log(response.data)
+            .then(response => {
+                console.log("response.data",response)
                 setCurso(response.data)
             })
             .finally(() => { setLoading(false) })
     }, [])
-    console.log("LA MENTIROSA, La TEMEROSA, LA DESEADA, LA INFORMACION DEL CURSO: ",curso)
-    console.log(curso)
     return (
             <div className='container'>
-                {isLoading ? <h1>asdsad</h1> : (
+                {isLoading ? <h1></h1> : (
                     <>
                         <img src={curso.Imagen}/>
                         <h3>Titulo: {curso.Titulo}</h3>
