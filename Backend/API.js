@@ -168,6 +168,16 @@ app.post('/aaf/insertMaterial',async(req,res) => {
     }
 })
 
+app.post('/aaf/insertClase',async(req,res) => {
+    try{
+        await Services.insertClase(req.body)
+        res.status(201).json({message:'creado con éxito'})
+    } catch(error){
+        console.log(error);
+        res.status(500).json({error:'fallo la creación'})
+    }
+})
+
 //PUT
 
 app.put('/aaf/editarperfil',async(req,res) => {
@@ -189,6 +199,14 @@ app.put('/aaf/asignarProfesor',async(req,res) =>{
     console.log("idProfesor",idProfesor);
     console.log("idCurso",idCurso);
     let curso = await Services.updateProfesor(idProfesor,idCurso);
+    res.status(202).send(curso);
+})
+
+app.put('/aaf/cambiarLinkZoom',async(req,res) => {
+    let link = req.body.link;
+    let idCurso = req.body.idCurso;
+    console.log("link",link);
+    let curso = await Services.updateLink(link,idCurso);
     res.status(202).send(curso);
 })
 

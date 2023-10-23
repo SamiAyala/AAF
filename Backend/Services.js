@@ -172,26 +172,38 @@ export class Services {
             .query('insert into CursoUsuarios (IdCurso,IdUsuario) VALUES (@pIdC,@pIdA)');
         return result.rowsAffected;
     }
-
-    static tomarAsistencia = async (idAlumno, idClase, asistencia) => {
+    
+    static tomarAsistencia = async (idAlumno, idCurso, asistencia, fecha) =>{
         let pool = await sql.connect(config);
         let result = await pool.request()
-            .input("pIdAlumno", sql.Int, idAlumno)
-            .input("pIdClase", sql.Int, idClase)
-            .input("pAsistencia", sql.Bit, asistencia)
-            .query("insert into ClaseAsistencia (IdCursoUsuarios,IdClase,Asistencia) VALUES (@pIdAlumno,@pIdClase,@pAsistencia)");
+        .input("pIdAlumno",sql.Int,idAlumno)
+        .input("pIdCurso",sql.Int,idCurso)
+        .input("pAsistencia", sql.Bit,asistencia)
+        .input("pFecha", sql.Date,fecha)
+        .query("insert into Asistencia (IdUsuarios,IdCurso,Asistencia,Fecha) VALUES (@pIdAlumno,@pIdClase,@pAsistencia,@pFecha)");
     }
 
     static insertMaterial = async (Material) => {
-        console.log("Estoy en: insert - Material");
-        const { IdCurso, Imagen, Texto } = Material
+        console.log("Estoy en: insert - Material"); 
+        const { IdCurso, Imagen, Texto, Link } = Material
         let pool = await sql.connect(config)
-
         let result = await pool.request()
             .input('idCurso', sql.Int, IdCurso)
             .input('imagen', sql.NVarChar(200), Imagen)
             .input('texto', sql.NVarChar(200), Texto)
-            .query('INSERT INTO CursoMateriales (idCurso,imagen,texto) VALUES (@idCurso,@imagen,@texto)')
+            .input('link',sql.NVarChar(999),Link)
+            .query('INSERT INTO CursoMateriales (IdCurso,Imagen,Texto,Link) VALUES (@idCurso,@imagen,@texto,@link)')
+    }
+
+    static insertClase = async (Clase) => {
+        console.log("Estoy en: insert - Clase");
+        const { fkCurso , Fecha , Horario } = Clase
+        let pool = await sql.connect(config)
+        let result = await pool.request()
+        .input('fkCurso',sql.Int,fkCurso)
+        .input('Fecha',sql.Date,Fecha)
+        .input('Horario',sql.Time,Horario)
+        .query('INSERT INTO ClaseCurso (fkCurso,Fecha,Horario) VALUES (@fkCurso,@Fecha,@Horario)')
     }
 
     static insertUsuario = async (Usuario) => {
@@ -280,6 +292,22 @@ export class Services {
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
+        }
+        return returnEntity;
+    }
+
+    static updateLink = async(link, idCurso) => {
+        let returnEntity = null;
+        console.log("Estoy en: update - CursoLink");
+        try{
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+            .input('link',sql.NVarChar(999),link)
+            .input('idCurso',sql.Int,idCurso)
+            .query('update Cursos SET LinkZoom = @link WHERE Id = @idCurso')
+            returnEntity = result.recordsets[0];
+        } catch(error){
+            console.log(error)
         }
         return returnEntity;
     }

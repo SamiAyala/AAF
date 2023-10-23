@@ -12,7 +12,7 @@ import AgregarNoticia from './Componentes/Formularios/AgregarNoticia';
 import Layout from './Componentes/Layout';
 import { usuarioContext , isAdmContext } from './Context/Context';
 import { useState } from 'react';
-import VerDetalleCursos from './VerDetalleCurso';
+import VerDetalleCursos from './Componentes/VerDetalleCurso';
 
 const App = () => {
 

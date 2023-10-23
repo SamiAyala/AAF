@@ -14,9 +14,11 @@ function FormRegistro() {
   const [noCoinciden, setNoCoinciden] = useState(false);
   const [camposVacios, setcamposVacios] = useState(false);
   const [mailIncorrecto, setmailIncorrecto] = useState(false);
+  const [mailUnico, setMailUnico] = useState(false);
   const Navigate = useNavigate('/iniciarSesion');
   const context = useContext(usuarioContext);
   const isAdm = useContext(isAdmContext);
+
   const handleChange = (event) => {
     setValues({
       ...values, [event.target.name]: event.target.value
@@ -27,12 +29,9 @@ function FormRegistro() {
     event.stopPropagation();
     setNoCoinciden(false);
     setcamposVacios(false);
-    setmailIncorrecto(false)
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    setmailIncorrecto(false);
+    setMailUnico(false);
+
     console.log(event.target.confirmarContraseña.value);
     let mensaje = "";
 
@@ -45,14 +44,14 @@ function FormRegistro() {
       setcamposVacios(true)
 
     }
-    if (!/@gmail\.com$/.test(event.target.mail.value)) {
-      mensaje = "Mail Incorrecto, Este tiene que terminar con @gmail.com "
+    if (!/\S+@\S+\.\S+/.test(event.target.mail.value)) {
+      mensaje = "Formato de email incorrecto. "
       setmailIncorrecto(true)
     }
     if (mensaje === "") {
       axios.post('http://localhost:5000/aaf/registrarse', values)
         .then(res => {
-          console.log("res",res)
+          console.log("res", res)
           //context.setUsuarioLogeado({ Id: res.data.Id, Nombre: values.nombre, Apellido: values.apellido, FkRol: 1, Contrasenia: values.contraseña, Telefono: values.telefono, Mail: values.mail, Fiscalia: values.fiscalia, Oficio: values.oficio, Descripcion: "" });
           let auxBool;
           res.data.FkRol === 3 ? auxBool = true : auxBool = false;
@@ -66,6 +65,8 @@ function FormRegistro() {
     }
     setValidated(true);
   };
+
+  
 
   return (
     <div className='container'>
