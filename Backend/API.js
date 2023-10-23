@@ -25,6 +25,15 @@ app.get('/aaf/getUsers',async(req,res) =>{
      }
 })
 
+app.get('/aaf/getMails',async(req,res) => {
+    try{
+        const mails = await Services.getMails();
+        res.status(200).send(mails)
+    }catch(error){
+        res.status(500).send(error)
+    }
+})
+
 app.get('/aaf/getAlumnos',async(req,res) =>{
     try{
          const alumnos = await Services.getAlumnos(req.body.idCurso);

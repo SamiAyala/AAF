@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './Registrar.css';
@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { usuarioContext, isAdmContext } from '../../Context/Context';
 
-
 function FormRegistro() {
   const [validated, setValidated] = useState(false);
   const [values, setValues] = useState({});
   const [noCoinciden, setNoCoinciden] = useState(false);
   const [camposVacios, setcamposVacios] = useState(false);
   const [mailIncorrecto, setmailIncorrecto] = useState(false);
-  const [mailUnico, setMailUnico] = useState(false);
+  const [mailUnico, setMailUnico] = useState(true);
+  const [mails, setMails] = useState('');
   const Navigate = useNavigate('/iniciarSesion');
   const context = useContext(usuarioContext);
   const isAdm = useContext(isAdmContext);
@@ -24,13 +24,31 @@ function FormRegistro() {
       ...values, [event.target.name]: event.target.value
     })
   }
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/aaf/getMails').then(res => {
+      setMails(res.data);
+    })
+  }, [])
+
+  let esUnico = async (mail) => {
+    console.log("entre a esUnico")
+    let r = true;
+    mails.forEach(m => {
+      console.log("m", m.mail);
+      if (mail === m.mail) r = false;
+    });
+    console.log("r", r);
+    return r;
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
     setNoCoinciden(false);
     setcamposVacios(false);
     setmailIncorrecto(false);
-    setMailUnico(false);
+    setMailUnico(true);
 
     console.log(event.target.confirmarContraseña.value);
     let mensaje = "";
@@ -48,6 +66,14 @@ function FormRegistro() {
       mensaje = "Formato de email incorrecto. "
       setmailIncorrecto(true)
     }
+    console.log("entre al handle");
+    if (!esUnico(event.target.mail.value)) {
+      console.log("entre al if");
+      mensaje = "Este mail ya está en uso."
+      setMailUnico(false);
+    }
+
+
     if (mensaje === "") {
       axios.post('http://localhost:5000/aaf/registrarse', values)
         .then(res => {
@@ -65,8 +91,6 @@ function FormRegistro() {
     }
     setValidated(true);
   };
-
-  
 
   return (
     <div className='container'>
@@ -144,6 +168,7 @@ function FormRegistro() {
           />
         </Form.Group>
         {mailIncorrecto ? <h5>Formato del mail incorrecto </h5> : <h5></h5>}
+        {!mailUnico ? <h5>El Mail ya esta en uso. </h5> : <h5></h5>}
         <br></br>
         <Form.Group controlId="validationCustom02">
           <Form.Label>Fiscalia</Form.Label>

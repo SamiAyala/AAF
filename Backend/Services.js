@@ -182,6 +182,14 @@ export class Services {
         .query("insert into Asistencia (IdUsuarios,IdCurso,Asistencia) VALUES (@pIdAlumno,@pIdClase,@pAsistencia)");
     }
 
+    static getMails = async() => {
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+        .query("SELECT DISTINCT mail FROM Usuarios");
+        console.log(result.recordset);
+        return result.recordset;
+    }
+
     static insertMaterial = async (Material) => {
         console.log("Estoy en: insert - Material"); 
         const { IdCurso, Imagen, Texto, Link } = Material
