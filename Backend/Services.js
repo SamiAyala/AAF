@@ -179,8 +179,7 @@ export class Services {
         .input("pIdAlumno",sql.Int,idAlumno)
         .input("pIdCurso",sql.Int,idCurso)
         .input("pAsistencia", sql.Bit,asistencia)
-        .input("pFecha", sql.Date,fecha)
-        .query("insert into Asistencia (IdUsuarios,IdCurso,Asistencia,Fecha) VALUES (@pIdAlumno,@pIdClase,@pAsistencia,@pFecha)");
+        .query("insert into Asistencia (IdUsuarios,IdCurso,Asistencia) VALUES (@pIdAlumno,@pIdClase,@pAsistencia)");
     }
 
     static insertMaterial = async (Material) => {
