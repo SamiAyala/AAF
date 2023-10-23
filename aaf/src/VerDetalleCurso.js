@@ -2,13 +2,14 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Row, Col } from 'react-bootstrap';
-import CardListaUsuarios from './Cards/CardListaUsuarios';
+import CardListaUsuarios from './Componentes/Cards/CardListaUsuarios';
 
 function VerDetalleCursos() {
     const [curso, setCurso] = useState({})
     const [isLoading, setLoading] = useState(true)
     const { Id } = useParams();
-    const [alumnos, setAlumnos] = useState({})
+    const [alumnos, setAlumnos] = useState([{}]);
+    let asistencia = false;
     useEffect(() => {
         axios.get('http://localhost:5000/aaf/getMaterial/' + Id)
             .then(response => {
@@ -32,10 +33,10 @@ function VerDetalleCursos() {
                     <h2>{curso.Texto}</h2>
                     <div>
                         <Row style={{ padding: '4%' }}>
-                            {Usuarios.map(Usuario => <Col sm='auto'><CardListaUsuarios Usuario={Usuario}></CardListaUsuarios>
+                            {alumnos.map(Usuario => <Col sm='auto'><CardListaUsuarios Usuario={Usuario}></CardListaUsuarios>
                                 <label>
-                                    <input type="checkbox" id="cbox1" value="first_checkbox" /> Este es mi primer
-                                    checkbox</label>
+                                    <input type="checkbox" id="cbox1" value="first_checkbox" onClick={() => axios.post('http://localhost:5000/aaf/tomarLista', Usuario.id, curso.Id, fecha, asistencia = true)} /> {Usuario.nombre}
+                                     </label>
                                 <br />                </Col>)}
                         </Row>
                     </div>
