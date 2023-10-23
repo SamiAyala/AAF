@@ -173,13 +173,14 @@ export class Services {
         return result.rowsAffected;
     }
     
-    static tomarAsistencia = async (idAlumno, idClase, asistencia) =>{
+    static tomarAsistencia = async (idAlumno, idCurso, asistencia, fecha) =>{
         let pool = await sql.connect(config);
         let result = await pool.request()
         .input("pIdAlumno",sql.Int,idAlumno)
-        .input("pIdClase",sql.Int,idClase)
+        .input("pIdCurso",sql.Int,idCurso)
         .input("pAsistencia", sql.Bit,asistencia)
-        .query("insert into ClaseAsistencia (IdCursoUsuarios,IdClase,Asistencia) VALUES (@pIdAlumno,@pIdClase,@pAsistencia)");
+        .input("pFecha", sql.Date,fecha)
+        .query("insert into Asistencia (IdUsuarios,IdCurso,Asistencia,Fecha) VALUES (@pIdAlumno,@pIdClase,@pAsistencia,@pFecha)");
     }
 
     static insertMaterial = async (Material) => {
