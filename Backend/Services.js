@@ -11,7 +11,7 @@ export class Services {
 
     static login = async (mail, contraseña) => {
         let returnEntity = null;
-        console.log("mail: ", mail, " contraseña: ",contraseña)
+        console.log("mail: ", mail, " contraseña: ", contraseña)
         let pool = await sql.connect(config);
         let result = await pool.request()
             .input("mail", sql.VarChar(200), mail)
@@ -162,24 +162,24 @@ export class Services {
             .input('footer', sql.NVarChar(50), footer)
             .query('insert into ArticuloNoticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
     }
-    static anotarAlumno = async (idAlumno,idCurso) => {
-        console.log("idCurso",idCurso)
-        console.log("idAlumno",idAlumno)
+    static anotarAlumno = async (idAlumno, idCurso) => {
+        console.log("idCurso", idCurso)
+        console.log("idAlumno", idAlumno)
         let pool = await sql.connect(config);
         let result = await pool.request()
-        .input('pIdC',sql.Int,idCurso)
-        .input('pIdA',sql.Int,idAlumno)
-        .query('insert into CursoUsuarios (IdCurso,IdUsuario) VALUES (@pIdC,@pIdA)');
+            .input('pIdC', sql.Int, idCurso)
+            .input('pIdA', sql.Int, idAlumno)
+            .query('insert into CursoUsuarios (IdCurso,IdUsuario) VALUES (@pIdC,@pIdA)');
         return result.rowsAffected;
     }
-    
-    static tomarAsistencia = async (idAlumno, idClase, asistencia) =>{
+
+    static tomarAsistencia = async (idAlumno, idClase, asistencia) => {
         let pool = await sql.connect(config);
         let result = await pool.request()
-        .input("pIdAlumno",sql.Int,idAlumno)
-        .input("pIdClase",sql.Int,idClase)
-        .input("pAsistencia", sql.Bit,asistencia)
-        .query("insert into ClaseAsistencia (IdCursoUsuarios,IdClase,Asistencia) VALUES (@pIdAlumno,@pIdClase,@pAsistencia)");
+            .input("pIdAlumno", sql.Int, idAlumno)
+            .input("pIdClase", sql.Int, idClase)
+            .input("pAsistencia", sql.Bit, asistencia)
+            .query("insert into ClaseAsistencia (IdCursoUsuarios,IdClase,Asistencia) VALUES (@pIdAlumno,@pIdClase,@pAsistencia)");
     }
 
     static insertMaterial = async (Material) => {
@@ -196,8 +196,9 @@ export class Services {
 
     static insertUsuario = async (Usuario) => {
         console.log("Estoy en: insert - Usuario");
-        const { contraseña, nombre, apellido, telefono, mail, fiscalia, oficio } = Usuario;
+        const { contraseña, nombre, apellido, telefono, mail, fiscalia, oficio , descripcion } = Usuario;
         const fkRol = 1;
+
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(contraseña, salt, async function (err, hash) {
                 let pool = await sql.connect(config)
@@ -210,8 +211,9 @@ export class Services {
                     .input('mail', sql.NVarChar(200), mail)
                     .input('fiscalia', sql.NVarChar(200), fiscalia)
                     .input('oficio', sql.NVarChar(200), oficio)
-                    .query('INSERT INTO Usuarios (Contrasenia,Nombre,Apellido,FkRol,Telefono,Mail,Fiscalia,Oficio) VALUES (@contrasenia,@nombre,@apellido,@fkRol,@telefono,@mail,@fiscalia,@oficio)')
-                });
+                    .input('descripcion',sql.NVarChar(999),descripcion)
+                    .query('INSERT INTO Usuarios (Contrasenia,Nombre,Apellido,FkRol,Telefono,Mail,Fiscalia,Oficio,Descripcion) VALUES (@contrasenia,@nombre,@apellido,@fkRol,@telefono,@mail,@fiscalia,@oficio,@descripcion)')
+            });
         })
         return Usuario;
     }
@@ -223,8 +225,8 @@ export class Services {
         console.log("Estoy en: update - Usuario");
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(Contrasenia, salt, async function (err, hash) {
-                console.log("Contrasenia",Contrasenia)
-                console.log("hash",hash)
+                console.log("Contrasenia", Contrasenia)
+                console.log("hash", hash)
                 try {
                     let pool = await sql.connect(config)
                     let result = await pool.request()
