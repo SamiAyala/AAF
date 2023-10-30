@@ -7,17 +7,17 @@ import CardListaUsuarios from './Cards/CardListaUsuarios';
 function VerDetalleCursos() {
     const [curso, setCurso] = useState({})
     const [isLoading, setLoading] = useState(true)
-    const { Id } = useParams();
+    const { id } = useParams();
     const [alumnos, setAlumnos] = useState([{}]);
     let asistencia = false;
     let fecha = new Date();
     useEffect(() => {
-        axios.get('http://localhost:5000/aaf/getMaterial/' + Id)
+        axios.get('http://localhost:5000/aaf/getMaterial/' + id)
             .then(response => {
                 console.log("response.data", response)
                 setCurso(response.data)
             })
-        axios.get('http://localhost:5000/aaf/getAlumnos' + Id)
+        axios.get('http://localhost:5000/aaf/getAlumnos' + id)
             .then(response => {
                 console.log("response.data", response)
                 setAlumnos(response.data)
@@ -37,7 +37,7 @@ function VerDetalleCursos() {
                             {alumnos.map(alumno => <Col sm='auto'><CardListaUsuarios Usuario={alumno}></CardListaUsuarios>
                                 <label>
                                     <input type="checkbox" id="cbox1" value="first_checkbox" onClick={() => axios.post('http://localhost:5000/aaf/tomarLista', alumno.id, curso.Id, fecha, asistencia = true)} /> {alumno.nombre}
-                                     </label>
+                                </label>
                                 <br />                </Col>)}
                         </Row>
                     </div>

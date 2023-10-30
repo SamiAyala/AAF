@@ -51,6 +51,14 @@ app.get('/aaf/getCursos',async(req,res) =>{
          res.status(500).send(error)
       }
  })
+ app.get('/aaf/getMisCursos/:id',async(req,res) =>{
+    try{
+         const cursos = await Services.getMisCursos(req.params.id);
+         res.status(200).send(cursos)
+     } catch (error){
+         res.status(500).send(error)
+      }
+ })
 
  app.get('/aaf/getUsersCurso',async(req,res) =>{
     try{

@@ -1,18 +1,23 @@
 import './App.css';
+
 import FormIniciarSesion from './Componentes/Formularios/IniciarSesion';
 import FormRegistro from './Componentes/Formularios/Registrar';
 import Perfil from './Componentes/Perfil';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import EditarPerfil from './Componentes/Formularios/EditarPerfil'
 import ListaUsuario from './Componentes/ListaUsuario';
 import ListaCursos from './Componentes/ListaCursos';
+import MisCursos from './Componentes/MisCursos';
 import CrearCursos from './Componentes/Formularios/CrearCursos'
 import Home from './Componentes/Home';
 import AgregarNoticia from './Componentes/Formularios/AgregarNoticia';
+import VerDetalleCursos from './Componentes/VerDetalleCurso';
+
 import Layout from './Componentes/Layout';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { usuarioContext , isAdmContext } from './Context/Context';
 import { useState } from 'react';
-import VerDetalleCursos from './Componentes/VerDetalleCurso';
+
 
 const App = () => {
 
@@ -32,9 +37,10 @@ const App = () => {
               <Route path='/EditarPerfil/:id' element={<EditarPerfil />}></Route>
               <Route path='/ListaUsuarios' element={<ListaUsuario />}></Route>
               <Route path='/ListaCursos' element={<ListaCursos />}></Route>
+              <Route path='/MisCursos' element={<MisCursos />}></Route>
               <Route path='/CrearCursos' element={<CrearCursos />}></Route>
               <Route path='/AgregarNoticia' element={<AgregarNoticia />}></Route>
-              <Route path='/VerDetalle/:Id' element={<VerDetalleCursos/>}></Route>
+              <Route path='/VerDetalle/:id' element={<VerDetalleCursos/>}></Route>
             </Route>
           </Routes>
         </BrowserRouter>

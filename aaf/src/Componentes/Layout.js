@@ -27,7 +27,7 @@ const Layout = () => {
                     <Link to="/ListaCursos" className='text'>Cursos</Link>
                 </Nav>
                 <Nav className="me-auto">
-                    <Link to="/ListaCursos" className='text'>Mis Cursos</Link>
+                    <Link to="/MisCursos" className='text'>Mis Cursos</Link>
                 </Nav>
                 <Nav className="me-auto">
                     <Link to="/ListaCursos" className='text'>Calendario</Link>

@@ -32,17 +32,14 @@ function FormRegistro() {
   }, [])
 
   let esUnico = async (mail) => {
-    console.log("entre a esUnico")
     let r = true;
     mails.forEach(m => {
-      console.log("m", m.mail);
       if (mail === m.mail) r = false;
     });
-    console.log("r", r);
     return r;
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
     setNoCoinciden(false);
@@ -66,9 +63,8 @@ function FormRegistro() {
       mensaje = "Formato de email incorrecto. "
       setmailIncorrecto(true)
     }
-    console.log("entre al handle");
-    if (!esUnico(event.target.mail.value)) {
-      console.log("entre al if");
+    let r = await esUnico(event.target.mail.value);
+    if (r===false) {
       mensaje = "Este mail ya está en uso."
       setMailUnico(false);
     }

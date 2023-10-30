@@ -41,6 +41,22 @@ export class Services {
         return returnEntity;
     }
 
+    static getMisCursos = async (id) => {
+        let returnEntity = null;
+        console.log("Estoy en: Get - MisCursos");
+        try {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .input("pId",sql.Int,id)
+                .query("SELECT Cursos.Id, Cursos.Titulo, Cursos.Descripcion, Cursos.fkProfesor, (SELECT Concat(Usuarios.Nombre, ' ', Usuarios.Apellido) FROM Usuarios WHERE Usuarios.Id = Cursos.fkProfesor) AS NombreProfesor FROM Cursos WHERE Cursos.Id = @pId");
+            returnEntity = result.recordsets[0];
+        } catch (error) {
+            console.log(error);
+        }
+        console.log("returnEntity",returnEntity);
+        return returnEntity;
+    }
+
     static getAlumnos = async (idCurso) => {
         let returnEntity = null;
         console.log("Estoy en: GetAll - Alumnos");
