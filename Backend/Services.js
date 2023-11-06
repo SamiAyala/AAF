@@ -15,7 +15,7 @@ export class Services {
         let pool = await sql.connect(config);
         let result = await pool.request()
             .input("mail", sql.VarChar(200), mail)
-            .query('SELECT * FROM Usuarios WHERE Mail = @mail');
+            .query('SELECT Usuarios.*,ImagenPerfil.url AS Imagen FROM Usuarios INNER JOIN ImagenPerfil ON Usuarios.Id=ImagenPerfil.fkUsuario WHERE Mail = @mail');
         if (typeof result.recordsets[0][0] !== "undefined") {
             const valid = await comparePassword(contraseña, result.recordsets[0][0].Contrasenia);
             valid ? returnEntity = { status: 200, objeto: result.recordsets[0][0] } : returnEntity = { status: 404 }
@@ -48,7 +48,7 @@ export class Services {
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input("pId",sql.Int,id)
-                .query("SELECT Cursos.Id, Cursos.Titulo, Cursos.Descripcion, Cursos.fkProfesor, (SELECT Concat(Usuarios.Nombre, ' ', Usuarios.Apellido) FROM Usuarios WHERE Usuarios.Id = Cursos.fkProfesor) AS NombreProfesor FROM Cursos WHERE Cursos.Id = @pId");
+                .query("SELECT Cursos.Id, Cursos.Titulo, Cursos.Descripcion, Cursos.fkProfesor, (SELECT Concat(Usuarios.Nombre, ' ', Usuarios.Apellido) FROM Usuarios WHERE Usuarios.Id = Cursos.fkProfesor) AS NombreProfesor FROM Cursos INNER JOIN CursoUsuarios ON CursoUsuarios.IdUsuario=@pId WHERE Cursos.Id=CursoUsuarios.IdCurso");
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);

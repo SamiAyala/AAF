@@ -1,49 +1,10 @@
-.Noticia{
-    width: auto;
-    height: auto;
-    display: flex;
-}
-.card{
-    background-color: white;
-    display: flex;
-    overflow: none;
-}
-.titulo{
-    position: relative;
-    top: 2%;
-    left: 2%;
-    margin-bottom: 1%;
-
-}
-
-.img{
-    position: relative;
-    left: 2%;
-    width: 50%;
-    height: auto;
-}
-.texto{
-    position: relative;
-    left: 50%;
-    top: 5%;
-    margin-left: 1%;
-}
-
-.footer{
-    position: relative; 
-    margin-top: 1%;
-    bottom: 2%;
-    left: 2%;
-}
-
-
-.fecha{
-    position: relative; 
-    margin-top: 1%;
-    left: 2%;
-}
 .textoNoticia{
     font-weight: bold;
     font-size:1.1em;
     color: red;
+}
+.divNoticia{
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }

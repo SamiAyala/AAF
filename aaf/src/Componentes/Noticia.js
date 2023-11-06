@@ -7,9 +7,8 @@ function Noticia ({ titulo = "", texto = "", footer = "", fecha = "", imagen = "
  {
    const shortDate = dayjs(fecha).format("DD/MM/YY");
    return (
-      <>
-         {
-            <Card style={{ width: '70rem' , marginBottom:'3%'}}>
+
+            <Card style={{ width: '70rem' , marginBottom:'3%'}} className='divNoticia'>
                <Card.Img style={{height:'auto',width:'70rem',padding:'1rem'}} variant="top" src={imagen} />
                <Card.Body>
                   <Card.Title>{titulo}</Card.Title>
@@ -19,8 +18,6 @@ function Noticia ({ titulo = "", texto = "", footer = "", fecha = "", imagen = "
                   <Card.Footer><h6>Fecha de Creacion de la noticia: {shortDate}</h6>{footer}</Card.Footer>
                </Card.Body>
             </Card>
-         }
-      </>
    )
 }
 export default Noticia;

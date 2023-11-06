@@ -32,10 +32,7 @@ const Layout = () => {
                 <Nav className="me-auto">
                     <Link to="/ListaCursos" className='text'>Calendario</Link>
                 </Nav>
-                <Nav className="me-auto">
-                    <Link to="/ListaCursos" className='text'>Mis Chats</Link>
-                </Nav>
-                <Navbar.Brand>{typeof context.usuarioLogeado === "string" ? <Link to="/IniciarSesion"><img src={perfilIcono} style={{ width: "10%", height: "auto" }}></img></Link> : <Link state={context.usuarioLogeado} to={`/Perfil/${context.usuarioLogeado.Id}`}><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1vQPe-Pm_-I8ZPk82L0XEggV76c7--2zrdw&usqp=CAU" style={{ width: "10%", height: "auto" }}></img></Link>}</Navbar.Brand>
+                <Navbar.Brand>{typeof context.usuarioLogeado === "string" ? <Link to="/IniciarSesion"><img src={perfilIcono} style={{ width: "10%", height: "auto" }}></img></Link> : <Link state={context.usuarioLogeado} to={`/Perfil/${context.usuarioLogeado.Id}`}><img src={context.usuarioLogeado.Imagen===undefined ? perfilIcono : context.usuarioLogeado.Imagen} style={{ width: "10%", height: "auto" }}></img></Link>}</Navbar.Brand>
             </Navbar>
             <Outlet/>
         </>
