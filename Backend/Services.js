@@ -78,12 +78,13 @@ export class Services {
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .input("pId", sql.Int, idCurso)
-                .query("SELECT * FROM CursoMateriales INNER JOIN Cursos ON Cursos.Id = CursoMateriales.IdCurso WHERE IdCurso = @pId");
+                .input("pId", idCurso)
+                .query("SELECT CursoMateriales.*, Cursos.titulo FROM CursoMateriales INNER JOIN Cursos ON Cursos.Id = CursoMateriales.IdCurso WHERE CursoMateriales.IdCurso = @pId");
             returnEntity = result.recordset[0];
         } catch (error) {
             console.log(error);
         }
+        console.log("ReturnEntity", returnEntity);
         return returnEntity;
     }
 
@@ -208,14 +209,15 @@ export class Services {
 
     static insertMaterial = async (Material) => {
         console.log("Estoy en: insert - Material"); 
-        const { IdCurso, Imagen, Texto, Link } = Material
+        const { IdCurso, Imagen, Texto, Drive, Zoom } = Material
         let pool = await sql.connect(config)
         let result = await pool.request()
             .input('idCurso', sql.Int, IdCurso)
             .input('imagen', sql.NVarChar(200), Imagen)
             .input('texto', sql.NVarChar(200), Texto)
-            .input('link',sql.NVarChar(999),Link)
-            .query('INSERT INTO CursoMateriales (IdCurso,Imagen,Texto,Link) VALUES (@idCurso,@imagen,@texto,@link)')
+            .input('link',sql.NVarChar(999),Drive)
+            .input('link',sql.NVarChar(999),Zoom)
+            .query('INSERT INTO CursoMateriales (IdCurso,Imagen,Texto,Drive,Zoom) VALUES (@idCurso,@imagen,@texto,@Drive,@Zoom)')
     }
 
     static insertClase = async (Clase) => {

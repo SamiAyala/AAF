@@ -32,12 +32,13 @@ function FormIniciarSesion() {
       .then(res => {
         console.log("res.data: ", res.data);
         let imagen = undefined;
-          if (validator.isURL(res.data.Imagen)) {
+        if(res.data.Imagen!==null)
+        {if (validator.isURL(res.data.Imagen)) {
             console.log("validator true");
             imagen = res.data.Imagen;
           } else {
           console.log("validator false");
-        }
+        }}
         context.setUsuarioLogeado({ Id: res.data.Id, Nombre: res.data.Nombre, Apellido: res.data.Apellido, FkRol: res.data.FkRol, Contrasenia: res.data.Contrasenia, Telefono: res.data.Telefono, Mail: res.data.Mail, Fiscalia: res.data.Fiscalia, Oficio: res.data.Oficio, Descripcion: res.data.Descripcion, Imagen: imagen });
         let auxBool;
         res.data.FkRol === 3 ? auxBool = true : auxBool = false;
@@ -46,9 +47,7 @@ function FormIniciarSesion() {
         Navigate(`/`)
       })
       .catch(e => {
-        console.log(e)
-        alert("Los campos Ingresados no coinciden con ningun usuario. Por favor revisarlos.")
-      });
+        alert("Los campos Ingresados no coinciden con ningun usuario. Por favor revisarlos.")});
 
   };
 

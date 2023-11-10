@@ -69,12 +69,23 @@ function AgregarMaterial() {
            
             <br></br>
             <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-              <Form.Label>Archivo</Form.Label>
+              <Form.Label>Links de pdf, drives, etc</Form.Label>
               <Form.Control
                 required
-                type="file"
+                type="text"
                 defaultValue=""
-                name="archivo"
+                name="drive"
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <br></br>
+            <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
+              <Form.Label>Link del Zoom</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                defaultValue=""
+                name="zoom"
                 onChange={handleChange}
               />
             </Form.Group>

@@ -11,11 +11,11 @@ import CrearCursos from './Componentes/Formularios/CrearCursos'
 import Home from './Componentes/Home';
 import AgregarNoticia from './Componentes/Formularios/AgregarNoticia';
 import VerDetalleCursos from './Componentes/VerDetalleCurso';
-
+import AgregarMaterial from './Componentes/Formularios/AgregarMAteriales';
 import Layout from './Componentes/Layout';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { usuarioContext , isAdmContext } from './Context/Context';
+import { usuarioContext , isAdmContext, isProContext } from './Context/Context';
 import { useState } from 'react';
 
 
@@ -23,10 +23,12 @@ const App = () => {
 
   const [usuarioLogeado, setUsuarioLogeado] = useState('');
   const [isAdm, setIsAdm] = useState(false);
+  const [isPro, setIsPro] = useState(false);
 
   return (
     <usuarioContext.Provider value={{ usuarioLogeado, setUsuarioLogeado }}>
       <isAdmContext.Provider value={{ isAdm, setIsAdm }}>
+      <isProContext.Provider value={{ isPro, setIsPro }}>
         <BrowserRouter>
           <Routes>
             <Route path='/iniciarSesion' element={<FormIniciarSesion />}></Route>
@@ -41,9 +43,11 @@ const App = () => {
               <Route path='/CrearCursos' element={<CrearCursos />}></Route>
               <Route path='/AgregarNoticia' element={<AgregarNoticia />}></Route>
               <Route path='/VerDetalle/:id' element={<VerDetalleCursos/>}></Route>
+              <Route path='/AgregarMaterial' element={<AgregarMaterial/>}></Route>
             </Route>
           </Routes>
         </BrowserRouter>
+        </isProContext.Provider>
       </isAdmContext.Provider>
     </usuarioContext.Provider>
   );
