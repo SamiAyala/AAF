@@ -12,10 +12,8 @@ function VerDetalleCursos() {
     const [curso, setCurso] = useState({})
     const [isLoading, setLoading] = useState(true)
     const { id } = useParams();
-    const [alumnos, setAlumnos] = useState([{}]);
     const isPro = useContext(isProContext);
-    let asistencia = false;
-    let fecha = new Date();
+    const context = useContext(usuarioContext);
     useEffect(() => {
         axios.get('http://localhost:5000/aaf/getMaterial/' + id)
             .then(response => {
@@ -31,11 +29,11 @@ function VerDetalleCursos() {
                     <img src={curso.Imagen} />
                     <h3>Titulo: {curso.titulo}</h3>
                     <h2>Descripcion: {curso.Texto}</h2>
-                    <h2>Link de materiales: {curso.Drive}</h2>
+                    <h2>Link de materiales: {curso.LinkMateriales}</h2>
                     <h2>Link del zoom: {curso.Zoom}</h2>
                     <h2>{curso.Texto}</h2>
                     <div>
-                    {isPro.isPro ? <Button onClick={()=> navigate("/AgregarMaterial")}>AgregarMaterial</Button> : <></>}
+                    {isPro ? <Button onClick={()=> navigate("/AgregarMaterial", curso.id)}>AgregarMaterial</Button> : <></>}
                     </div>
                 </>
             )}

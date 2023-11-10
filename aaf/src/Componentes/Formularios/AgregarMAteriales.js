@@ -14,9 +14,11 @@ function AgregarMaterial() {
   const Navigate = useNavigate('/ListaCursos');
   let mensaje;
   const handleChange = (event) => {
-    setValues({...values, [event.target.name]:event.target.value 
+    setValues({...values, [event.target.name]:event.target.value
     })
+    console.log("datos", event.target.value)
   }
+  console.log("VALORES:", values);
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -26,12 +28,12 @@ function AgregarMaterial() {
       event.preventDefault();
       event.stopPropagation();
     }
-    if(event.target.imagen.value=== "" || event.target.texto.value=== "" || event.target.archivo.value=== ""){
+    if(event.target.imagen.value=== "" || event.target.texto.value=== "" || event.target.Zoom.value=== ""){
         mensaje =  "Complete todos los campos (El de imagen puede estar vacio). "
         setcamposVacios(true)
       }
       if(mensaje === undefined){
-        axios.post('http://localhost:5000/aaf/insertMaterial', values)
+        axios.post('http://localhost:5000/aaf/insertMaterial', values, id)
           .then(res => {
             Navigate('/ListaCursos') 
           })
@@ -74,7 +76,7 @@ function AgregarMaterial() {
                 required
                 type="text"
                 defaultValue=""
-                name="drive"
+                name="LinkMateriales"
                 onChange={handleChange}
               />
             </Form.Group>
