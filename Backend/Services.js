@@ -224,13 +224,14 @@ export class Services {
 
     static insertClase = async (Clase) => {
         console.log("Estoy en: insert - Clase");
-        const { fkCurso , Fecha , Horario } = Clase
+        const { fkCurso , Fecha , Horario, Titulo } = Clase
         let pool = await sql.connect(config)
         let result = await pool.request()
         .input('fkCurso',sql.Int,fkCurso)
         .input('Fecha',sql.Date,Fecha)
         .input('Horario',sql.Time,Horario)
-        .query('INSERT INTO ClaseCurso (fkCurso,Fecha,Horario) VALUES (@fkCurso,@Fecha,@Horario)')
+        .input('Horario',sql.NVarChar(200),Titulo)
+        .query('INSERT INTO ClaseCurso (fkCurso,Fecha,Horario) VALUES (@fkCurso,@Fecha,@Horario,@Titulo)')
     }
 
     static insertUsuario = async (Usuario) => {

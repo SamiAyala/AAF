@@ -33,7 +33,8 @@ function VerDetalleCursos() {
                     <h2>Link del zoom: {curso.Zoom}</h2>
                     <h2>{curso.Texto}</h2>
                     <div>
-                    {isPro ? <Button onClick={()=> navigate("/AgregarMaterial", curso.id)}>AgregarMaterial</Button> : <></>}
+                    {isPro ? <Button onClick={()=> navigate("/AgregarMaterial/" + id)}>AgregarMaterial</Button> : <></>}
+                    {isPro ? <Button onClick={()=> navigate("/AgregarMaterial/" + id)}>Crear Clase</Button> : <></>}
                     </div>
                 </>
             )}
