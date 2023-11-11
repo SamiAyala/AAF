@@ -177,7 +177,7 @@ app.post('/aaf/crearNoticia',async(req,res) => {
 
 app.post('/aaf/insertMaterial',async(req,res) => {
     try{
-        await Services.insertMaterial(req.body)
+        await Services.insertMaterial(req.body.values, req.body.id)
         res.status(201).json({message:'creado con éxito'})
     } catch(error){
         console.log(error);

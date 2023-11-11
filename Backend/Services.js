@@ -209,17 +209,17 @@ export class Services {
 
     static insertMaterial = async (Material, IdCurso) => {
         console.log("Estoy en: insert - Material"); 
-        const {Imagen, Texto, Drive, Zoom } = Material
+        const {Imagen, Texto, LinkMateriales, Zoom } = Material
         const idCurso = IdCurso
         
         let pool = await sql.connect(config)
         let result = await pool.request()
-            .input('idCurso', sql.Int, idCurso)
-            .input('imagen', sql.NVarChar(200), Imagen)
-            .input('texto', sql.NVarChar(200), Texto)
-            .input('link',sql.NVarChar(999),LinkMateriales)
-            .input('link',sql.NVarChar(999),Zoom)
-            .query('INSERT INTO CursoMateriales (IdCurso,Imagen,Texto,Drive,Zoom) VALUES (@idCurso,@imagen,@texto,@LinkMateriales,@Zoom)')
+            .input('IdCurso', sql.Int, idCurso)
+            .input('Imagen', sql.NVarChar(200), Imagen)
+            .input('Texto', sql.NVarChar(200), Texto)
+            .input('LinkMateriales',sql.NVarChar(999),LinkMateriales)
+            .input('Zoom',sql.NVarChar(999),Zoom)
+            .query('INSERT INTO CursoMateriales (IdCurso,Imagen,Texto,LinkMateriales,Zoom) VALUES (@IdCurso,@Imagen,@Texto,@LinkMateriales,@Zoom)')
     }
 
     static insertClase = async (Clase) => {
