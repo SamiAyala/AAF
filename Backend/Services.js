@@ -60,6 +60,7 @@ export class Services {
     static getAlumnos = async (idCurso) => {
         let returnEntity = null;
         console.log("Estoy en: GetAll - Alumnos");
+        console.log("IDCURSO:",idCurso)
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
@@ -144,6 +145,21 @@ export class Services {
         }
         return returnEntity
     }
+    static getAsistencia = async (idClase) => {
+        let returnEntity = null;
+        console.log("Estoy en: GetAll - Asistencia");
+        console.log("idClase:",idClase)
+        try {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .input("pId", sql.Int, idClase)
+                .query("SELECT distinct Usuarios.* from CursoUsuarios INNER JOIN Usuarios ON IdUsuario=Usuarios.Id INNER JOIN ClaseCurso ON fkCurso = IdCurso INNER JOIN Asistencia ON ClaseCurso.Id = Asistencia.fkClase INNER JOIN Cursos ON ClaseCurso.fkCurso = Cursos.Id WHERE Asistencia.Asistencia = 'true' AND Asistencia.fkClase = @pId");
+            returnEntity = result.recordsets[0];
+        } catch (error) {
+            console.log(error);
+        }
+        return returnEntity;
+    }
     static getClase = async (id) => {
         let returnEntity = null;
         console.log("Estoy en: getClase");
@@ -205,13 +221,17 @@ export class Services {
         return result.rowsAffected;
     }
 
-    static tomarAsistencia = async (idAlumno, idCurso, asistencia, fecha) => {
+    static tomarAsistencia = async (IdAlumno, Asistencia, IdClase) => {
+        const idAlumno = IdAlumno;
+        const asistencia = Asistencia;
+        const idClase = IdClase;
+        console.log("datos concha tu mare:", idAlumno, asistencia,idClase)
         let pool = await sql.connect(config);
         let result = await pool.request()
             .input("pIdAlumno", sql.Int, idAlumno)
-            .input("pIdCurso", sql.Int, idCurso)
             .input("pAsistencia", sql.Bit, asistencia)
-            .query("insert into Asistencia (IdUsuarios,IdCurso,Asistencia) VALUES (@pIdAlumno,@pIdClase,@pAsistencia)");
+            .input("pIdClase", sql.Int, idClase)
+            .query("insert into Asistencia (IdUsuario,Asistencia,fkClase) VALUES (@pIdAlumno,@pAsistencia,@pIdClase)");
     }
 
     static getMails = async () => {
@@ -224,17 +244,17 @@ export class Services {
 
     static insertMaterial = async (Material, IdCurso) => {
         console.log("Estoy en: insert - Material");
-        const { Imagen, Texto, LinkMateriales, Zoom } = Material
+        const {Texto, LinkMateriales, Zoom } = Material
         const idCurso = IdCurso
 
         let pool = await sql.connect(config)
         let result = await pool.request()
             .input('IdCurso', sql.Int, idCurso)
-            .input('Imagen', sql.NVarChar(200), Imagen)
+        
             .input('Texto', sql.NVarChar(200), Texto)
             .input('LinkMateriales', sql.NVarChar(999), LinkMateriales)
             .input('Zoom', sql.NVarChar(999), Zoom)
-            .query('INSERT INTO CursoMateriales (IdCurso,Imagen,Texto,LinkMateriales,Zoom) VALUES (@IdCurso,@Imagen,@Texto,@LinkMateriales,@Zoom)')
+            .query('INSERT INTO CursoMateriales (IdCurso,Texto,LinkMateriales,Zoom) VALUES (@IdCurso,@Texto,@LinkMateriales,@Zoom)')
     }
 
     static insertClase = async (Clase, IdCurso) => {

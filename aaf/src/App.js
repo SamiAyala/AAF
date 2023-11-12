@@ -15,8 +15,9 @@ import VerDetalleCursos from './Componentes/VerDetalleCurso';
 import AgregarMaterial from './Componentes/Formularios/AgregarMAteriales';
 import CrearClase from './Componentes/Formularios/CrearClase';
 import ListaClases from './Componentes/ListaClases';
+import Asistencia from './Componentes/Asistencia';
 import Layout from './Componentes/Layout';
-
+import ListaAsistencia from './Componentes/ListaAsistencia';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { usuarioContext , isAdmContext, isProContext } from './Context/Context';
 import { useState } from 'react';
@@ -28,10 +29,12 @@ const App = () => {
   const [isAdm, setIsAdm] = useState(false);
   const [isPro, setIsPro] = useState(false);
 
+
   return (
     <usuarioContext.Provider value={{ usuarioLogeado, setUsuarioLogeado }}>
       <isAdmContext.Provider value={{ isAdm, setIsAdm }}>
       <isProContext.Provider value={{ isPro, setIsPro }}>
+
         <BrowserRouter>
           <Routes>
             <Route path='/iniciarSesion' element={<FormIniciarSesion />}></Route>
@@ -49,6 +52,8 @@ const App = () => {
               <Route path='/AgregarMaterial/:id' element={<AgregarMaterial/>}></Route>
               <Route path='/CrearClase/:id' element={<CrearClase/>}></Route>
               <Route path='/ListaClases/:id' element={<ListaClases/>}></Route>
+              <Route path='/Asistencia' element={<Asistencia/>}></Route>
+              <Route path='/ListaAsistencia/:id' element={<ListaAsistencia/>}></Route>
             </Route>
           </Routes>
         </BrowserRouter>
