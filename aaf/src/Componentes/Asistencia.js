@@ -45,7 +45,7 @@ function Asistencia() {
                     </label>
                     <br />                </Col>)}
             </Row>
-            <Button onClick={() => navigate("/VerAsistencia/", alumnos.IdUsuario)}>Ver asistencia</Button> 
+            <Button onClick={() => navigate("/ListaAsistencia/" + dataFromNavigation.idClase)}>Ver asistencia</Button> 
         </div>
     );
 }

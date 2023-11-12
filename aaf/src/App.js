@@ -16,6 +16,7 @@ import CrearClase from './Componentes/Formularios/CrearClase';
 import ListaClases from './Componentes/ListaClases';
 import Asistencia from './Componentes/Asistencia';
 import Layout from './Componentes/Layout';
+import ListaAsistencia from './Componentes/ListaAsistencia';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { usuarioContext , isAdmContext, isProContext } from './Context/Context';
 import { useState } from 'react';
@@ -51,6 +52,7 @@ const App = () => {
               <Route path='/CrearClase/:id' element={<CrearClase/>}></Route>
               <Route path='/ListaClases/:id' element={<ListaClases/>}></Route>
               <Route path='/Asistencia' element={<Asistencia/>}></Route>
+              <Route path='/ListaAsistencia/:id' element={<ListaAsistencia/>}></Route>
             </Route>
           </Routes>
         </BrowserRouter>

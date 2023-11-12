@@ -56,7 +56,7 @@ function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha a
                      </DropdownButton>
                   </Col>
                   <Col sm='auto'>
-                     <Button onClick={() => Navigate('/AgregarNoticia', Id)} variant='secondary' className='button u-full-width'>Agregar Material</Button>
+                     <Button onClick={() => Navigate('/AgregarMaterial/' + Id)} variant='secondary' className='button u-full-width'>Agregar Material</Button>
                   </Col>
                   <Col sm='auto'>
                      <Button onClick={() => eliminarCurso(Id)} variant='danger' className='button u-full-width'>Eliminar</Button>

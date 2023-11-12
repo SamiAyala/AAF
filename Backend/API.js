@@ -38,15 +38,24 @@ app.get('/aaf/getMails',async(req,res) => {
     }
 })
 
-app.get('/aaf/getAlumnos',async(req,res) =>{
+app.get('/aaf/getAlumnos/:idCurso',async(req,res) =>{
     try{
-         const alumnos = await Services.getAlumnos(req.body.idCurso);
+        console.log("en la api",req.params.idCurso)
+         const alumnos = await Services.getAlumnos(req.params.idCurso);
          res.status(200).send(alumnos);
      } catch (error){
          res.status(500).send(error);
       }
  })
-
+ app.get('/aaf/getAsistencia/:idClase',async(req,res) =>{
+    try{
+        console.log("en la api",req.params.idClase)
+         const usuarios = await Services.getAsistencia(req.params.idClase);
+         res.status(200).send(usuarios);
+     } catch (error){
+         res.status(500).send(error);
+      }
+ })
 app.get('/aaf/getCursos',async(req,res) =>{
     try{
          const cursos = await Services.getAllCursos();
@@ -121,8 +130,8 @@ app.post("/aaf/tomarLista",async(req,res) =>{
     let idAlumno = req.body.idUsuario;
     let idClase = req.body.idClase;
     let asistencia = req.body.asistencia;
-    const respuesta = await Services.tomarAsistencia(idAlumno,idClase,asistencia);
-    res.status(404).send(respuesta);
+    const respuesta = await Services.tomarAsistencia(idAlumno,asistencia,idClase);
+    res.status(200).send(respuesta);
     console.log("respuesta",respuesta);
 })
 

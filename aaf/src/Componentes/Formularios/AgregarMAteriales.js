@@ -48,16 +48,6 @@ function AgregarMaterial() {
       return (
         <div className='container'>
           <Form onSubmit={(e) => handleSubmit(e)} noValidate validated={validated} className='form'>
-            <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-              <Form.Label>Imagen</Form.Label>
-              <Form.Control
-                required
-                type="file"
-                defaultValue=""
-                name="Imagen"
-                onChange={handleChange}
-              />
-            </Form.Group>
             <br></br>
             <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
               <Form.Label>Texto</Form.Label>

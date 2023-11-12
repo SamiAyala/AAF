@@ -14,6 +14,12 @@ function VerDetalleCursos() {
     const { id } = useParams();
     const isPro = useContext(isProContext);
     const context = useContext(usuarioContext);
+    let val = false;
+    console.log("rol de ahora",context.usuarioLogeado.FkRol)
+    console.log("CONTEXTEANDO",context.usuarioLogeado)
+    if(context.usuarioLogeado.FkRol=== 2){
+       val= true
+    }
     useEffect(() => {
         axios.get('http://localhost:5000/aaf/getMaterial/' + id)
             .then(response => {
@@ -33,8 +39,8 @@ function VerDetalleCursos() {
                     <h2>Link del zoom: {curso.Zoom}</h2>
                     <h2>{curso.Texto}</h2>
                     <div>
-                    {isPro ? <Button onClick={()=> navigate("/AgregarMaterial/" + id)}>AgregarMaterial</Button> : <></>}
-                    {isPro ? <Button onClick={()=> navigate("/CrearClase/" + id)}>Crear Clase</Button> : <></>}
+                    {val ? <Button onClick={()=> navigate("/AgregarMaterial/" + id)}>AgregarMaterial</Button> : <></>}
+                    {val ? <Button onClick={()=> navigate("/CrearClase/" + id)}>Crear Clase</Button> : <></>}
                     <Button onClick={()=> navigate("/ListaClases/" + id)}>Clases</Button>  
                     </div>
                 </>
