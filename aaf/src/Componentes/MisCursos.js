@@ -14,8 +14,10 @@ function MisCursos() {
   const usuario = useContext(usuarioContext);
   useEffect(() => {
     setRecargar(false);
+    console.log("usuario.usuarioLogeado.Id",usuario.usuarioLogeado.Id)
     axios.get('http://localhost:5000/aaf/getMisCursos/' + usuario.usuarioLogeado.Id)
       .then(res => {
+        console.log("res.data",res.data);
         setCursos(res.data)
       })
       .catch(e => {
@@ -28,7 +30,7 @@ function MisCursos() {
     <div>
       <Row style={{ padding: '4%', paddingTop:'1%' }}>
         <Row><Col style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', fontSize: 'xx-large', fontWeight: 'bold', padding: '0px', alignItems: 'center' }}><p style={{ color: 'white' }}>Mis cursos</p></Col></Row>
-        { Cursos[0].Id === undefined ? <Col style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', fontSize: 'x-large', padding: '0px', alignItems: 'center',height:'0vh' }}><p style={{ color: 'white' }}>No se ha anotado a ningún curso.</p></Col> :  
+        { Cursos[0] === undefined ? <Col style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', fontSize: 'x-large', padding: '0px', alignItems: 'center',height:'0vh' }}><p style={{ color: 'white' }}>No se ha anotado a ningún curso.</p></Col> :  
         Cursos.map(Curso =>
           <Col sm='auto' key={Curso.Id}>
             <CardMisCursos Titulo={Curso.Titulo} Descripcion={Curso.Descripcion} Profesor={Curso.NombreProfesor} fkProfesor={Curso.fkProfesor}  />

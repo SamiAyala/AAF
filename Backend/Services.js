@@ -46,7 +46,7 @@ export class Services {
         console.log("Estoy en: Get - MisCursos");
         try {
             let pool = await sql.connect(config)
-            let result = await pool.request()
+            let result = await pool.request() 
                 .input("pId", sql.Int, id)
                 .query("SELECT Cursos.Id, Cursos.Titulo, Cursos.Descripcion, Cursos.fkProfesor, (SELECT Concat(Usuarios.Nombre, ' ', Usuarios.Apellido) FROM Usuarios WHERE Usuarios.Id = Cursos.fkProfesor) AS NombreProfesor FROM Cursos INNER JOIN CursoUsuarios ON CursoUsuarios.IdUsuario=@pId WHERE Cursos.Id=CursoUsuarios.IdCurso");
             returnEntity = result.recordsets[0];
@@ -270,7 +270,6 @@ export class Services {
                         .input('fiscalia', sql.NVarChar(200), fiscalia)
                         .input('oficio', sql.NVarChar(200), oficio)
                         .input('descripcion', sql.NVarChar(999), descripcion)
-                        //.input('idUsuario', sql.NVarChar(999), idUsuario)
                         .execute(`Register`);
                     console.log("result", result);
                 } catch (error){
@@ -281,8 +280,26 @@ export class Services {
         
     }
 
+    static updateFoto = async (id,url) => {
+        console.log('id',id);
+        console.log('url',url);
+        let returnEntity;
+        console.log('Estoy en: update - Foto');
+        try{
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+            .input('pId',sql.Int,id)
+            .input('url',sql.NVarChar(999),url)
+            .query('UPDATE ImagenPerfil SET Url = @url WHERE fkUsuario=@pId');
+            returnEntity = result;
+        }catch (error){
+            console.log(error);
+        }
+        console.log("returnEntity",returnEntity);
+        return returnEntity;
+    }
+
     static updateUsuario = async (usuario) => {
-        console.log("usuario", usuario)
         const { Id, Contrasenia, Nombre, Apellido, FkRol, Telefono, Mail, Fiscalia, Oficio, Descripcion } = usuario;
         let returnEntity = null;
         console.log("Estoy en: update - Usuario");

@@ -74,7 +74,6 @@ function FormRegistro() {
       axios.post('http://localhost:5000/aaf/registrarse', values)
         .then(res => {
           console.log("res", res)
-          //context.setUsuarioLogeado({ Id: res.data.Id, Nombre: values.nombre, Apellido: values.apellido, FkRol: 1, Contrasenia: values.contraseña, Telefono: values.telefono, Mail: values.mail, Fiscalia: values.fiscalia, Oficio: values.oficio, Descripcion: "" });
           let auxBool;
           res.data.FkRol === 3 ? auxBool = true : auxBool = false;
           isAdm.setIsAdm(auxBool);

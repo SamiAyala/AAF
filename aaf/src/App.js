@@ -1,4 +1,5 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import FormIniciarSesion from './Componentes/Formularios/IniciarSesion';
 import FormRegistro from './Componentes/Formularios/Registrar';

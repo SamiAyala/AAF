@@ -1,51 +1,46 @@
 .divPerfil{
-    display: block;
+    display: flex;
+    flex: wrap;
     background-color: rgb(3, 3, 73);
     align-items: center;
     justify-content: center;
     border-radius: 2%;
-    height: 55%;
     color: white;
-    --bs-gutter-x: 1.5rem;
-    --bs-gutter-y: 0;
-    padding-right: calc(var(--bs-gutter-x) * .5);
-    padding-left: calc(var(--bs-gutter-x) * .5);
-    padding: 1%;
-    margin-right: 10%;
-    margin-left: 10%;
     -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    width: 100% !important;
 }
 
 .body{
     background-color: grey;
 }
 
-.foto{
-    margin-top: 1%;
-    width: 15%;
-    height: auto;
-}
-.contacto{
-    bottom: 30%;
-    left: 10%;
-    width: fit-content;
-}
 .boton{
 float: right;
 top: 0%;
 }
-.sobreMi{
-    float: right;
-    margin-top: 5;
-    width: 25%;
-    height: auto;
+
+.aclaracion{
+    font-weight:lighter;
+    font-size: 20px;
+    margin: 0px;
 }
-.hr1{
-    width: 50%;
+.value{
+    font-size:25px;
+    font-weight:400;
+}
+.MyModal{
+    color: white;
+}
+.modalBody{
+    justify-content: center;
+    align-items: center;
 }
 
-.logout{
-    float: right;
+#modalBg{
+    background-color: rgb(3, 3, 73);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }

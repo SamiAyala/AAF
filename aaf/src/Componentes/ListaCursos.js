@@ -28,7 +28,6 @@ function ListaCursos() {
       .then(res => {
         setProfesores(res.data);
       })
-
   }, [recargar]);
 
   const eliminarCurso = (Id) => {

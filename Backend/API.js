@@ -201,6 +201,13 @@ app.post('/aaf/insertClase',async(req,res) => {
 
 //PUT
 
+app.put('/aaf/editarFoto',async(req,res)=>{
+    let id = req.body.id;
+    let url = req.body.url;
+    const result = Services.updateFoto(id,url);
+    res.status(202).send(result);
+})
+
 app.put('/aaf/editarperfil',async(req,res) => {
     let usuario = Services.updateUsuario(req.body);
     res.status(202).send(usuario);
