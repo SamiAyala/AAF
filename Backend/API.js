@@ -15,6 +15,10 @@ app.get('/aaf/getPerfil/:id',async(req,res)=>{
     const perfil = await Services.getUserById(req.params.id);
     res.status(200).send(perfil);
 })
+app.get('/aaf/getClases/:id',async(req,res)=>{
+    const Clase = await Services.getClase(req.params.id);
+    res.status(200).send(Clase);
+})
 
 app.get('/aaf/getUsers',async(req,res) =>{
    try{
@@ -187,7 +191,7 @@ app.post('/aaf/insertMaterial',async(req,res) => {
 
 app.post('/aaf/insertClase',async(req,res) => {
     try{
-        await Services.insertClase(req.body)
+        await Services.insertClase(req.body.values, req.body.id)
         res.status(201).json({message:'creado con éxito'})
     } catch(error){
         console.log(error);

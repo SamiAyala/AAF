@@ -35,6 +35,7 @@ function VerDetalleCursos() {
                     <div>
                     {isPro ? <Button onClick={()=> navigate("/AgregarMaterial/" + id)}>AgregarMaterial</Button> : <></>}
                     {isPro ? <Button onClick={()=> navigate("/CrearClase/" + id)}>Crear Clase</Button> : <></>}
+                    <Button onClick={()=> navigate("/ListaClases/" + id)}>Clases</Button>  
                     </div>
                 </>
             )}

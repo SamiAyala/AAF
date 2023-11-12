@@ -13,6 +13,7 @@ import AgregarNoticia from './Componentes/Formularios/AgregarNoticia';
 import VerDetalleCursos from './Componentes/VerDetalleCurso';
 import AgregarMaterial from './Componentes/Formularios/AgregarMAteriales';
 import CrearClase from './Componentes/Formularios/CrearClase';
+import ListaClases from './Componentes/ListaClases';
 import Layout from './Componentes/Layout';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -46,6 +47,7 @@ const App = () => {
               <Route path='/VerDetalle/:id' element={<VerDetalleCursos/>}></Route>
               <Route path='/AgregarMaterial/:id' element={<AgregarMaterial/>}></Route>
               <Route path='/CrearClase/:id' element={<CrearClase/>}></Route>
+              <Route path='/ListaClases/:id' element={<ListaClases/>}></Route>
             </Route>
           </Routes>
         </BrowserRouter>

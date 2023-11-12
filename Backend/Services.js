@@ -144,6 +144,21 @@ export class Services {
         }
         return returnEntity
     }
+    static getClase = async (id) => {
+        let returnEntity = null;
+        console.log("Estoy en: getClase");
+        console.log("id:", id);
+        try {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .input("pid", sql.Int, id)
+                .query("SELECT * FROM ClaseCurso WHERE fkCurso = @pId");
+            returnEntity = result.recordsets[0];
+        } catch (error) {
+            console.log(error);
+        }
+        return returnEntity
+    }
     static getUsersCurso = async (IdCurso) => {
         let returnEntity = null;
         console.log("Estoy en: GetAllUsers");
@@ -222,16 +237,17 @@ export class Services {
             .query('INSERT INTO CursoMateriales (IdCurso,Imagen,Texto,LinkMateriales,Zoom) VALUES (@IdCurso,@Imagen,@Texto,@LinkMateriales,@Zoom)')
     }
 
-    static insertClase = async (Clase) => {
+    static insertClase = async (Clase, IdCurso) => {
         console.log("Estoy en: insert - Clase");
-        const { fkCurso , Fecha , Horario, Titulo } = Clase
+        const { Fecha , Horario, Titulo } = Clase
+        const idCurso = IdCurso
         let pool = await sql.connect(config)
         let result = await pool.request()
-        .input('fkCurso',sql.Int,fkCurso)
+        .input('fkCurso',sql.Int,idCurso)
         .input('Fecha',sql.Date,Fecha)
-        .input('Horario',sql.Time,Horario)
-        .input('Horario',sql.NVarChar(200),Titulo)
-        .query('INSERT INTO ClaseCurso (fkCurso,Fecha,Horario) VALUES (@fkCurso,@Fecha,@Horario,@Titulo)')
+        .input('Horario',sql.NVarChar(200),Horario)
+        .input('Titulo',sql.NVarChar(200),Titulo)
+        .query('INSERT INTO ClaseCurso (fkCurso,Fecha,Horario,Titulo) VALUES (@fkCurso,@Fecha,@Horario,@Titulo)')
     }
 
     static insertUsuario = async (Usuario) => {

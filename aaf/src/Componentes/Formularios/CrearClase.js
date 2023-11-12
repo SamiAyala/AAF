@@ -13,7 +13,7 @@ function CrearClase() {
   const [camposVacios, setcamposVacios] = useState(false);
   const Navigate = useNavigate('/ListaCursos');
   let mensaje = "";
-  console.log("SOYOGAYAGYAGYA",id)
+  console.log("ID: ",id)
   const handleChange = (event) => {
     setValues({...values, [event.target.name]:event.target.value
     })
@@ -30,7 +30,7 @@ function CrearClase() {
       event.preventDefault();
       event.stopPropagation();
     }
-    if(values.fecha=== "" || values.horario=== ""){
+    if(values.fecha=== "" || values.horario=== "" || values.Titulo===""){
         mensaje =  "Complete todos los campos (El de imagen puede estar vacio). "
         setcamposVacios(true)
         return
@@ -63,7 +63,7 @@ function CrearClase() {
               <Form.Label>Horario</Form.Label>
               <Form.Control
                 required
-                type="time"
+                type="text"
                 defaultValue=""
                 name="Horario"
                 onChange={handleChange}
