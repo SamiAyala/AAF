@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 
-function AgregarMaterial() {
+function CrearClase() {
     let { id } = useParams();
   const [validated, setValidated] = useState(false);
   const [values, setValues] = useState({});
@@ -30,12 +30,12 @@ function AgregarMaterial() {
       event.preventDefault();
       event.stopPropagation();
     }
-    if(values.imagen=== "" || values.texto=== "" || values.zoom=== ""){
+    if(values.fecha=== "" || values.horario=== ""){
         mensaje =  "Complete todos los campos (El de imagen puede estar vacio). "
         setcamposVacios(true)
         return
       }
-        axios.post('http://localhost:5000/aaf/insertMaterial', {values: values, id:id})
+        axios.post('http://localhost:5000/aaf/insertClase', {values: values, id:id})
           .then(res => {
             Navigate('/ListaCursos') 
           })
@@ -49,52 +49,41 @@ function AgregarMaterial() {
         <div className='container'>
           <Form onSubmit={(e) => handleSubmit(e)} noValidate validated={validated} className='form'>
             <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-              <Form.Label>Imagen</Form.Label>
+              <Form.Label>Fecha</Form.Label>
               <Form.Control
                 required
-                type="file"
+                type="date"
                 defaultValue=""
-                name="Imagen"
+                name="Fecha"
                 onChange={handleChange}
               />
             </Form.Group>
             <br></br>
             <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-              <Form.Label>Texto</Form.Label>
+              <Form.Label>Horario</Form.Label>
               <Form.Control
                 required
-                type="text"
+                type="time"
                 defaultValue=""
-                name="Texto"
+                name="Horario"
                 onChange={handleChange}
               />
             </Form.Group>
            
             <br></br>
             <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-              <Form.Label>Links de pdf, drives, etc</Form.Label>
+              <Form.Label>Titulo</Form.Label>
               <Form.Control
                 required
                 type="text"
                 defaultValue=""
-                name="LinkMateriales"
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <br></br>
-            <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
-              <Form.Label>Link del Zoom</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                defaultValue=""
-                name="Zoom"
+                name="Titulo"
                 onChange={handleChange}
               />
             </Form.Group>
             <br></br>
             { camposVacios ? <h5>Completa todos los campos</h5> : <h5></h5> }
-            <Button type="submit" className='form'>Cargar material</Button>
+            <Button type="submit" className='form'>Crear clase</Button>
             <Link to="/ListaCursos" className="btn btn-light form">Cursos</Link>
           </Form>
         </div>
@@ -102,4 +91,4 @@ function AgregarMaterial() {
   };
 
 
-export default AgregarMaterial;
+export default CrearClase;
