@@ -47,13 +47,13 @@ export class Services {
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .input("pId",sql.Int,id)
+                .input("pId", sql.Int, id)
                 .query("SELECT Cursos.Id, Cursos.Titulo, Cursos.Descripcion, Cursos.fkProfesor, (SELECT Concat(Usuarios.Nombre, ' ', Usuarios.Apellido) FROM Usuarios WHERE Usuarios.Id = Cursos.fkProfesor) AS NombreProfesor FROM Cursos INNER JOIN CursoUsuarios ON CursoUsuarios.IdUsuario=@pId WHERE Cursos.Id=CursoUsuarios.IdCurso");
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
         }
-        console.log("returnEntity",returnEntity);
+        console.log("returnEntity", returnEntity);
         return returnEntity;
     }
 
@@ -189,72 +189,79 @@ export class Services {
             .query('insert into CursoUsuarios (IdCurso,IdUsuario) VALUES (@pIdC,@pIdA)');
         return result.rowsAffected;
     }
-    
-    static tomarAsistencia = async (idAlumno, idCurso, asistencia, fecha) =>{
+
+    static tomarAsistencia = async (idAlumno, idCurso, asistencia, fecha) => {
         let pool = await sql.connect(config);
         let result = await pool.request()
-        .input("pIdAlumno",sql.Int,idAlumno)
-        .input("pIdCurso",sql.Int,idCurso)
-        .input("pAsistencia", sql.Bit,asistencia)
-        .query("insert into Asistencia (IdUsuarios,IdCurso,Asistencia) VALUES (@pIdAlumno,@pIdClase,@pAsistencia)");
+            .input("pIdAlumno", sql.Int, idAlumno)
+            .input("pIdCurso", sql.Int, idCurso)
+            .input("pAsistencia", sql.Bit, asistencia)
+            .query("insert into Asistencia (IdUsuarios,IdCurso,Asistencia) VALUES (@pIdAlumno,@pIdClase,@pAsistencia)");
     }
 
-    static getMails = async() => {
+    static getMails = async () => {
         let pool = await sql.connect(config);
         let result = await pool.request()
-        .query("SELECT DISTINCT mail FROM Usuarios");
+            .query("SELECT DISTINCT mail FROM Usuarios");
         console.log(result.recordset);
         return result.recordset;
     }
 
     static insertMaterial = async (Material, IdCurso) => {
-        console.log("Estoy en: insert - Material"); 
-        const {Imagen, Texto, LinkMateriales, Zoom } = Material
+        console.log("Estoy en: insert - Material");
+        const { Imagen, Texto, LinkMateriales, Zoom } = Material
         const idCurso = IdCurso
-        
+
         let pool = await sql.connect(config)
         let result = await pool.request()
             .input('IdCurso', sql.Int, idCurso)
             .input('Imagen', sql.NVarChar(200), Imagen)
             .input('Texto', sql.NVarChar(200), Texto)
-            .input('LinkMateriales',sql.NVarChar(999),LinkMateriales)
-            .input('Zoom',sql.NVarChar(999),Zoom)
+            .input('LinkMateriales', sql.NVarChar(999), LinkMateriales)
+            .input('Zoom', sql.NVarChar(999), Zoom)
             .query('INSERT INTO CursoMateriales (IdCurso,Imagen,Texto,LinkMateriales,Zoom) VALUES (@IdCurso,@Imagen,@Texto,@LinkMateriales,@Zoom)')
     }
 
     static insertClase = async (Clase) => {
         console.log("Estoy en: insert - Clase");
-        const { fkCurso , Fecha , Horario } = Clase
+        const { fkCurso, Fecha, Horario } = Clase
         let pool = await sql.connect(config)
         let result = await pool.request()
-        .input('fkCurso',sql.Int,fkCurso)
-        .input('Fecha',sql.Date,Fecha)
-        .input('Horario',sql.Time,Horario)
-        .query('INSERT INTO ClaseCurso (fkCurso,Fecha,Horario) VALUES (@fkCurso,@Fecha,@Horario)')
+            .input('fkCurso', sql.Int, fkCurso)
+            .input('Fecha', sql.Date, Fecha)
+            .input('Horario', sql.Time, Horario)
+            .query('INSERT INTO ClaseCurso (fkCurso,Fecha,Horario) VALUES (@fkCurso,@Fecha,@Horario)')
     }
 
     static insertUsuario = async (Usuario) => {
         console.log("Estoy en: insert - Usuario");
-        const { contraseña, nombre, apellido, telefono, mail, fiscalia, oficio , descripcion } = Usuario;
+        const { contraseña, nombre, apellido, telefono, mail, fiscalia, oficio, descripcion } = Usuario;
         const fkRol = 1;
+        const idUsuario = 1;
 
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(contraseña, salt, async function (err, hash) {
-                let pool = await sql.connect(config)
-                let result = await pool.request()
-                    .input('contrasenia', sql.NVarChar(200), hash)
-                    .input('nombre', sql.NVarChar(200), nombre)
-                    .input('apellido', sql.NVarChar(200), apellido)
-                    .input('fkRol', sql.Int, fkRol)
-                    .input('telefono', sql.NVarChar(17), telefono)
-                    .input('mail', sql.NVarChar(200), mail)
-                    .input('fiscalia', sql.NVarChar(200), fiscalia)
-                    .input('oficio', sql.NVarChar(200), oficio)
-                    .input('descripcion',sql.NVarChar(999),descripcion)
-                    .query('INSERT INTO Usuarios (Contrasenia,Nombre,Apellido,FkRol,Telefono,Mail,Fiscalia,Oficio,Descripcion) VALUES (@contrasenia,@nombre,@apellido,@fkRol,@telefono,@mail,@fiscalia,@oficio,@descripcion)')
-            });
+                try {
+                    let pool = await sql.connect(config)
+                    let result = await pool.request()
+                        .input('contrasenia', sql.NVarChar(200), hash)
+                        .input('nombre', sql.NVarChar(200), nombre)
+                        .input('apellido', sql.NVarChar(200), apellido)
+                        .input('fkRol', sql.Int, fkRol)
+                        .input('telefono', sql.NVarChar(17), telefono)
+                        .input('mail', sql.NVarChar(200), mail)
+                        .input('fiscalia', sql.NVarChar(200), fiscalia)
+                        .input('oficio', sql.NVarChar(200), oficio)
+                        .input('descripcion', sql.NVarChar(999), descripcion)
+                        //.input('idUsuario', sql.NVarChar(999), idUsuario)
+                        .execute(`Register`);
+                    console.log("result", result);
+                } catch (error){
+                    console.log(error);
+                }
+            })
         })
-        return Usuario;
+        
     }
 
     static updateUsuario = async (usuario) => {
@@ -323,17 +330,17 @@ export class Services {
         return returnEntity;
     }
 
-    static updateLink = async(link, idCurso) => {
+    static updateLink = async (link, idCurso) => {
         let returnEntity = null;
         console.log("Estoy en: update - CursoLink");
-        try{
+        try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-            .input('link',sql.NVarChar(999),link)
-            .input('idCurso',sql.Int,idCurso)
-            .query('update Cursos SET LinkZoom = @link WHERE Id = @idCurso')
+                .input('link', sql.NVarChar(999), link)
+                .input('idCurso', sql.Int, idCurso)
+                .query('update Cursos SET LinkZoom = @link WHERE Id = @idCurso')
             returnEntity = result.recordsets[0];
-        } catch(error){
+        } catch (error) {
             console.log(error)
         }
         return returnEntity;
