@@ -5,12 +5,12 @@ import CardListaCursos from './Cards/CardListaCursos';
 import axios from 'axios';
 import './Lista.css'
 import { Row, Col } from 'react-bootstrap';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { usuarioContext, isAdmContext } from '../Context/Context';
 
 
 function ListaCursos() {
-  const [Cursos, setCursos] = useState([{}]);
+  const [Cursos, setCursos] = useState([]);
   const [Profesores, setProfesores] = useState([]);
   const [recargar, setRecargar] = useState(false);
   const isAdm = useContext(isAdmContext);
@@ -28,7 +28,7 @@ function ListaCursos() {
       .then(res => {
         setProfesores(res.data);
       })
-    console.log("cursos lista", Cursos);
+
   }, [recargar]);
 
   const eliminarCurso = (Id) => {
@@ -54,8 +54,9 @@ function ListaCursos() {
 
   return (
     <div>
-      <Row style={{ padding: '4%', paddingTop:'1%' }}>
+      <Row style={{ padding: '4%', paddingTop: '1%' }}>
         <Row><Col style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', fontSize: 'xx-large', fontWeight: 'bold', padding: '0px', alignItems: 'center' }}><p style={{ color: 'white' }}>Todos los cursos</p></Col></Row>
+
         {Cursos.map(Curso =>
           <Col sm='auto' key={Curso.Id}>
             <CardListaCursos Titulo={Curso.Titulo} Descripcion={Curso.Descripcion} Profesor={Curso.NombreProfesor} eliminarCurso={eliminarCurso} asignarProfesor={asignarProfesor} Profesores={Profesores} Id={Curso.Id} fkProfesor={Curso.fkProfesor} isAdm={isAdm.isAdm} idUsuario={usuario.usuarioLogeado.Id} />
