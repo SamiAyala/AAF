@@ -5,10 +5,15 @@ import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { DropdownButton } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
-function CardClases({ Fecha, Horario, Titulo, Id, fkCurso }) {
+function CardClases({ Fecha, Horario, Titulo, Id, fkCurso}) {
     const navigate = useNavigate();
+   let ids= {
+      idCurso: fkCurso,
+      idClase: Id,
+   }
+   console.log("IDS DE LA CARD:",ids)
    return (
       <>
          <Card className='cardListas' style={{
@@ -26,7 +31,7 @@ function CardClases({ Fecha, Horario, Titulo, Id, fkCurso }) {
                </Card.Text>
             </Card.Body>
             <Card.Footer>
-            <Button onClick={() => navigate("/Asistencia/" + Id )}>Cursos</Button> 
+            <Button onClick={() => navigate("/Asistencia/", {state:ids})}>Tomar asistencia</Button> 
             </Card.Footer>
          </Card>
       </>
