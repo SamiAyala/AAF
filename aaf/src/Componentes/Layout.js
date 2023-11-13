@@ -7,6 +7,7 @@ import { Link,Outlet} from 'react-router-dom';
 import { useContext, useEffect} from 'react';
 import {usuarioContext,isAdmContext} from '../Context/Context';
 import './Layout.css';
+import { Col, Container, Row } from 'react-bootstrap';
 
 const Layout = () => {
     const context = useContext(usuarioContext);
@@ -19,23 +20,25 @@ const Layout = () => {
     })
 
     return (
-        <>
-            <Navbar className='navBar'>
-
-                <Navbar.Brand> <Link to='/'><img src={logoAAF} style={{ width: "20%", height: "auto" }}></img></Link></Navbar.Brand>
-                <Nav className="me-auto">
+        <Row style={{width:'auto'}}>
+            <Navbar className='navBar' style={{paddingLeft:'2%',paddingRight:'2%'}}>
+                <Navbar.Brand><Link to='/'>
+                    <img src={logoAAF} width="auto" height="60vh" className="align-top"></img>
+                    </Link></Navbar.Brand>
+                <Nav>
                     <Link to="/ListaCursos" className='text'>Cursos</Link>
                 </Nav>
                 <Nav className="me-auto">
                     <Link to="/MisCursos" className='text'>Mis Cursos</Link>
                 </Nav>
-                <Nav className="me-auto">
-                    <Link to="/ListaCursos" className='text'>Calendario</Link>
-                </Nav>
-                <Navbar.Brand>{typeof context.usuarioLogeado === "string" ? <Link to="/IniciarSesion"><img src={perfilIcono} style={{ width: "10%", height: "auto" }}></img></Link> : <Link state={context.usuarioLogeado} to={`/Perfil/${context.usuarioLogeado.Id}`}><img src={context.usuarioLogeado.Imagen===undefined ? perfilIcono : context.usuarioLogeado.Imagen} style={{ width: "10%", height: "auto" }}></img></Link>}</Navbar.Brand>
+                {isAdm.isAdm ? <Nav>
+                    <Link to="/ListaUsuarios" className='text'>Usuarios</Link>
+                </Nav> : <></>}
+                
+                <Navbar.Brand>{typeof context.usuarioLogeado === "string" ? <Link to="/IniciarSesion">  <img src={perfilIcono} width="auto" height="60vh" className="d-inline-block align-top"></img></Link> : <Link state={context.usuarioLogeado} to={`/Perfil/${context.usuarioLogeado.Id}`}><img width="auto" height="60vh" className="d-inline-block align-top" src={context.usuarioLogeado.Imagen===undefined ? perfilIcono : context.usuarioLogeado.Imagen}></img></Link>}</Navbar.Brand>
             </Navbar>
             <Outlet/>
-        </>
+        </Row>
     )
 }
 export default Layout;

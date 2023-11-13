@@ -25,7 +25,7 @@ export default function Home() {
          <div>
          
            <Row className='justify-content-md-center'>
-            {noticias.map(noticia => <Col sm={8} key={noticia.Id}  style={{marginTop:'2%'}}><Noticia titulo={noticia.Titulo} texto={noticia.Texto} imagen={noticia.Imagen} footer={noticia.Footer} fecha={noticia.Fecha}></Noticia></Col>)}
+            {noticias.map(noticia => <Col sm={8} key={noticia.Id}  style={{marginTop:'1%',marginBottom:'2%'}}><Noticia titulo={noticia.Titulo} texto={noticia.Texto} imagen={noticia.Imagen} footer={noticia.Footer} fecha={noticia.Fecha}></Noticia></Col>)}
             {isAdm.isAdm ? <Button onClick={()=> navigate("/AgregarNoticia")}>Crear Noticia</Button> : <></>}
             </Row> 
         </div>

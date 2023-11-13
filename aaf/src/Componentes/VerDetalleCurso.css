@@ -1,0 +1,16 @@
+.aclaracion{
+    font-weight:lighter;
+    font-size: 20px;
+    margin: 0px;
+}
+.value{
+    font-size:25px;
+    font-weight:400;
+}
+#bgCard{
+    background-color: rgb(3, 3, 73);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    color: white;
+}

@@ -147,14 +147,9 @@ app.post('/aaf/login', async(req, res) => {
 })
 
 app.post('/aaf/registrarse', async(req,res) =>{
-    try{
         const perfil = await Services.insertUsuario(req.body);
         console.log("perfil",perfil);
         res.status(201).send(perfil);
-    } catch (error){
-        console.log(error)
-        res.status(500).json({error : 'Fallo el registro'})
-    }
 })
 
 app.post('/aaf/crearCurso', async(req,res) =>{
@@ -259,6 +254,7 @@ app.delete('/aaf/eliminarCurso/:Id',async(req,res) =>{
     }
 })
 app.delete('/aaf/eliminarUsuario/:Id',async(req,res) =>{
+    console.log("req.params.Id",req.params.Id)
     try{
         await Services.deleteUsuario(req.params.Id);
         res.status(200).json({message:'eliminado con éxito'});

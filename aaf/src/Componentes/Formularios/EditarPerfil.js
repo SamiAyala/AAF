@@ -34,7 +34,7 @@ function EditarPerfil() {
     console.log("values editarperfil: ",values)
     axios.put('http://localhost:5000/aaf/editarperfil', values)
       .then(res => {
-        context.setUsuarioLogeado(values)
+        context.setUsuarioLogeado(values);
         Navigate(`/perfil/${context.usuarioLogeado.Id}`)
       })
       .catch(e => {

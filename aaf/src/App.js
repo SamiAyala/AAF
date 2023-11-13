@@ -19,44 +19,56 @@ import Asistencia from './Componentes/Asistencia';
 import Layout from './Componentes/Layout';
 import ListaAsistencia from './Componentes/ListaAsistencia';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { usuarioContext , isAdmContext, isProContext } from './Context/Context';
-import { useState } from 'react';
+import { usuarioContext, isAdmContext, isProContext } from './Context/Context';
+import { useEffect, useState } from 'react';
 
 
 const App = () => {
-
   const [usuarioLogeado, setUsuarioLogeado] = useState('');
   const [isAdm, setIsAdm] = useState(false);
   const [isPro, setIsPro] = useState(false);
-
+  useEffect(() => {
+    if (localStorage.getItem("usuarioKey") === null) {
+      localStorage.setItem("usuarioKey", JSON.stringify(''));
+    }
+    const localStorageJSON = JSON.parse(localStorage.getItem("usuarioKey"));
+    console.log("localStorageJSON",localStorageJSON)
+    setUsuarioLogeado(localStorageJSON);
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("usuarioKey",JSON.stringify(usuarioLogeado));
+    let auxBool;
+        usuarioLogeado.FkRol === 3 ? auxBool = true : auxBool = false;
+        setIsAdm(auxBool);
+  }, [usuarioLogeado]);
 
   return (
     <usuarioContext.Provider value={{ usuarioLogeado, setUsuarioLogeado }}>
       <isAdmContext.Provider value={{ isAdm, setIsAdm }}>
-      <isProContext.Provider value={{ isPro, setIsPro }}>
+        <isProContext.Provider value={{ isPro, setIsPro }}>
 
-        <BrowserRouter>
-          <Routes>
-            <Route path='/iniciarSesion' element={<FormIniciarSesion />}></Route>
-            <Route path='/Registrarse' element={<FormRegistro />}></Route>
-            <Route path='/' element={<Layout />}>
-              <Route index element={<Home />} ></Route>
-              <Route path='/Perfil/:id' element={<Perfil />}></Route>
-              <Route path='/EditarPerfil/:id' element={<EditarPerfil />}></Route>
-              <Route path='/ListaUsuarios' element={<ListaUsuario />}></Route>
-              <Route path='/ListaCursos' element={<ListaCursos />}></Route>
-              <Route path='/MisCursos' element={<MisCursos />}></Route>
-              <Route path='/CrearCursos' element={<CrearCursos />}></Route>
-              <Route path='/AgregarNoticia' element={<AgregarNoticia />}></Route>
-              <Route path='/VerDetalle/:id' element={<VerDetalleCursos/>}></Route>
-              <Route path='/AgregarMaterial/:id' element={<AgregarMaterial/>}></Route>
-              <Route path='/CrearClase/:id' element={<CrearClase/>}></Route>
-              <Route path='/ListaClases/:id' element={<ListaClases/>}></Route>
-              <Route path='/Asistencia' element={<Asistencia/>}></Route>
-              <Route path='/ListaAsistencia/:id' element={<ListaAsistencia/>}></Route>
-            </Route>
-          </Routes>
-        </BrowserRouter>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/iniciarSesion' element={<FormIniciarSesion />}></Route>
+              <Route path='/Registrarse' element={<FormRegistro />}></Route>
+              <Route path='/' element={<Layout />}>
+                <Route index element={<Home />} ></Route>
+                <Route path='/Perfil/:id' element={<Perfil />}></Route>
+                <Route path='/EditarPerfil/:id' element={<EditarPerfil />}></Route>
+                <Route path='/ListaUsuarios' element={<ListaUsuario />}></Route>
+                <Route path='/ListaCursos' element={<ListaCursos />}></Route>
+                <Route path='/MisCursos' element={<MisCursos />}></Route>
+                <Route path='/CrearCursos' element={<CrearCursos />}></Route>
+                <Route path='/AgregarNoticia' element={<AgregarNoticia />}></Route>
+                <Route path='/VerDetalle/:id' element={<VerDetalleCursos />}></Route>
+                <Route path='/AgregarMaterial/:id' element={<AgregarMaterial />}></Route>
+                <Route path='/CrearClase/:id' element={<CrearClase />}></Route>
+                <Route path='/ListaClases/:id' element={<ListaClases />}></Route>
+                <Route path='/Asistencia' element={<Asistencia />}></Route>
+                <Route path='/ListaAsistencia/:id' element={<ListaAsistencia />}></Route>
+              </Route>
+            </Routes>
+          </BrowserRouter>
         </isProContext.Provider>
       </isAdmContext.Provider>
     </usuarioContext.Provider>

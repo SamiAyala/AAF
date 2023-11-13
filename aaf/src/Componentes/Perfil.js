@@ -67,7 +67,7 @@ function Perfil() {
   }
 
   return (
-    <>
+    <div className='body'>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', fontSize: 'xx-large', fontWeight: 'bold', padding: '0px', alignItems: 'center', color: 'white' }}><p>Perfil </p></div>
 
       <Container className='divPerfil'>
@@ -122,7 +122,7 @@ function Perfil() {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }
 

@@ -30,7 +30,8 @@ function ListaClases() {
     <div>
       <Row style={{ padding: '4%', paddingTop:'1%' }}>
         <Row><Col style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', fontSize: 'xx-large', fontWeight: 'bold', padding: '0px', alignItems: 'center' }}><p style={{ color: 'white' }}>Clases</p></Col></Row>
-        {Clases.map(Clase =>
+        {Clases[0] === undefined ? <Col style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', fontSize: 'x-large', padding: '0px', alignItems: 'center',height:'0vh' }}><p style={{ color: 'white' }}>No hay clases disponibles actualmente.</p></Col> :
+         Clases.map(Clase =>
           <Col sm='auto' key={Clase.Id}>
             <CardClases Titulo={Clase.Titulo} Fecha={Clase.Feecha} Horario={Clase.Horario} Id={Clase.Id} fkCurso ={Clase.fkCurso} />
           </Col>)}

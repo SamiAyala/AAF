@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import CardListaUsuarios from './Cards/CardListaUsuarios';
+import CardUsuarios from './Cards/CardUsuarios';
 import axios from 'axios';
 import './Lista.css';
 import { Row, Col } from 'react-bootstrap';
@@ -39,7 +39,7 @@ function Asistencia() {
     return (
         <div>
             <Row style={{ padding: '4%' }}>
-                {alumnos.map(alumno => <Col sm='auto'><CardListaUsuarios Usuario={alumno}></CardListaUsuarios>
+                {alumnos.map(alumno => <Col sm='auto'><CardUsuarios Nombre={alumno.nombre} Apellido={alumno.Apellido} Fiscalia ={alumno.Fiscalia} Oficio={alumno.Oficio} Mail={alumno.Mail} Telefono ={alumno.Telefono}></CardUsuarios>
                     <label>
                         <input type="checkbox" id="cbox1" value="first_checkbox" onClick={ () => tomarAsistencia(alumno.Id) } /> {alumno.nombre}
                     </label>

@@ -274,30 +274,35 @@ export class Services {
         console.log("Estoy en: insert - Usuario");
         const { contraseña, nombre, apellido, telefono, mail, fiscalia, oficio, descripcion } = Usuario;
         const fkRol = 1;
-        const idUsuario = 1;
-
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(contraseña, salt, async function (err, hash) {
-                try {
-                    let pool = await sql.connect(config)
-                    let result = await pool.request()
-                        .input('contrasenia', sql.NVarChar(200), hash)
-                        .input('nombre', sql.NVarChar(200), nombre)
-                        .input('apellido', sql.NVarChar(200), apellido)
-                        .input('fkRol', sql.Int, fkRol)
-                        .input('telefono', sql.NVarChar(17), telefono)
-                        .input('mail', sql.NVarChar(200), mail)
-                        .input('fiscalia', sql.NVarChar(200), fiscalia)
-                        .input('oficio', sql.NVarChar(200), oficio)
-                        .input('descripcion', sql.NVarChar(999), descripcion)
-                        .execute(`Register`);
-                    console.log("result", result);
-                } catch (error){
-                    console.log(error);
-                }
-            })
-        })
-        
+    
+        return new Promise((resolve, reject) => {
+            bcrypt.genSalt(10, async (err, salt) => {
+                bcrypt.hash(contraseña, salt, async function (err, hash) {
+                    try {
+                        let pool = await sql.connect(config)
+                        let result = await pool.request()
+                            .input('contrasenia', sql.NVarChar(200), hash)
+                            .input('nombre', sql.NVarChar(200), nombre)
+                            .input('apellido', sql.NVarChar(200), apellido)
+                            .input('fkRol', sql.Int, fkRol)
+                            .input('telefono', sql.NVarChar(17), telefono)
+                            .input('mail', sql.NVarChar(200), mail)
+                            .input('fiscalia', sql.NVarChar(200), fiscalia)
+                            .input('oficio', sql.NVarChar(200), oficio)
+                            .input('descripcion', sql.NVarChar(999), descripcion)
+                            .execute(`Register`);
+                        
+                        const returnEntity = result.recordset[0];
+                        console.log("result", returnEntity);
+    
+                        resolve(returnEntity);
+                    } catch (error) {
+                        console.log(error);
+                        reject(error);
+                    }
+                })
+            });
+        });
     }
 
     static updateFoto = async (id,url) => {

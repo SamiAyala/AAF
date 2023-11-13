@@ -8,8 +8,8 @@ function Noticia ({ titulo = "", texto = "", footer = "", fecha = "", imagen = "
    const shortDate = dayjs(fecha).format("DD/MM/YY");
    return (
 
-            <Card style={{ width: '70rem' , marginBottom:'3%'}} className='divNoticia'>
-               <Card.Img style={{height:'auto',width:'70rem',padding:'1rem'}} variant="top" src={imagen} />
+            <Card className='divNoticia'>
+               <Card.Img style={{padding:'1rem'}} variant="top" src={imagen} />
                <Card.Body>
                   <Card.Title>{titulo}</Card.Title>
                   <Card.Text className='textoNoticia'>

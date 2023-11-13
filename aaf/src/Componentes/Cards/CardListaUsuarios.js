@@ -45,7 +45,7 @@ function CardListaUsuarios({ Usuario, eliminarUsuario, convertirUsuario }) {
                   </DropdownButton>
                   </Col>
                   <Col sm='auto'>
-                     <Button onClick={() => eliminarUsuario(Usuario.Id)} variant='danger' class='button elimnar u-full-width'>Eliminar</Button>
+                     <Button onClick={() => eliminarUsuario(Usuario.Id)} variant='danger' className='button elimnar u-full-width'>Eliminar</Button>
                      </Col>
                </Row>
             </Card.Footer>

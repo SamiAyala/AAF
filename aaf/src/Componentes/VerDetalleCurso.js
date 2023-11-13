@@ -1,11 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext} from "react";
 import axios from "axios";
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import CardListaUsuarios from './Cards/CardListaUsuarios';
 import { usuarioContext , isAdmContext, isProContext } from '../Context/Context';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+import './Cards/Card.css';
+import './VerDetalleCurso.css';
 
 function VerDetalleCursos() {
     const navigate = useNavigate();
@@ -29,23 +32,29 @@ function VerDetalleCursos() {
             .finally(() => { setLoading(false) })
     }, [])
     return (
-        <div className='container'>
-            {isLoading ? <></> : (
-                <>
-                    <img src={curso.Imagen} />
-                    <h3>Titulo: {curso.titulo}</h3>
-                    <h2>Descripcion: {curso.Texto}</h2>
-                    <h2>Link de materiales: {curso.LinkMateriales}</h2>
-                    <h2>Link del zoom: {curso.Zoom}</h2>
-                    <h2>{curso.Texto}</h2>
-                    <div>
-                    {val ? <Button onClick={()=> navigate("/AgregarMaterial/" + id)}>AgregarMaterial</Button> : <></>}
-                    {val ? <Button onClick={()=> navigate("/CrearClase/" + id)}>Crear Clase</Button> : <></>}
-                    <Button onClick={()=> navigate("/ListaClases/" + id)}>Clases</Button>  
-                    </div>
-                </>
-            )}
-        </div>
+        <Row style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: '0px', alignItems: 'center',height:'70vh'}}><Col sm={6}>
+        <Card>
+      <Card.Img id="bgCard" variant="top" src={curso.Imagen} />
+      <Card.Body id="bgCard">
+        <Card.Title>{curso.titulo}</Card.Title>
+        <Card.Text>
+        <p className="aclaracion">Descripcion: <p className="value">{curso.Texto}</p></p>
+                    <p className="aclaracion">Link de materiales: <p className="value">{curso.LinkMateriales}</p></p>
+                    <p className="aclaracion">Link del zoom: <p className="value">{curso.Zoom}</p></p>
+                    <p>{curso.Texto}</p>
+        </Card.Text>
+      </Card.Body>
+      
+      <Card.Footer id="bgCard">
+        <Row>
+      {val ? <Col><Button onClick={()=> navigate("/AgregarMaterial/" + id)}>AgregarMaterial</Button></Col> : <></>}
+                    {val ? <Col><Button onClick={()=> navigate("/CrearClase/" + id)}>Crear Clase</Button></Col> : <></>}
+                    <Col><Button onClick={()=> navigate("/ListaClases/" + id)}>Clases</Button></Col>
+                    </Row>
+      </Card.Footer>
+    </Card>
+    </Col>
+    </Row>
     );
 }
 

@@ -9,22 +9,36 @@ import { useNavigate } from 'react-router-dom';
 
 function ListaUsuario() {
   const [Usuarios, setUsuarios] = useState([{}]);
+  const [recargar, setRecargar] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     axios.get('http://localhost:5000/aaf/getUsers')
       .then(res => {
-        console.log(res)
         setUsuarios(res.data)
       })
       .catch(e => {
       });
   }, []);
+
+  useEffect(()=>{
+    axios.get('http://localhost:5000/aaf/getUsers')
+      .then(res => {
+        setUsuarios(res.data)
+      })
+      .catch(e => {
+      });
+    setRecargar(false);
+  },[recargar])
+
+
+
   const eliminarUsuario = (Id) => {
+    console.log("ideliminarusuario",Id)
     axios.delete('http://localhost:5000/aaf/eliminarUsuario/' + Id)
       .then(res => {
         console.log(res)
+        setRecargar(true);
       })
-    window.location.reload();
   }
   const convertirUsuario = (id, value) => {
     const values = {
