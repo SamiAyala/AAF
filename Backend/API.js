@@ -147,6 +147,7 @@ app.post('/aaf/login', async(req, res) => {
 })
 
 app.post('/aaf/registrarse', async(req,res) =>{
+    console.log("req.body",req.body)
         const perfil = await Services.insertUsuario(req.body);
         console.log("perfil",perfil);
         res.status(201).send(perfil);

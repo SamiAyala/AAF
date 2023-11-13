@@ -153,7 +153,7 @@ export class Services {
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input("pId", sql.Int, idClase)
-                .query("SELECT distinct Usuarios.* from CursoUsuarios INNER JOIN Usuarios ON IdUsuario=Usuarios.Id INNER JOIN ClaseCurso ON fkCurso = IdCurso INNER JOIN Asistencia ON ClaseCurso.Id = Asistencia.fkClase INNER JOIN Cursos ON ClaseCurso.fkCurso = Cursos.Id WHERE Asistencia.Asistencia = 'true' AND Asistencia.fkClase = @pId");
+                .query("SELECT distinct Usuarios.* from CursoUsuarios INNER JOIN Usuarios ON IdUsuario=Usuarios.Id INNER JOIN ClaseCurso ON fkCurso = IdCurso INNER JOIN Asistencia ON ClaseCurso.Id = Asistencia.fkClase INNER JOIN Cursos ON ClaseCurso.fkCurso = Cursos.Id WHERE Asistencia.Asistencia = true AND Asistencia.fkClase = @pId");
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
@@ -203,9 +203,9 @@ export class Services {
         const { titulo, texto, imagen, fecha, footer } = noticia;
         let pool = await sql.connect(config);
         let result = await pool.request()
-            .input('titulo', sql.NVarChar(50), titulo)
-            .input('texto', sql.NVarChar(200), texto)
-            .input('imagen', sql.NVarChar(200), imagen)
+            .input('titulo', sql.NVarChar(999), titulo)
+            .input('texto', sql.NVarChar(999), texto)
+            .input('imagen', sql.NVarChar(999), imagen)
             .input('fecha', sql.Date, fecha)
             .input('footer', sql.NVarChar(50), footer)
             .query('insert into ArticuloNoticia (Titulo, Texto, Imagen, Fecha, Footer) VALUES (@titulo,@texto,@imagen,@fecha,@footer)')
@@ -251,7 +251,7 @@ export class Services {
         let result = await pool.request()
             .input('IdCurso', sql.Int, idCurso)
         
-            .input('Texto', sql.NVarChar(200), Texto)
+            .input('Texto', sql.NVarChar(999), Texto)
             .input('LinkMateriales', sql.NVarChar(999), LinkMateriales)
             .input('Zoom', sql.NVarChar(999), Zoom)
             .query('INSERT INTO CursoMateriales (IdCurso,Texto,LinkMateriales,Zoom) VALUES (@IdCurso,@Texto,@LinkMateriales,@Zoom)')
@@ -274,6 +274,7 @@ export class Services {
         console.log("Estoy en: insert - Usuario");
         const { contraseña, nombre, apellido, telefono, mail, fiscalia, oficio, descripcion } = Usuario;
         const fkRol = 1;
+        console.log("Usuario",Usuario);
     
         return new Promise((resolve, reject) => {
             bcrypt.genSalt(10, async (err, salt) => {

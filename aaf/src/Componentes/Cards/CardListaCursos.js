@@ -1,5 +1,5 @@
 import './Card.css';
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -8,9 +8,11 @@ import Col from 'react-bootstrap/Col';
 import { useNavigate} from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
+import { usuarioContext } from '../../Context/Context';
 
 function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha asignado ningún profesor aún.", eliminarCurso, asignarProfesor, cargarMaterial, Profesores, Id, fkProfesor, isAdm, idUsuario }) {
    const Navigate = useNavigate('/AgregarMateriales');
+   const context = useContext(usuarioContext);
 
    const anotarse = () => {
       let body = { Id, idUsuario }
@@ -68,7 +70,7 @@ function CardListaCursos({ Titulo = "", Descripcion = "", Profesor = "No se ha a
                   </Col>
                }
                <Col sm='auto'>
-               <Button onClick={()=> Navigate('/VerDetalle/' + Id)} variant="secondary" className='button u-full-width'>Ver Detalles</Button>
+               {context.usuarioLogeado.Id===undefined ? <></>:<Button onClick={()=> Navigate('/VerDetalle/' + Id)} variant="secondary" className='button u-full-width'>Ver Detalles</Button>}
                </Col>
             </Row>
          </Card.Footer>

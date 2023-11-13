@@ -15,6 +15,7 @@ function ListaAsistencia() {
   useEffect(() => {
     axios.get('http://localhost:5000/aaf/getAsistencia/' + id)
       .then(res => {
+        console.log("res",res)
         setUsuarios(res.data)
       })
       .catch(e => {
