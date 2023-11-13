@@ -29,11 +29,17 @@ function Asistencia() {
       })
 
     }
+    /* let yaExiste = carrito.findIndex(producto => producto.id === prod.id);
+    if(yaExiste === -1) SetCarrito([...carrito, {...prod, cantidad: 1}]);
+    else {
+      SetCarrito(carrito.map(producto => producto.id === prod.id ? {...producto, cantidad: producto.cantidad + 1} : producto));
+    }*/ 
     useEffect(() => {
         axios.get('http://localhost:5000/aaf/getAlumnos/' + dataFromNavigation.idCurso)
             .then(response => {
                 console.log("response.data", response)
-                setAlumnos(response.data)
+                let yaExiste = alumnos.findIndex(alumno => alumno.id === alum.id);
+                if(yaExiste === -1) setAlumnos(response.data);
             })
             .catch(e => {
             });
