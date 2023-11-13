@@ -1,10 +1,11 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import CardUsuarios from './Cards/CardUsuarios';
 import axios from 'axios';
 import './Lista.css';
 import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { usuarioContext } from '../Context/Context';
 
 //import { useState } from 'react';
 
@@ -13,6 +14,7 @@ function Asistencia() {
     const dataFromNavigation = location.state;
     const [alumnos, setAlumnos] = useState([{}]);
     const navigate = useNavigate();
+    const context = useContext(usuarioContext);
     let bit = false;
     console.log("ids  .",dataFromNavigation);
    const tomarAsistencia = (id)=>{
@@ -23,8 +25,9 @@ function Asistencia() {
      }
      axios.post('http://localhost:5000/aaf/tomarLista',body)
      .then(res => {
-        console.log("papas gratis:",res.data);
+        console.log(res.data);
       })
+
     }
     useEffect(() => {
         axios.get('http://localhost:5000/aaf/getAlumnos/' + dataFromNavigation.idCurso)

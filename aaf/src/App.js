@@ -38,6 +38,7 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("usuarioKey",JSON.stringify(usuarioLogeado));
     let auxBool;
+    console.log("usuarioLogeado",usuarioLogeado)
         usuarioLogeado.FkRol === 3 ? auxBool = true : auxBool = false;
         setIsAdm(auxBool);
   }, [usuarioLogeado]);

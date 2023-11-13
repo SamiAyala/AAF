@@ -5,6 +5,7 @@ import './Registrar.css';
 import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
+import validator from 'validator';
 
 function AgregarNoticia() {
   const [validated, setValidated] = useState(false);
@@ -65,7 +66,6 @@ function AgregarNoticia() {
                 onChange={handleChange}
               />
             </Form.Group>
-           
             <br></br>
             <Form.Group /*as={Col} md="4"*/ controlId="validationCustom02">
               <Form.Label>Fecha</Form.Label>

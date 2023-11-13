@@ -110,7 +110,7 @@ function Perfil() {
         <Modal.Body className='modalBody' id='modalBg'>
           <label>Url</label>
           <br />
-          <input type="text" placeholder="url" defaultValue={null} onChange={handleChange}></input>
+          <input type="text" placeholder="url" defaultValue={null} onChange={handleChange} maxlength="99999999"></input>
           {urlInvalido ? <p> El url ingresado no es válido. </p> : <></>}
         </Modal.Body>
         <Modal.Footer id='modalBg'>

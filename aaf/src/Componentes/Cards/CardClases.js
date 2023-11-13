@@ -1,14 +1,16 @@
 import './Card.css';
-import React from 'react';
+import React, { useContext } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { DropdownButton } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import { useNavigate} from 'react-router-dom';
+import { usuarioContext } from '../../Context/Context';
 
 function CardClases({ Fecha, Horario, Titulo, Id, fkCurso}) {
     const navigate = useNavigate();
+    const context = useContext(usuarioContext);
    let ids= {
       idCurso: fkCurso,
       idClase: Id,
@@ -31,7 +33,8 @@ function CardClases({ Fecha, Horario, Titulo, Id, fkCurso}) {
                </Card.Text>
             </Card.Body>
             <Card.Footer>
-            <Button onClick={() => navigate("/Asistencia/", {state:ids})}>Tomar asistencia</Button> 
+            {context.usuarioLogeado.FkRol === 2 ? <Button onClick={() => navigate("/Asistencia/", {state:ids})}>Tomar asistencia</Button>  : <></>}
+            
             </Card.Footer>
          </Card>
       </>

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { usuarioContext, isAdmContext } from '../../Context/Context';
+import { validator } from 'validator';
 
 function FormRegistro() {
   const [validated, setValidated] = useState(false);
